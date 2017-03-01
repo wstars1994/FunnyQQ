@@ -1,5 +1,8 @@
-package com.boomzz.core;
+package com.boomzz.test;
 
+import com.boomzz.core.Constant;
+import com.boomzz.core.FunnyQQBase;
+import com.boomzz.core.IQRCodeLogin;
 import com.boomzz.model.PtuiCBMsgModel;
 import com.boomzz.util.HttpClientUtil;
 import com.boomzz.util.TencentBackMsgUtil;
