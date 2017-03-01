@@ -3,6 +3,7 @@ package com.boomzz.core;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.boomzz.logs.FQQLogs;
 import com.boomzz.model.DiscusModel;
 import com.boomzz.model.FriendsModel;
 import com.boomzz.model.GroupModel;
@@ -24,6 +25,9 @@ public interface IFunnyQQBase {
 	 * 全局个人登录信息
 	 */
 	public static LoginModel loginModel=new LoginModel(); //
+	
+	
+	public static FQQLogs logs=new FQQLogs(Constant.FILE_PATH_LOGS);
 	
 	/**
 	 * 获取个人信息 

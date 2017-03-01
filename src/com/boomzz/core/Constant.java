@@ -8,6 +8,7 @@ public class Constant {
 	
 	
 	public static String FILE_PATH_QR="qr.png";
+	public static String FILE_PATH_LOGS="logs/log.log";
 	
 	/**
 	 * 获取二维码图片
