@@ -22,7 +22,7 @@ public class QRCodeLogin extends FunnyQQBase implements IQRCodeLogin{
 	@Override
 	public boolean getQRCodeForMobile() {
 		try {
-			HttpClientUtil.getBackAndCookieForQR(Constant.URL_GET_QR+Math.random(),Constant.FILE_PATH_QR);
+			HttpClientUtil.getBackAndCookieForQR(Constant.URL_GET_QR+Math.random(),Constant.FILE_PATH_QR,cookies);
     		System.out.println("获取二维码成功");
     		return true;
     	} catch (Exception e) {
@@ -57,7 +57,7 @@ public class QRCodeLogin extends FunnyQQBase implements IQRCodeLogin{
 				boolean flag=true;
 				while(flag){
 					try {
-						String back=HttpClientUtil.get(url);
+						String back=HttpClientUtil.get(url,cookies);
 						//转换成类
 						PtuiCBMsgModel ptuiCBMsgModel=TencentBackMsgUtil.ptuiCBMsgToModel(back);
 						if(ptuiCBMsgModel==null){

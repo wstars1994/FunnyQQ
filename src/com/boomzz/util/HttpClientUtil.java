@@ -15,13 +15,12 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-import com.boomzz.core.QRCodeLogin;
+import com.boomzz.core.FunnyQQBase;
 
 public class HttpClientUtil {
 
@@ -29,15 +28,15 @@ public class HttpClientUtil {
      * 处理get请求.
      * @param url  请求路径
      */
-    public static String get(String url){
+    public static String get(String url,Map<String, String> cookies){
     	//实例化httpclient
         CloseableHttpClient httpclient = HttpClients.createDefault();
         //实例化get方法
         HttpGet httpget = new HttpGet(url);
-        if(QRCodeLogin.cookies!=null){
+        if(cookies!=null){
         	String cooStr="";
-        	for(String c:QRCodeLogin.cookies.keySet()){
-        		cooStr+=c+"="+QRCodeLogin.cookies.get(c)+";";
+        	for(String c:cookies.keySet()){
+        		cooStr+=c+"="+cookies.get(c)+";";
         	}
         	httpget.addHeader("Cookie",cooStr);
         }
@@ -49,11 +48,11 @@ public class HttpClientUtil {
             response = httpclient.execute(httpget);
             for(Header h: response.getAllHeaders()){
             	if("Set-Cookie".equals(h.getName())){
-            		String cookies[]=h.getValue().split(";");
-            		for(String s:cookies){
+            		String cookiesArry[]=h.getValue().split(";");
+            		for(String s:cookiesArry){
             			String c[]=s.split("=");
             			if(c.length==2)
-            				QRCodeLogin.cookies.put(c[0], c[1]);
+            				cookies.put(c[0], c[1]);
             		}
             	}
             }
@@ -73,7 +72,7 @@ public class HttpClientUtil {
      * @param url  请求路径
 	 * @param path 
      */
-    public static String getBackAndCookieForQR(String url, String path){
+    public static String getBackAndCookieForQR(String url, String path,Map<String, String> cookies){
     	//实例化httpclient
         CloseableHttpClient httpclient = HttpClients.createDefault();
         //实例化get方法
@@ -86,10 +85,10 @@ public class HttpClientUtil {
             response = httpclient.execute(httpget);
             for(Header h: response.getAllHeaders()){
             	if("Set-Cookie".equals(h.getName())){
-            		String cookies[]=h.getValue().split(";");
-            		for(String s:cookies){
+            		String cookiesArr[]=h.getValue().split(";");
+            		for(String s:cookiesArr){
             			String c[]=s.split("=");
-            			QRCodeLogin.cookies.put(c[0], c[1]);
+            			cookies.put(c[0], c[1]);
             		}
             	}
             }
@@ -126,15 +125,15 @@ public class HttpClientUtil {
      * @param params  参数
      * @return  json
      */
-    public static String post(String url,Map<String, String> params) {
+    public static String post(String url,Map<String, String> params,Map<String, String> cookies) {
         //实例化httpClient
         CloseableHttpClient httpclient = HttpClients.createDefault();
         //实例化post方法
         HttpPost httpPost = new HttpPost(url);
-        if(QRCodeLogin.cookies!=null){
+        if(cookies!=null){
         	String cooStr="";
-        	for(String c:QRCodeLogin.cookies.keySet()){
-        		cooStr+=c+"="+QRCodeLogin.cookies.get(c)+";";
+        	for(String c:cookies.keySet()){
+        		cooStr+=c+"="+cookies.get(c)+";";
         	}
         	httpPost.addHeader("Cookie",cooStr);
         }
@@ -156,11 +155,11 @@ public class HttpClientUtil {
             response = httpclient.execute(httpPost);
             for(Header h: response.getAllHeaders()){
             	if("Set-Cookie".equals(h.getName())){
-            		String cookies[]=h.getValue().split(";");
-            		for(String s:cookies){
+            		String cookiesArr[]=h.getValue().split(";");
+            		for(String s:cookiesArr){
             			String c[]=s.split("=");
             			if(c.length==2)
-            				QRCodeLogin.cookies.put(c[0], c[1]);
+            				cookies.put(c[0], c[1]);
             		}
             	}
             }

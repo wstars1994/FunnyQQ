@@ -19,7 +19,7 @@ public class FunnyQQBase implements IFunnyQQBase{
 	public UserModel getSelfInfo() {
 		UserModel userModel=new UserModel();
 		
-		HttpClientUtil.get(Constant.URL_GET_SELFINFO+Math.random());
+		HttpClientUtil.get(Constant.URL_GET_SELFINFO+Math.random(),cookies);
 		
 		return userModel;
 	}
@@ -29,7 +29,7 @@ public class FunnyQQBase implements IFunnyQQBase{
 		Map<String,String> params=new HashMap<>();
 		
 		FriendsModel friendsModel=new FriendsModel();
-		HttpClientUtil.post(Constant.URL_POST_FRIENDS,params);
+		HttpClientUtil.post(Constant.URL_POST_FRIENDS,params,cookies);
 		
 		return friendsModel;
 	}
@@ -38,7 +38,7 @@ public class FunnyQQBase implements IFunnyQQBase{
 	public FriendsModel getOnlineFrientList() {
 		FriendsModel friendsModel=new FriendsModel();
 		
-		HttpClientUtil.get(Constant.URL_GET_ONLINEFRIENDS+Math.random());
+		HttpClientUtil.get(Constant.URL_GET_ONLINEFRIENDS+Math.random(),cookies);
 		
 		return friendsModel;
 	}
@@ -47,7 +47,7 @@ public class FunnyQQBase implements IFunnyQQBase{
 	public FriendsModel getRecentFrientList() {
 		FriendsModel friendsModel=new FriendsModel();
 		Map<String,String> params=new HashMap<>();
-		HttpClientUtil.post(Constant.URL_POST_RECENTRIENDS,params);
+		HttpClientUtil.post(Constant.URL_POST_RECENTRIENDS,params,cookies);
 		return friendsModel;
 	}
 
@@ -57,7 +57,7 @@ public class FunnyQQBase implements IFunnyQQBase{
 		
 		Map<String,String> params=new HashMap<>();
 		
-		HttpClientUtil.post(Constant.URL_POST_GROUP,params);
+		HttpClientUtil.post(Constant.URL_POST_GROUP,params,cookies);
 		
 		return groupModel;
 	}
@@ -66,7 +66,7 @@ public class FunnyQQBase implements IFunnyQQBase{
 	public DiscusModel getDiscusList() {
 		DiscusModel discusModel=new DiscusModel();
 		
-		HttpClientUtil.get(Constant.URL_GET_DISCUS+Math.random());
+		HttpClientUtil.get(Constant.URL_GET_DISCUS+Math.random(),cookies);
 		
 		return discusModel;
 	}
