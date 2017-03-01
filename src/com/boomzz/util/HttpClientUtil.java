@@ -71,8 +71,9 @@ public class HttpClientUtil {
 	/**
      * 处理get请求 获取图片.
      * @param url  请求路径
+	 * @param path 
      */
-    public static String getBackAndCookieForQR(String url){
+    public static String getBackAndCookieForQR(String url, String path){
     	//实例化httpclient
         CloseableHttpClient httpclient = HttpClients.createDefault();
         //实例化get方法
@@ -96,7 +97,7 @@ public class HttpClientUtil {
             	InputStream inputStream=response.getEntity().getContent();
 				try {
 					byte[] data =   QRImageUtil.readInputStream(inputStream);
-					File imageFile = new File("qr.jpg");
+					File imageFile = new File(path);
 					if(imageFile.exists()){
 						imageFile.delete();
 					}

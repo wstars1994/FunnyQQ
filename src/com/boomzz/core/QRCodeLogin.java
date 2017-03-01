@@ -22,7 +22,7 @@ public class QRCodeLogin extends FunnyQQBase implements IQRCodeLogin{
 	@Override
 	public boolean getQRCodeForMobile() {
 		try {
-			HttpClientUtil.getBackAndCookieForQR(Constant.URL_GET_QR+Math.random());
+			HttpClientUtil.getBackAndCookieForQR(Constant.URL_GET_QR+Math.random(),Constant.FILE_PATH_QR);
     		System.out.println("获取二维码成功");
     		return true;
     	} catch (Exception e) {

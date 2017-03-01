@@ -6,6 +6,9 @@ package com.boomzz.core;
  */
 public class Constant {
 	
+	
+	public static String FILE_PATH_QR="qr.png";
+	
 	/**
 	 * 获取二维码图片
 	 */
