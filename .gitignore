@@ -5,3 +5,4 @@ qr.png
 *.classpath
 /.settings/
 /.git/
+*.log
