@@ -2,5 +2,5 @@
 
 qr.jpg
 *.classpath
-/settings/
+/.settings/
 /.git/
