@@ -7,6 +7,7 @@ import com.boomzz.core.Constant;
 import com.boomzz.core.FunnyQQBase;
 import com.boomzz.core.IQRCodeLogin;
 import com.boomzz.model.PtuiCBMsgModel;
+import com.boomzz.util.DateTimeUtil;
 import com.boomzz.util.FunnyQQUtil;
 import com.boomzz.util.HttpClientUtil;
 
@@ -79,9 +80,16 @@ public class QRCodeLogin extends FunnyQQBase implements IQRCodeLogin{
 								//第一次登录验证 获取必要参数
 								String checkSigUrl=ptuiCBMsgModel.getP2();
 								HttpClientUtil.get(checkSigUrl, cookies);
-								HttpClientUtil.get(FunnyQQUtil.replace(Constant.URL_GET_VFWEBQQ+Math.random(), "ptwebqq",loginModel.getPtwebqq()), cookies);
-								//第二次登录验证
+								//获取Vfwebqq
+								back=HttpClientUtil.get(FunnyQQUtil.replace(Constant.URL_GET_VFWEBQQ+DateTimeUtil.getTimestamp(), "ptwebqq",loginModel.getPtwebqq()), cookies);
+								System.out.println(back);
+								loginModel.setVfwebqq(FunnyQQUtil.findParamVfwebqq(back));
 								
+								//第二次登录验证
+								Map<String, String> params=new HashMap<>();
+								params.put("r", FunnyQQUtil.replace(Constant.PARAM_LOGIN2, "ptwebqq",loginModel.getPtwebqq()));
+								back=HttpClientUtil.post(Constant.URL_POST_LONGIN2, params, cookies);
+								System.out.println(back);
 								flag=false;
 							}
 						}
@@ -99,7 +107,6 @@ public class QRCodeLogin extends FunnyQQBase implements IQRCodeLogin{
 		IQRCodeLogin funnyQQ=new QRCodeLogin();
 		boolean status=funnyQQ.getQRCodeForMobile();
 		if(status){
-			Map<String, String> map=new HashMap<>();
 			String url=FunnyQQUtil.replace(Constant.URL_GET_LOGIN_POLLING, "ptqrtoken",funnyQQ.getPtqrToken());
 			funnyQQ.loginPolling(url);
 		}

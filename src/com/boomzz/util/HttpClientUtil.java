@@ -15,9 +15,11 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.params.ClientPNames;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 
 public class HttpClientUtil {
@@ -31,6 +33,11 @@ public class HttpClientUtil {
         CloseableHttpClient httpclient = HttpClients.createDefault();
         //实例化get方法
         HttpGet httpget = new HttpGet(url);
+        //禁止重定向
+        HttpParams params=httpget.getParams();
+        params.setParameter(ClientPNames.HANDLE_REDIRECTS, false);  
+        httpget.setParams(params);
+        
         if(cookies!=null){
         	String cooStr="";
         	for(String c:cookies.keySet()){
@@ -49,11 +56,22 @@ public class HttpClientUtil {
             		String cookiesArry[]=h.getValue().split(";");
             		for(String s:cookiesArry){
             			String c[]=s.split("=");
-            			if(c.length==2)
-            				cookies.put(c[0], c[1]);
+            			if(c.length==2){
+            				//除去不需要的
+            				if(c[0].contains("ptwebqq"))
+            					System.out.println(c[0]);
+            				if(!c[0].contains("EXPIRES")&&!c[0].contains("PATH")&&!c[0].contains("DOMAIN"))
+                				cookies.put(c[0], c[1]);
+            			}
             		}
             	}
             }
+            String cooStr="";
+            for(String c:cookies.keySet()){
+        		cooStr+=c+"="+cookies.get(c)+";";
+        	}
+            System.out.println(cooStr);
+            
             if(response.getStatusLine().getStatusCode()==200){
                 content = EntityUtils.toString(response.getEntity(),"utf-8");
             }
@@ -86,7 +104,11 @@ public class HttpClientUtil {
             		String cookiesArr[]=h.getValue().split(";");
             		for(String s:cookiesArr){
             			String c[]=s.split("=");
-            			cookies.put(c[0], c[1]);
+            			if(c.length==2){
+            				//除去不需要的
+            				if(!c[0].contains("EXPIRES")&&!c[0].contains("PATH")&&!c[0].contains("DOMAIN"))
+                				cookies.put(c[0], c[1]);
+            			}
             		}
             	}
             }
@@ -156,8 +178,11 @@ public class HttpClientUtil {
             		String cookiesArr[]=h.getValue().split(";");
             		for(String s:cookiesArr){
             			String c[]=s.split("=");
-            			if(c.length==2)
+            			if(c.length==2){
+            				//除去不需要的
+            				if(!c[0].contains("EXPIRES")&&!c[0].contains("PATH")&&!c[0].contains("DOMAIN"))
             				cookies.put(c[0], c[1]);
+            			}
             		}
             	}
             }

@@ -7,6 +7,8 @@ import com.boomzz.model.DiscusModel;
 import com.boomzz.model.FriendsModel;
 import com.boomzz.model.GroupModel;
 import com.boomzz.model.UserModel;
+import com.boomzz.util.DateTimeUtil;
+import com.boomzz.util.FunnyQQUtil;
 import com.boomzz.util.HttpClientUtil;
 
 /**
@@ -19,7 +21,8 @@ public class FunnyQQBase implements IFunnyQQBase{
 	public UserModel getSelfInfo() {
 		UserModel userModel=new UserModel();
 		
-		HttpClientUtil.get(Constant.URL_GET_SELFINFO+Math.random(),cookies);
+		String back=HttpClientUtil.get(Constant.URL_GET_SELFINFO+DateTimeUtil.getTimestamp(),cookies);
+		System.out.println(back);
 		
 		return userModel;
 	}
@@ -65,9 +68,13 @@ public class FunnyQQBase implements IFunnyQQBase{
 	@Override
 	public DiscusModel getDiscusList() {
 		DiscusModel discusModel=new DiscusModel();
-		
-		HttpClientUtil.get(Constant.URL_GET_DISCUS+Math.random(),cookies);
-		
+		Map<String, String> map=new HashMap<>();
+		map.put("psessionid", loginModel.getPsessionid());
+		map.put("vfwebqq", loginModel.getVfwebqq());
+		String url=FunnyQQUtil.replace(Constant.URL_GET_DISCUS+Math.random(), map);
+		System.out.println(url);
+		String back=HttpClientUtil.get(url,cookies);
+		System.out.println(back);
 		return discusModel;
 	}
 
