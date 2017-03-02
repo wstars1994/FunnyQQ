@@ -29,6 +29,10 @@ public interface IFunnyQQBase {
 	
 	public static FQQLogs logs=new FQQLogs(Config.FILE_PATH_LOGS);
 	
+	/**获取必要参数 Hash
+	 * @return
+	 */
+	public int getHash();
 	/**
 	 * 获取个人信息 
 	 * @return json

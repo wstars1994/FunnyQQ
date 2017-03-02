@@ -15,6 +15,16 @@ public class Config {
 	 * 第二次登录请求参数
 	 */
 	public static String PARAM_LOGIN2="{\"ptwebqq\":\"#ptwebqq#\",\"clientid\":"+PARAM_CLIENTID+",\"psessionid\":\"\",\"status\":\"online\"}";
+
+	/**
+	 * 获取好友列表请求参数
+	 */
+	public static String PARAM_FRIENDS_LIST="{\"vfwebqq\":\"#vfwebqq#\",\"hash\":\"#hash#\"}";
+	
+	/**
+	 * 获取最近好友列表请求参数
+	 */
+	public static String PARAM_RECENTFRIENDS_LIST="{\"vfwebqq\":\"vfwebqq\",\"clientid\":"+PARAM_CLIENTID+",\"psessionid\":\"#psessionid#\"}";
 	
 	/**
 	 * 图片路径

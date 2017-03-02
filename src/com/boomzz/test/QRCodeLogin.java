@@ -93,7 +93,15 @@ public class QRCodeLogin extends FunnyQQBase implements IQRCodeLogin{
 									loginModel.setPsessionid(map.get("psessionid"));
 								}
 								//登陆完毕
+								//获取个人信息
 								getSelfInfo();
+								//获取好友列表
+								getFrientList();
+								//获取在线好友列表
+								getOnlineFrientList();
+								//获取最近联系好友列表
+								getRecentFrientList();
+								
 								flag=false;
 							}
 						}
@@ -111,8 +119,7 @@ public class QRCodeLogin extends FunnyQQBase implements IQRCodeLogin{
 		IQRCodeLogin funnyQQ=new QRCodeLogin();
 		boolean status=funnyQQ.getQRCodeForMobile();
 		if(status){
-			String url=FunnyQQUtil.replace(Config.URL_GET_LOGIN_POLLING, "ptqrtoken",funnyQQ.getPtqrToken());
-			funnyQQ.loginPolling(url);
+			funnyQQ.loginPolling(FunnyQQUtil.replace(Config.URL_GET_LOGIN_POLLING, "ptqrtoken",funnyQQ.getPtqrToken()));
 		}
 	}
 }
