@@ -33,10 +33,12 @@ public class FunnyQQBase implements IFunnyQQBase{
 		FriendsModel friendsModel=new FriendsModel();
 		Map<String,String> params=new HashMap<>();
 		params.put("vfwebqq", loginModel.getVfwebqq());
+		System.out.println(getHash());
 		params.put("hash", getHash()+"");
 		String pString=FunnyQQUtil.replace(Config.PARAM_FRIENDS_LIST, params);
 		params.clear();
 		params.put("r", pString);
+		System.out.println(pString);
 		String json=HttpClientUtil.post(Config.URL_POST_FRIENDS,params,cookies);
 		System.out.println(json);
 		return friendsModel;
