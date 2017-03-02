@@ -22,5 +22,5 @@ public interface IQRCodeLogin extends IFunnyQQBase{
 	 * @param url
 	 * @return
 	 */
-	public boolean loginPolling(String url);
+	public void loginPolling(String url);
 }

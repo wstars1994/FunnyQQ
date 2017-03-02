@@ -20,8 +20,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-import com.boomzz.core.FunnyQQBase;
-
 public class HttpClientUtil {
 
 	/**
@@ -95,7 +93,7 @@ public class HttpClientUtil {
             if(response.getStatusLine().getStatusCode()==200){
             	InputStream inputStream=response.getEntity().getContent();
 				try {
-					byte[] data =   QRImageUtil.readInputStream(inputStream);
+					byte[] data =  FunnyQQUtil.readInputStream(inputStream);
 					File imageFile = new File(path);
 					if(imageFile.exists()){
 						imageFile.delete();

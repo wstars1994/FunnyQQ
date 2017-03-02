@@ -1,11 +1,14 @@
 package com.boomzz.test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.boomzz.core.Constant;
 import com.boomzz.core.FunnyQQBase;
 import com.boomzz.core.IQRCodeLogin;
 import com.boomzz.model.PtuiCBMsgModel;
+import com.boomzz.util.FunnyQQUtil;
 import com.boomzz.util.HttpClientUtil;
-import com.boomzz.util.TencentBackMsgUtil;
 
 /**
  * @author WStars
@@ -52,7 +55,7 @@ public class QRCodeLogin extends FunnyQQBase implements IQRCodeLogin{
 	}
 
 	@Override
-	public boolean loginPolling(final String url) {
+	public void loginPolling(final String url) {
 		System.out.println("开始登录轮询");
 		Thread polling=new Thread(new Runnable() {
 			@Override
@@ -62,7 +65,7 @@ public class QRCodeLogin extends FunnyQQBase implements IQRCodeLogin{
 					try {
 						String back=HttpClientUtil.get(url,cookies);
 						//转换成类
-						PtuiCBMsgModel ptuiCBMsgModel=TencentBackMsgUtil.ptuiCBMsgToModel(back);
+						PtuiCBMsgModel ptuiCBMsgModel=FunnyQQUtil.ptuiCBMsgToModel(back);
 						if(ptuiCBMsgModel==null){
 							System.out.println("登录轮询失败");
 							flag=false;
@@ -70,8 +73,13 @@ public class QRCodeLogin extends FunnyQQBase implements IQRCodeLogin{
 							System.out.println(ptuiCBMsgModel.getNo() +" : "+ ptuiCBMsgModel.getP4());
 							if(ptuiCBMsgModel.getNo()==0){//初次登录成功
 								loginModel.setNickName(ptuiCBMsgModel.getP5());
-								//第一次登录验证
-								
+								loginModel.setUid(FunnyQQUtil.findParam(ptuiCBMsgModel.getP2(),"uin"));
+								loginModel.setPtwebqq(FunnyQQUtil.findCookieParam("ptwebqq", cookies));
+								loginModel.setClientId(Constant.PARAM_CLIENTID);
+								//第一次登录验证 获取必要参数
+								String checkSigUrl=ptuiCBMsgModel.getP2();
+								HttpClientUtil.get(checkSigUrl, cookies);
+								HttpClientUtil.get(FunnyQQUtil.replace(Constant.URL_GET_VFWEBQQ+Math.random(), "ptwebqq",loginModel.getPtwebqq()), cookies);
 								//第二次登录验证
 								
 								flag=false;
@@ -85,14 +93,14 @@ public class QRCodeLogin extends FunnyQQBase implements IQRCodeLogin{
 			}
 		});
 		polling.start();
-		return true;
 	}
 	public static void main(String[] args) {
 		
 		IQRCodeLogin funnyQQ=new QRCodeLogin();
 		boolean status=funnyQQ.getQRCodeForMobile();
 		if(status){
-			String url=Constant.URL_GET_LOGIN_POLLING.replace("#ptqrtoken#", funnyQQ.getPtqrToken());
+			Map<String, String> map=new HashMap<>();
+			String url=FunnyQQUtil.replace(Constant.URL_GET_LOGIN_POLLING, "ptqrtoken",funnyQQ.getPtqrToken());
 			funnyQQ.loginPolling(url);
 		}
 	}

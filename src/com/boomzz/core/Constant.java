@@ -6,8 +6,19 @@ package com.boomzz.core;
  */
 public class Constant {
 	
+	/**
+	 * clientId 暂时不变
+	 */
+	public static String PARAM_CLIENTID="53999199";
 	
+	/**
+	 * 图片路径
+	 */
 	public static String FILE_PATH_QR="qr.png";
+	
+	/**
+	 * 日志路径
+	 */
 	public static String FILE_PATH_LOGS="logs/log.log";
 	
 	/**
@@ -20,6 +31,11 @@ public class Constant {
 	 */
 	public static String URL_GET_LOGIN_POLLING="https://ssl.ptlogin2.qq.com/ptqrlogin?ptqrtoken=#ptqrtoken#&webqq_type=10&remember_uin=1&login2qq=1&aid=501004106&u1=http://w.qq.com/proxy.html?login2qq=1&webqq_type=10&ptredirect=0&ptlang=2052&daid=164&from_ui=1&pttype=1&dumy=&fp=loginerroralert&action=0-0-666&mibao_css=m_webqq&t=undefined&g=1&js_type=0&js_ver=10197&login_sig=&pt_randsalt=0";
 
+	/**
+	 * 获取VFWEBQQ参数
+	 */
+	public static String URL_GET_VFWEBQQ="http://s.web2.qq.com/api/getvfwebqq?ptwebqq=#ptwebqq#&clientid=53999199&psessionid=&t=";
+	
 	/**
 	 * 获取个人信息
 	 */
