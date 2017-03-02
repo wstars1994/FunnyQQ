@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import com.boomzz.core.Constant;
+import com.boomzz.core.Config;
 import com.boomzz.util.DateTimeUtil;
 
 /**
@@ -53,6 +53,6 @@ public class FQQLogs{
 		sBuffer.append(DateTimeUtil.getFormatDate());
 		sBuffer.append("]");
 		sBuffer.append("TEST");
-		new FQQLogs(Constant.FILE_PATH_LOGS).writeNewLogs(sBuffer.toString());
+		new FQQLogs(Config.FILE_PATH_LOGS).writeNewLogs(sBuffer.toString());
 	}
 }

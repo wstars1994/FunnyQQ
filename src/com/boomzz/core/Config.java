@@ -4,7 +4,7 @@ package com.boomzz.core;
  * @author WStars
  *
  */
-public class Constant {
+public class Config {
 	
 	/**
 	 * clientId 暂时不变
@@ -20,6 +20,11 @@ public class Constant {
 	 * 图片路径
 	 */
 	public static String FILE_PATH_QR="qr.png";
+
+	/**
+	 * 图片在本地生成
+	 */
+	public static boolean FILE_IMG_LOCAL=true;
 	
 	/**
 	 * 日志路径

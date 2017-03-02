@@ -45,6 +45,8 @@ public class HttpClientUtil {
         	}
         	httpget.addHeader("Cookie",cooStr);
         }
+        //拿真实的ptwebqq必须头  这里很坑....困扰好几个小时  其它请求加不加无所谓 
+        httpget.addHeader("Referer","http://s.web2.qq.com/proxy.html?v=20130916001&callback=1&id=1");
         //请求结果
         CloseableHttpResponse response = null;
         String content ="";
@@ -58,19 +60,12 @@ public class HttpClientUtil {
             			String c[]=s.split("=");
             			if(c.length==2){
             				//除去不需要的
-            				if(c[0].contains("ptwebqq"))
-            					System.out.println(c[0]);
             				if(!c[0].contains("EXPIRES")&&!c[0].contains("PATH")&&!c[0].contains("DOMAIN"))
                 				cookies.put(c[0], c[1]);
             			}
             		}
             	}
             }
-            String cooStr="";
-            for(String c:cookies.keySet()){
-        		cooStr+=c+"="+cookies.get(c)+";";
-        	}
-            System.out.println(cooStr);
             
             if(response.getStatusLine().getStatusCode()==200){
                 content = EntityUtils.toString(response.getEntity(),"utf-8");
@@ -88,7 +83,7 @@ public class HttpClientUtil {
      * @param url  请求路径
 	 * @param path 
      */
-    public static String getBackAndCookieForQR(String url, String path,Map<String, String> cookies){
+    public static String getBackAndCookieForQR(String url, String path,Map<String, String> cookies,boolean local){
     	//实例化httpclient
         CloseableHttpClient httpclient = HttpClients.createDefault();
         //实例化get方法
@@ -113,23 +108,25 @@ public class HttpClientUtil {
             	}
             }
             if(response.getStatusLine().getStatusCode()==200){
-            	InputStream inputStream=response.getEntity().getContent();
-				try {
-					byte[] data =  FunnyQQUtil.readInputStream(inputStream);
-					File imageFile = new File(path);
-					if(imageFile.exists()){
-						imageFile.delete();
-					}
-					//创建输出流  
-					FileOutputStream outStream = new FileOutputStream(imageFile);  
-					//写入数据  
-					outStream.write(data);
-					//关闭输出流  
-					outStream.close(); 
-				}catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+            	if(local){
+            		InputStream inputStream=response.getEntity().getContent();
+            		try {
+            			byte[] data =  FunnyQQUtil.readInputStream(inputStream);
+            			File imageFile = new File(path);
+            			if(imageFile.exists()){
+            				imageFile.delete();
+            			}
+            			//创建输出流  
+            			FileOutputStream outStream = new FileOutputStream(imageFile);  
+            			//写入数据  
+            			outStream.write(data);
+            			//关闭输出流  
+            			outStream.close(); 
+            		}catch (Exception e) {
+            			// TODO Auto-generated catch block
+            			e.printStackTrace();
+            		}
+            	}
           }
             
         } catch (ClientProtocolException e) {

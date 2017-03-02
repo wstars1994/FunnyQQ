@@ -95,7 +95,6 @@ public class FunnyQQUtil {
 	public static String replace(String url,String key,String value){
 		
 		url=url.replace("#"+key+"#",value);
-		System.out.println(url);
 		return url;
 	}
 	
@@ -146,7 +145,6 @@ public class FunnyQQUtil {
 		}
 		JSONObject result=(JSONObject) o.get("result");
 		map.put("psessionid", result.get("psessionid").toString());
-		map.put("vfwebqq", result.get("vfwebqq").toString());
 		return map;
 	}
 	/**

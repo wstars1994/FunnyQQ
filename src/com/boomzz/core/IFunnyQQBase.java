@@ -27,7 +27,7 @@ public interface IFunnyQQBase {
 	public static LoginModel loginModel=new LoginModel(); //
 	
 	
-	public static FQQLogs logs=new FQQLogs(Constant.FILE_PATH_LOGS);
+	public static FQQLogs logs=new FQQLogs(Config.FILE_PATH_LOGS);
 	
 	/**
 	 * 获取个人信息 
@@ -60,7 +60,7 @@ public interface IFunnyQQBase {
 	public GroupModel getGroupList();
 	
 	/**
-	 * 获取讨论组
+	 * 获取讨论组 (暂时拿不到讨论组)
 	 * @return json
 	 */
 	public DiscusModel getDiscusList();

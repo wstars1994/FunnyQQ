@@ -3,7 +3,7 @@ package com.boomzz.test;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.boomzz.core.Constant;
+import com.boomzz.core.Config;
 import com.boomzz.core.FunnyQQBase;
 import com.boomzz.core.IQRCodeLogin;
 import com.boomzz.model.PtuiCBMsgModel;
@@ -29,7 +29,7 @@ public class QRCodeLogin extends FunnyQQBase implements IQRCodeLogin{
 	@Override
 	public boolean getQRCodeForMobile() {
 		try {
-			HttpClientUtil.getBackAndCookieForQR(Constant.URL_GET_QR+Math.random(),Constant.FILE_PATH_QR,cookies);
+			HttpClientUtil.getBackAndCookieForQR(Config.URL_GET_QR+Math.random(),Config.FILE_PATH_QR,cookies,Config.FILE_IMG_LOCAL);
     		System.out.println("获取二维码成功");
     		return true;
     	} catch (Exception e) {
@@ -76,20 +76,24 @@ public class QRCodeLogin extends FunnyQQBase implements IQRCodeLogin{
 								loginModel.setNickName(ptuiCBMsgModel.getP5());
 								loginModel.setUid(FunnyQQUtil.findParam(ptuiCBMsgModel.getP2(),"uin"));
 								loginModel.setPtwebqq(FunnyQQUtil.findCookieParam("ptwebqq", cookies));
-								loginModel.setClientId(Constant.PARAM_CLIENTID);
+								loginModel.setClientId(Config.PARAM_CLIENTID);
 								//第一次登录验证 获取必要参数
 								String checkSigUrl=ptuiCBMsgModel.getP2();
 								HttpClientUtil.get(checkSigUrl, cookies);
-								//获取Vfwebqq
-								back=HttpClientUtil.get(FunnyQQUtil.replace(Constant.URL_GET_VFWEBQQ+DateTimeUtil.getTimestamp(), "ptwebqq",loginModel.getPtwebqq()), cookies);
-								System.out.println(back);
+								//获取必须的Vfwebqq
+								back=HttpClientUtil.get(FunnyQQUtil.replace(Config.URL_GET_VFWEBQQ+DateTimeUtil.getTimestamp(), "ptwebqq",loginModel.getPtwebqq()), cookies);
 								loginModel.setVfwebqq(FunnyQQUtil.findParamVfwebqq(back));
-								
 								//第二次登录验证
 								Map<String, String> params=new HashMap<>();
-								params.put("r", FunnyQQUtil.replace(Constant.PARAM_LOGIN2, "ptwebqq",loginModel.getPtwebqq()));
-								back=HttpClientUtil.post(Constant.URL_POST_LONGIN2, params, cookies);
-								System.out.println(back);
+								params.put("r", FunnyQQUtil.replace(Config.PARAM_LOGIN2, "ptwebqq",loginModel.getPtwebqq()));
+								back=HttpClientUtil.post(Config.URL_POST_LONGIN2, params, cookies);
+								Map<String, String> map=FunnyQQUtil.jsonLogin(back);
+								if(map!=null){
+									System.out.println("正式登陆成功");
+									loginModel.setPsessionid(map.get("psessionid"));
+								}
+								//登陆完毕
+								getSelfInfo();
 								flag=false;
 							}
 						}
@@ -107,7 +111,7 @@ public class QRCodeLogin extends FunnyQQBase implements IQRCodeLogin{
 		IQRCodeLogin funnyQQ=new QRCodeLogin();
 		boolean status=funnyQQ.getQRCodeForMobile();
 		if(status){
-			String url=FunnyQQUtil.replace(Constant.URL_GET_LOGIN_POLLING, "ptqrtoken",funnyQQ.getPtqrToken());
+			String url=FunnyQQUtil.replace(Config.URL_GET_LOGIN_POLLING, "ptqrtoken",funnyQQ.getPtqrToken());
 			funnyQQ.loginPolling(url);
 		}
 	}
