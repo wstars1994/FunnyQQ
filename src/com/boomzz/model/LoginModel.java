@@ -3,18 +3,7 @@ package com.boomzz.model;
  * @author WStars
  * 登录的一些必要信息 单例
  */
-public class LoginModel {
-	
-	
-	/**
-	 * 身份id 一般为qq号
-	 */
-	private String uid;
-	
-	/**
-	 * 昵称
-	 */
-	private String nickName;
+public class LoginModel extends BaseModel{
 	
 	/**
 	 * 扫码登陆签名
@@ -29,22 +18,6 @@ public class LoginModel {
 
 	private String psessionid;
 	
-	public String getUid() {
-		return uid;
-	}
-
-	public void setUid(String uid) {
-		this.uid = uid;
-	}
-
-	public String getNickName() {
-		return nickName;
-	}
-
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
-	}
-
 	public String getQrSig() {
 		return qrSig;
 	}

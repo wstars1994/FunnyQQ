@@ -2,6 +2,7 @@ package com.boomzz.test;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 import com.boomzz.core.Config;
 import com.boomzz.core.FunnyQQBase;
@@ -25,6 +26,9 @@ public class QRCodeLogin extends FunnyQQBase implements IQRCodeLogin{
 	 * 开发时间 2017/02/27 webqq版本适用 可能qq接口会变动
 	 *
 	 **/
+	
+	//  现在只开放了手Q扫描二维码登录
+	
 	
 	@Override
 	public boolean getQRCodeForMobile() {
@@ -74,7 +78,8 @@ public class QRCodeLogin extends FunnyQQBase implements IQRCodeLogin{
 							System.out.println(ptuiCBMsgModel.getNo() +" : "+ ptuiCBMsgModel.getP4());
 							if(ptuiCBMsgModel.getNo()==0){//初次登录成功
 								loginModel.setNickName(ptuiCBMsgModel.getP5());
-								loginModel.setUid(FunnyQQUtil.findParam(ptuiCBMsgModel.getP2(),"uin"));
+								loginModel.setUin(FunnyQQUtil.findParam(ptuiCBMsgModel.getP2(),"uin"));
+								loginModel.setId(loginModel.getUin());
 								loginModel.setPtwebqq(FunnyQQUtil.findCookieParam("ptwebqq", cookies));
 								loginModel.setClientId(Config.PARAM_CLIENTID);
 								//第一次登录验证 获取必要参数
@@ -82,7 +87,7 @@ public class QRCodeLogin extends FunnyQQBase implements IQRCodeLogin{
 								HttpClientUtil.get(checkSigUrl, cookies);
 								//获取必须的Vfwebqq
 								back=HttpClientUtil.get(FunnyQQUtil.replace(Config.URL_GET_VFWEBQQ+DateTimeUtil.getTimestamp(), "ptwebqq",loginModel.getPtwebqq()), cookies);
-								loginModel.setVfwebqq(FunnyQQUtil.findParamVfwebqq(back));
+								loginModel.setVfwebqq(FunnyQQUtil.jsonVfwebqq(back));
 								//第二次登录验证
 								Map<String, String> params=new HashMap<>();
 								params.put("r", FunnyQQUtil.replace(Config.PARAM_LOGIN2, "ptwebqq",loginModel.getPtwebqq()));
@@ -92,17 +97,46 @@ public class QRCodeLogin extends FunnyQQBase implements IQRCodeLogin{
 									System.out.println("正式登陆成功");
 									loginModel.setPsessionid(map.get("psessionid"));
 								}
-								//登陆完毕
-								//获取个人信息
-//								getSelfInfo();
-								//获取好友列表  首先要获取这个
-//								getFrientList();
-								//获取在线好友列表
-//								getOnlineFrientList();
-								//获取最近联系好友列表
-//								getRecentFrientList();
 								
-								flag=false;
+								while(flag)
+								{
+									System.out.println(">> 欢迎您 "+loginModel.getNickName());
+									System.out.println(">> 选择一个项目");
+									System.out.println(">> 1.获取个人信息");
+									System.out.println(">> 2.获取好友列表");
+									System.out.println(">> 3.获取在线好友列表");
+									System.out.println(">> 4.获取最近联系的好友列表");
+									System.out.println(">> 5.获取群列表");
+									System.out.println(">> 6.获取讨论组列表");
+									System.out.println(">> 7.退出");
+									System.out.print(">> 请选择 : ");
+									Scanner sc = new Scanner(System.in);
+									String line = sc.nextLine();
+									switch(line){
+									case "1":
+										getSelfInfo();
+										break;
+									case "2":
+										getFrientList();
+										break;
+									case "3":
+										getOnlineFrientList();
+										break;
+									case "4":
+										getRecentFrientList();
+										break;
+									case "5":
+										getGroupList();
+										break;
+									case "6":
+										getDiscusList();
+										break;
+									case "7":
+										System.out.print(">> 退出成功");
+										flag=false;
+										break;
+									}
+								}
 							}
 						}
 						Thread.sleep(1000L);

@@ -12,6 +12,11 @@ public class Config {
 	public static String PARAM_CLIENTID="53999199";
 	
 	/**
+	 * 发送消息参数
+	 */
+	public static String PARAM_SENDMSG="{\"to\":#to#,\"content\":\"#content#\",\"face\":#face#,\"clientid\":"+PARAM_CLIENTID+",\"msg_id\":#msg_id#,\"psessionid\":\"#psessionid#\"}";
+
+	/**
 	 * 第二次登录请求参数
 	 */
 	public static String PARAM_LOGIN2="{\"ptwebqq\":\"#ptwebqq#\",\"clientid\":"+PARAM_CLIENTID+",\"psessionid\":\"\",\"status\":\"online\"}";

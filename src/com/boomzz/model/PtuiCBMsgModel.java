@@ -1,7 +1,7 @@
 package com.boomzz.model;
 /**
  * @author WStars
- *
+ * 登录前返回消息
  */
 public class PtuiCBMsgModel {
 	
