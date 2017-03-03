@@ -96,7 +96,7 @@ public class QRCodeLogin extends FunnyQQBase implements IQRCodeLogin{
 								//获取个人信息
 //								getSelfInfo();
 								//获取好友列表  首先要获取这个
-								getFrientList();
+//								getFrientList();
 								//获取在线好友列表
 //								getOnlineFrientList();
 								//获取最近联系好友列表
