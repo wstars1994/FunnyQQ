@@ -45,8 +45,10 @@ public class HttpClientUtil {
         	}
         	httpget.addHeader("Cookie",cooStr);
         }
-        //拿真实的ptwebqq必须头  这里很坑....困扰好几个小时  其它请求加不加无所谓 
-        httpget.addHeader("Referer","http://s.web2.qq.com/proxy.html?v=20130916001&callback=1&id=1");
+        // 这里很坑....困扰好几个小时
+        if(url.contains("online_buddies2")||url.contains("recent_list2"))
+        	httpget.addHeader("Referer","http://d1.web2.qq.com/proxy.html?v=20151105001&callback=1&id=2"); 
+        	else httpget.addHeader("Referer","http://s.web2.qq.com/proxy.html?v=20130916001&callback=1&id=1");
         //请求结果
         CloseableHttpResponse response = null;
         String content ="";
@@ -154,6 +156,10 @@ public class HttpClientUtil {
         	}
         	httpPost.addHeader("Cookie",cooStr);
         }
+        //这里很坑....困扰好几个小时 
+        if(url.contains("online_buddies2")||url.contains("recent_list2"))
+        	httpPost.addHeader("Referer","http://d1.web2.qq.com/proxy.html?v=20151105001&callback=1&id=2"); 
+        	else httpPost.addHeader("Referer","http://s.web2.qq.com/proxy.html?v=20130916001&callback=1&id=1");
         //处理参数
         List<NameValuePair> nvps = new ArrayList <NameValuePair>();
         Set<String> keySet = params.keySet();

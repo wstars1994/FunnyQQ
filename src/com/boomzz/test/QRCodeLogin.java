@@ -94,13 +94,13 @@ public class QRCodeLogin extends FunnyQQBase implements IQRCodeLogin{
 								}
 								//登陆完毕
 								//获取个人信息
-								getSelfInfo();
-								//获取好友列表
+//								getSelfInfo();
+								//获取好友列表  首先要获取这个
 								getFrientList();
 								//获取在线好友列表
-								getOnlineFrientList();
+//								getOnlineFrientList();
 								//获取最近联系好友列表
-								getRecentFrientList();
+//								getRecentFrientList();
 								
 								flag=false;
 							}

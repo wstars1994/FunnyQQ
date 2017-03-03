@@ -1,6 +1,8 @@
 package com.boomzz.core;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.boomzz.model.DiscusModel;
@@ -29,36 +31,32 @@ public class FunnyQQBase implements IFunnyQQBase{
 	}
 
 	@Override
-	public FriendsModel getFrientList() {
-		FriendsModel friendsModel=new FriendsModel();
+	public List<FriendsModel> getFrientList() {
+		List<FriendsModel> friendsModel=new ArrayList<FriendsModel>();
 		Map<String,String> params=new HashMap<>();
 		params.put("vfwebqq", loginModel.getVfwebqq());
-		System.out.println(getHash());
 		params.put("hash", getHash()+"");
 		String pString=FunnyQQUtil.replace(Config.PARAM_FRIENDS_LIST, params);
 		params.clear();
 		params.put("r", pString);
-		System.out.println(pString);
 		String json=HttpClientUtil.post(Config.URL_POST_FRIENDS,params,cookies);
-		System.out.println(json);
 		return friendsModel;
 	}
 
 	@Override
-	public FriendsModel getOnlineFrientList() {
-		FriendsModel friendsModel=new FriendsModel();
+	public List<FriendsModel> getOnlineFrientList() {
+		List<FriendsModel> friendsModel=new ArrayList<>();
 		Map<String,String> params=new HashMap<>();
 		params.put("vfwebqq", loginModel.getVfwebqq());
 		params.put("psessionid", loginModel.getPsessionid());
 		String url=FunnyQQUtil.replace(Config.URL_GET_ONLINEFRIENDS, params);
 		String json=HttpClientUtil.get(url+DateTimeUtil.getTimestamp(),cookies);
-		System.out.println(json);
 		return friendsModel;
 	}
 
 	@Override
-	public FriendsModel getRecentFrientList() {
-		FriendsModel friendsModel=new FriendsModel();
+	public List<FriendsModel> getRecentFrientList() {
+		List<FriendsModel> friendsModel=new ArrayList<>();
 		Map<String,String> params=new HashMap<>();
 		params.put("vfwebqq", loginModel.getVfwebqq());
 		params.put("psessionid", loginModel.getPsessionid());
@@ -71,8 +69,8 @@ public class FunnyQQBase implements IFunnyQQBase{
 	}
 
 	@Override
-	public GroupModel getGroupList() {
-		GroupModel groupModel=new GroupModel();
+	public List<GroupModel> getGroupList() {
+		List<GroupModel> groupModel=new ArrayList<>();
 		Map<String,String> params=new HashMap<>();
 		params.put("vfwebqq", loginModel.getVfwebqq());
 		params.put("hash", getHash()+"");
@@ -86,8 +84,8 @@ public class FunnyQQBase implements IFunnyQQBase{
 
 	@Deprecated
 	@Override
-	public DiscusModel getDiscusList() {
-		DiscusModel discusModel=new DiscusModel();
+	public List<DiscusModel> getDiscusList() {
+		List<DiscusModel> discusModel=new ArrayList<>();
 		Map<String, String> map=new HashMap<>();
 		map.put("psessionid", loginModel.getPsessionid());
 		map.put("vfwebqq", loginModel.getVfwebqq());
@@ -104,10 +102,10 @@ public class FunnyQQBase implements IFunnyQQBase{
 	}
 
 	@Override
-	public int getHash() {
+	public String getHash() {
 		int uin=Integer.parseInt(loginModel.getUid());
 		String ptvfwebqq=loginModel.getPtwebqq();
-		int ptb[]=new int[ptvfwebqq.length()];
+		int ptb[]=new int[4];
 		for (int i=0;i<ptvfwebqq.length();i++){
             int ptbIndex = i%4;
             ptb[ptbIndex] ^= ptvfwebqq.charAt(i);
@@ -122,13 +120,12 @@ public class FunnyQQBase implements IFunnyQQBase{
 				result[i] = uinByte[i>>1];
         }
 		char hex[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
-		int buf = 0;
+		String buf = "";
 //
-      for (int i=0;i<result.length;i++){
-          buf += (hex[(result[i]>>4) & 0xF]);
-          buf += (hex[result[i] & 0xF]);
-      }
+		for (int i=0;i<result.length;i++){
+			buf += (hex[(result[i]>>4) & 0xF]);
+			buf += (hex[result[i] & 0xF]);
+		}
 		return buf;
 	}
-
 }

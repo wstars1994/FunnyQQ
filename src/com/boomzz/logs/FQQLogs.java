@@ -47,12 +47,12 @@ public class FQQLogs{
 		
 	}
 	
-	public static void main(String[] args) {
-		StringBuffer sBuffer=new StringBuffer();
-		sBuffer.append("[");
-		sBuffer.append(DateTimeUtil.getFormatDate());
-		sBuffer.append("]");
-		sBuffer.append("TEST");
-		new FQQLogs(Config.FILE_PATH_LOGS).writeNewLogs(sBuffer.toString());
-	}
+//	public static void main(String[] args) {
+//		StringBuffer sBuffer=new StringBuffer();
+//		sBuffer.append("[");
+//		sBuffer.append(DateTimeUtil.getFormatDate());
+//		sBuffer.append("]");
+//		sBuffer.append("TEST");
+//		new FQQLogs(Config.FILE_PATH_LOGS).writeNewLogs(sBuffer.toString());
+//	}
 }
