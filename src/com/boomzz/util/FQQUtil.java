@@ -16,9 +16,13 @@ package com.boomzz.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import com.boomzz.model.FriendsModel;
+import com.boomzz.model.InfoModel;
 import com.boomzz.model.PtuiCBMsgModel;
 
 import net.sf.json.JSONObject;
@@ -27,7 +31,7 @@ import net.sf.json.JSONObject;
  * @author WStars
  *
  */
-public class FunnyQQUtil {
+public class FQQUtil {
 	
 	//ptuiCB('66','0','','0','二维码未失效。(3974129836)', '');
 	//ptuiCB('67','0','','0','二维码认证中。(812671429)', '');
@@ -150,7 +154,7 @@ public class FunnyQQUtil {
 	public static Map<String, String> jsonLogin(String json){
 		Map<String, String> map=new HashMap<>();
 		JSONObject o=JSONObject.fromObject(json);
-		if(!o.get("retcode").toString().equals("0")){
+		if(json==null||!o.get("retcode").toString().equals("0")){
 			return null;
 		}
 		JSONObject result=(JSONObject) o.get("result");
@@ -164,10 +168,49 @@ public class FunnyQQUtil {
 	 */
 	public static String jsonVfwebqq(String json) {
 		JSONObject o=JSONObject.fromObject(json);
-		if(!o.get("retcode").toString().equals("0")){
+		if(json==null||!o.get("retcode").toString().equals("0")){
 			return null;
 		}
 		JSONObject result=(JSONObject) o.get("result");
 		return result.getString("vfwebqq");
+	}
+	
+	public static InfoModel jsonInfo(String json){
+		InfoModel info=new InfoModel();
+		JSONObject o=JSONObject.fromObject(json);
+		if(json==null||!o.get("retcode").toString().equals("0")){
+			return null;
+		}
+		JSONObject result=(JSONObject) o.get("result");
+		JSONObject birthday=(JSONObject) result.get("birthday");
+		info.setBirthday(birthday.getString("year")+"-"+birthday.getString("month")+"-"+birthday.getString("day"));
+		info.setAllow(result.get("allow").toString());
+		info.setBlood(result.get("blood").toString());
+		info.setCity(result.get("city").toString());
+		info.setCollege(result.get("college").toString());
+		info.setConstel(result.get("constel").toString());
+		info.setCountry(result.get("country").toString());
+		info.setEmail(result.get("email").toString());
+		info.setFace(result.get("face").toString());
+		info.setGender(result.get("gender").toString());
+		info.setMobile(result.get("mobile").toString());
+		info.setOccupation(result.get("occupation").toString());
+		info.setPhone(result.get("phone").toString());
+		info.setProvince(result.get("province").toString());
+		info.setShengxiao(result.get("shengxiao").toString());
+		info.setType(0);
+		return info;
+	}
+
+	public static List<FriendsModel> jsonFriendsList(String json) {
+		List<FriendsModel> friendsModel = new ArrayList<>();
+		JSONObject o=JSONObject.fromObject(json);
+		if(json==null||!o.get("retcode").toString().equals("0")){
+			return null;
+		}
+		
+		
+		
+		return friendsModel;
 	}
 }

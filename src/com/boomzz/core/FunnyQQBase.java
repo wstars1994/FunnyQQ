@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import com.boomzz.cache.Cache;
 import com.boomzz.model.DiscusModel;
 import com.boomzz.model.FriendsModel;
 import com.boomzz.model.GroupModel;
-import com.boomzz.model.BaseModel;
+import com.boomzz.model.InfoModel;
 import com.boomzz.util.DateTimeUtil;
-import com.boomzz.util.FunnyQQUtil;
+import com.boomzz.util.FQQUtil;
 import com.boomzz.util.HttpClientUtil;
 
 /**
@@ -20,26 +20,35 @@ import com.boomzz.util.HttpClientUtil;
 public class FunnyQQBase implements IFunnyQQBase{
 
 	@Override
-	public BaseModel getSelfInfo() {
-		//{"retcode":0,"result":{"birthday":{"month":6,"year":1994,"day":15},"face":558,"phone":"110","occupation":"高中生","allow":3,"college":"赤城县第一中学","uin":545640807,"blood":3,"constel":5,"lnick":"","vfwebqq":"bdf14d67b30317082791abe43eec8d12c863fdce52f2d62234ea6b1a5c60c676b33654de9d6adc23","homepage":"http://user.qzone.qq.com/545640807/infocenter","vip_info":0,"city":"张家口","country":"中国","personal":"","shengxiao":11,"nick":"战略忽悠局副局座同学","email":"545640807@qq.com","province":"河北","account":545640807,"gender":"male","mobile":"150********"}}
-		BaseModel userModel=new BaseModel();
-		
-		String back=HttpClientUtil.get(Config.URL_GET_SELFINFO+DateTimeUtil.getTimestamp(),cookies);
-		System.out.println("selfInfo : "+back);
-		
+	public InfoModel getSelfInfo() {
+		InfoModel userModel;
+		if(Cache.getCache("selfInfo")!=null)
+			userModel=(InfoModel) Cache.getCache("selfInfo");
+		else{
+			String back=HttpClientUtil.get(Config.URL_GET_SELFINFO+DateTimeUtil.getTimestamp(),cookies);
+			userModel=FQQUtil.jsonInfo(back);
+			Cache.putCache("selfInfo", userModel);
+		}
 		return userModel;
 	}
 
 	@Override
 	public List<FriendsModel> getFrientList() {
-		List<FriendsModel> friendsModel=new ArrayList<FriendsModel>();
-		Map<String,String> params=new HashMap<>();
-		params.put("vfwebqq", loginModel.getVfwebqq());
-		params.put("hash", getHash()+"");
-		String pString=FunnyQQUtil.replace(Config.PARAM_FRIENDS_LIST, params);
-		params.clear();
-		params.put("r", pString);
-		String json=HttpClientUtil.post(Config.URL_POST_FRIENDS,params,cookies);
+		List<FriendsModel> friendsModel;
+		if(Cache.getCache("allFriend")!=null)
+			friendsModel=(List<FriendsModel>) Cache.getCache("allFriend");
+		else{
+			Map<String,String> params=new HashMap<>();
+			params.put("vfwebqq", loginModel.getVfwebqq());
+			params.put("hash", getHash()+"");
+			String pString=FQQUtil.replace(Config.PARAM_FRIENDS_LIST, params);
+			params.clear();
+			params.put("r", pString);
+			String json=HttpClientUtil.post(Config.URL_POST_FRIENDS,params,cookies);
+			friendsModel=FQQUtil.jsonFriendsList(json);
+			Cache.putCache("allFriend", friendsModel);
+			System.out.println(json);
+		}
 		return friendsModel;
 	}
 
@@ -49,8 +58,9 @@ public class FunnyQQBase implements IFunnyQQBase{
 		Map<String,String> params=new HashMap<>();
 		params.put("vfwebqq", loginModel.getVfwebqq());
 		params.put("psessionid", loginModel.getPsessionid());
-		String url=FunnyQQUtil.replace(Config.URL_GET_ONLINEFRIENDS, params);
+		String url=FQQUtil.replace(Config.URL_GET_ONLINEFRIENDS, params);
 		String json=HttpClientUtil.get(url+DateTimeUtil.getTimestamp(),cookies);
+		System.out.println(json);
 		return friendsModel;
 	}
 
@@ -60,7 +70,7 @@ public class FunnyQQBase implements IFunnyQQBase{
 		Map<String,String> params=new HashMap<>();
 		params.put("vfwebqq", loginModel.getVfwebqq());
 		params.put("psessionid", loginModel.getPsessionid());
-		String url=FunnyQQUtil.replace(Config.PARAM_RECENTFRIENDS_LIST, params);
+		String url=FQQUtil.replace(Config.PARAM_RECENTFRIENDS_LIST, params);
 		params.clear();
 		params.put("r", url);
 		String json=HttpClientUtil.post(Config.URL_POST_RECENTRIENDS,params,cookies);
@@ -75,7 +85,7 @@ public class FunnyQQBase implements IFunnyQQBase{
 		Map<String,String> params=new HashMap<>();
 		params.put("vfwebqq", loginModel.getVfwebqq());
 		params.put("hash", getHash()+"");
-		String pString=FunnyQQUtil.replace(Config.PARAM_FRIENDS_LIST, params);
+		String pString=FQQUtil.replace(Config.PARAM_FRIENDS_LIST, params);
 		params.clear();
 		params.put("r", pString);
 		String json=HttpClientUtil.post(Config.URL_POST_GROUP,params,cookies);
@@ -90,9 +100,9 @@ public class FunnyQQBase implements IFunnyQQBase{
 		Map<String, String> map=new HashMap<>();
 		map.put("psessionid", loginModel.getPsessionid());
 		map.put("vfwebqq", loginModel.getVfwebqq());
-		String url=FunnyQQUtil.replace(Config.URL_GET_DISCUS+Math.random(), map);
+		String url=FQQUtil.replace(Config.URL_GET_DISCUS+Math.random(), map);
 		String back=HttpClientUtil.get(url,cookies);
-		System.out.println("discus : "+back);
+		System.out.println(back);
 		return discusModel;
 	}
 
@@ -101,7 +111,7 @@ public class FunnyQQBase implements IFunnyQQBase{
 		
 		return null;
 	}
-	public String getHash() {
+	private String getHash() {
 		int uin=Integer.parseInt(loginModel.getId());
 		String ptvfwebqq=loginModel.getPtwebqq();
 		int ptb[]=new int[4];
@@ -120,7 +130,6 @@ public class FunnyQQBase implements IFunnyQQBase{
         }
 		char hex[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 		String buf = "";
-//
 		for (int i=0;i<result.length;i++){
 			buf += (hex[(result[i]>>4) & 0xF]);
 			buf += (hex[result[i] & 0xF]);

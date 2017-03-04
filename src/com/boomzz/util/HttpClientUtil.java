@@ -16,6 +16,7 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.params.ClientPNames;
+import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
@@ -54,7 +55,12 @@ public class HttpClientUtil {
         String content ="";
         try {
             //执行get方法
-            response = httpclient.execute(httpget);
+        	try{
+        		response = httpclient.execute(httpget);
+        	}catch(HttpHostConnectException e){
+        		System.out.println("连接远程服务器超时");
+        		return null;
+        	}
             for(Header h: response.getAllHeaders()){
             	if("Set-Cookie".equals(h.getName())){
             		String cookiesArry[]=h.getValue().split(";");
@@ -95,7 +101,12 @@ public class HttpClientUtil {
         String content ="";
         try {
             //执行get方法
-            response = httpclient.execute(httpget);
+        	try{
+        		response = httpclient.execute(httpget);
+        	}catch(HttpHostConnectException e){
+        		System.out.println("连接远程服务器超时");
+        		return null;
+        	}
             for(Header h: response.getAllHeaders()){
             	if("Set-Cookie".equals(h.getName())){
             		String cookiesArr[]=h.getValue().split(";");
@@ -113,7 +124,7 @@ public class HttpClientUtil {
             	if(local){
             		InputStream inputStream=response.getEntity().getContent();
             		try {
-            			byte[] data =  FunnyQQUtil.readInputStream(inputStream);
+            			byte[] data =  FQQUtil.readInputStream(inputStream);
             			File imageFile = new File(path);
             			if(imageFile.exists()){
             				imageFile.delete();
@@ -175,7 +186,12 @@ public class HttpClientUtil {
             //将参数给post方法
             httpPost.setEntity(uefEntity);
             //执行post方法
-            response = httpclient.execute(httpPost);
+            try{
+        		response = httpclient.execute(httpPost);
+        	}catch(HttpHostConnectException e){
+        		System.out.println("连接远程服务器超时");
+        		return null;
+        	}
             for(Header h: response.getAllHeaders()){
             	if("Set-Cookie".equals(h.getName())){
             		String cookiesArr[]=h.getValue().split(";");

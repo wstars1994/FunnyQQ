@@ -1,5 +1,8 @@
 package com.boomzz.core;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author WStars
  *
@@ -109,4 +112,5 @@ public class Config {
 	 * 发送消息
 	 */
 	public static String URL_POST_SENDMESSAGE="https://d1.web2.qq.com/channel/poll2";
+	
 }
