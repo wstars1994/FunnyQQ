@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import com.boomzz.core.Config;
+import com.boomzz.config.Config;
 import com.boomzz.core.FunnyQQBase;
 import com.boomzz.core.IQRCodeLogin;
 import com.boomzz.model.InfoModel;
@@ -87,7 +87,7 @@ public class QRCodeLogin extends FunnyQQBase implements IQRCodeLogin{
 								String checkSigUrl=ptuiCBMsgModel.getP2();
 								HttpClientUtil.get(checkSigUrl, cookies);
 								//获取必须的Vfwebqq
-								back=HttpClientUtil.get(FQQUtil.replace(Config.URL_GET_VFWEBQQ+DateTimeUtil.getTimestamp(), "ptwebqq",loginModel.getPtwebqq()), cookies);
+								back=HttpClientUtil.get(FQQUtil.replace(com.boomzz.config.Config.URL_GET_VFWEBQQ+DateTimeUtil.getTimestamp(), "ptwebqq",loginModel.getPtwebqq()), cookies);
 								loginModel.setVfwebqq(FQQUtil.jsonVfwebqq(back));
 								//第二次登录验证
 								Map<String, String> params=new HashMap<>();

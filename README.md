@@ -1,2 +1,2 @@
 # FunnyQQ
-腾讯QQ - QDK
+腾讯QQ - FQDK

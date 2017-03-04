@@ -4,12 +4,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.boomzz.config.Config;
 import com.boomzz.logs.FQQLogs;
+import com.boomzz.model.BaseModel;
 import com.boomzz.model.DiscusModel;
 import com.boomzz.model.FriendsModel;
 import com.boomzz.model.GroupModel;
 import com.boomzz.model.LoginModel;
-import com.boomzz.model.BaseModel;
 
 /**
  * @author WStars
