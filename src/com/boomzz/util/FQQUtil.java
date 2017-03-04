@@ -175,6 +175,11 @@ public class FQQUtil {
 		return result.getString("vfwebqq");
 	}
 	
+	/**
+	 * 用户信息解析
+	 * @param json
+	 * @return
+	 */
 	public static InfoModel jsonInfo(String json){
 		InfoModel info=new InfoModel();
 		JSONObject o=JSONObject.fromObject(json);

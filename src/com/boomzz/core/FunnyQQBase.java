@@ -82,7 +82,6 @@ public class FunnyQQBase implements IFunnyQQBase{
 
 	@Override
 	public List<GroupModel> getGroupList() {
-		//{"retcode":0,"result":{"gmasklist":[],"gnamelist":[{"flag":16778241,"name":"石职院张家口老乡会","gid":1822234734,"code":626156874},{"flag":16778241,"name":"九班神话","gid":2004342419,"code":1647254537},{"flag":184550417,"name":"森林游戏群","gid":3378740576,"code":2998688552},{"flag":150995985,"name":"軟一帝國","gid":3424978637,"code":2417026472}],"gmarklist":[]}}
 		List<GroupModel> groupModel=new ArrayList<>();
 		Map<String,String> params=new HashMap<>();
 		params.put("vfwebqq", loginModel.getVfwebqq());
@@ -97,7 +96,6 @@ public class FunnyQQBase implements IFunnyQQBase{
 
 	@Override
 	public List<DiscusModel> getDiscusList() {
-		//discus:{"retcode":0,"result":{"dnamelist":[{"name":"战略忽悠局 - SFYA","did":2326890534},{"name":"大春!我爱你","did":4022070421},{"name":"要事讨论组，禁止瞎聊。","did":2636880716},{"name":"Special A在线项目部","did":693674923}]}}
 		List<DiscusModel> discusModel=new ArrayList<>();
 		Map<String, String> map=new HashMap<>();
 		map.put("psessionid", loginModel.getPsessionid());

@@ -5,6 +5,10 @@ import java.util.Map;
 
 import com.boomzz.config.Config;
 
+/**
+ * @author WStars
+ * 缓存
+ */
 public class Cache{
 	
 	private static Map<String,Object> cacheMap=new HashMap<>();
