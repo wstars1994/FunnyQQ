@@ -14,21 +14,21 @@ public class Cache{
 	private static Map<String,Object> cacheMap=new HashMap<>();
 	
 	public static void putCache(String uniqueKey,Object o){
-		if(Config.cache)
+		if(Config.CACHE)
 			cacheMap.put(uniqueKey, o);
 	}
 	
 	public static Object getCache(String uniqueKey){
-		return	Config.cache?cacheMap.get(uniqueKey):null;
+		return	Config.CACHE?cacheMap.get(uniqueKey):null;
 	}
 	
 	public void removeCache(String uniqueKey){
-		if(Config.cache)
+		if(Config.CACHE)
 			cacheMap.remove(uniqueKey);
 	}
 	
 	public void clear(){
-		if(Config.cache)
+		if(Config.CACHE)
 			cacheMap.clear();
 	}
 }

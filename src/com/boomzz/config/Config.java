@@ -9,7 +9,7 @@ public class Config {
 	/**
 	 * 是否开启缓存
 	 */
-	public static boolean cache=true;
+	public static boolean CACHE=true;
 	
 	/**
 	 * clientId 暂时不变

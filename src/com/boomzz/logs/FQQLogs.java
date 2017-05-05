@@ -28,8 +28,8 @@ public class FQQLogs{
 	public void writeNewLogs(String log) {
 		logsFile=new File(path);
 		try {
-			FileWriter fileWriter = new FileWriter(logsFile);
-			fileWriter.write(log, (int)logsFile.length(), log.length());
+			FileWriter fileWriter = new FileWriter(logsFile,true);
+			fileWriter.write(log+"\r\n");
 			fileWriter.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -43,6 +43,11 @@ public class FQQLogs{
 		sBuffer.append(log);
 	}
 	public void readLogs() {
+		
+	}
+	public static void main(String[] args) {
+		
+		new FQQLogs("D:/1.txt").writeNewLogs("huanhang");
 		
 	}
 }

@@ -1,17 +1,3 @@
-/**
- * 
- * 项目名称:[FunnyQQ]
- * 包:	 [com.boomzz.util]
- * 类名称: [TencentBackMsgUtil]
- * 类描述: [一句话描述该类的功能]
- * 创建人: [王新晨]
- * 创建时间:[2017年2月28日 下午2:15:28]
- * 修改人: [王新晨]
- * 修改时间:[2017年2月28日 下午2:15:28]
- * 修改备注:[说明本次修改内容]  
- * 版本:	 [v1.0]   
- * 
- */
 package com.boomzz.util;
 
 import java.io.ByteArrayOutputStream;
