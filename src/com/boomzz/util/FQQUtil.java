@@ -10,7 +10,9 @@ import java.util.Map;
 import com.boomzz.core.Config;
 import com.boomzz.core.cache.Cache;
 import com.boomzz.core.model.CategoriesModel;
+import com.boomzz.core.model.DiscusModel;
 import com.boomzz.core.model.FriendsModel;
+import com.boomzz.core.model.GroupModel;
 import com.boomzz.core.model.InfoModel;
 import com.boomzz.core.model.PtuiCBMsgModel;
 
@@ -274,6 +276,11 @@ public class FQQUtil {
 			friendsList.add(mapping.get(uin));
 		return friendsList;
 	}
+	/**
+	 * 获取在线好友
+	 * @param json
+	 * @return
+	 */
 	public static List<String> jsonOnlineFriendsList(String json) {
 		List<String> onlinUin = new ArrayList<>();
 		if(checkRetcode(json)){
@@ -286,6 +293,41 @@ public class FQQUtil {
 		}
 		return onlinUin;
 	}
+	public static List<DiscusModel> jsonDiscusList(String json){
+		List<DiscusModel> discusList = new ArrayList<>();
+		if(checkRetcode(json)){
+			JSONObject o=JSONObject.fromObject(json);
+			JSONObject result=(JSONObject) o.get("result");
+			JSONArray dnamelist=(JSONArray)result.get("dnamelist");
+			for(Object m:dnamelist){
+				JSONObject object = (JSONObject) m;
+				DiscusModel model = new DiscusModel();
+				model.setDid(object.getString("did"));
+				model.setName(object.getString("name"));
+				discusList.add(model);
+			}
+		}
+		return discusList;
+	}
+	public static List<GroupModel> jsonGroupList(String json){
+		List<GroupModel> discusList = new ArrayList<>();
+		if(checkRetcode(json)){
+			JSONObject o=JSONObject.fromObject(json);
+			JSONObject result=(JSONObject) o.get("result");
+			JSONArray dnamelist=(JSONArray)result.get("gnamelist");
+			for(Object m:dnamelist){
+				JSONObject object = (JSONObject) m;
+				GroupModel model = new GroupModel();
+				model.setName(object.getString("name"));
+				model.setCode(object.getString("code"));
+				model.setFlag(object.getString("flag"));
+				model.setGid(object.getString("gid"));
+				discusList.add(model);
+			}
+		}
+		return discusList;
+	}
+	
 	private static boolean checkRetcode(String json){
 		if(json==null) return false;
 		try {

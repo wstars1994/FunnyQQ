@@ -158,4 +158,8 @@ public class InfoModel extends BaseModel{
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
+	@Override
+	public String toString() {
+		return super.toString();
+	}
 }

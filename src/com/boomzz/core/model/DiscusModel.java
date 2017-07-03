@@ -6,17 +6,32 @@ package com.boomzz.core.model;
  */
 public class DiscusModel  extends BaseModel{
 
-	private int count;
+	private String name;
+	
+	private String did;
 	
 	public DiscusModel() {
 		setType(2);
 	}
 
-	public int getCount() {
-		return count;
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDid() {
+		return did;
+	}
+
+	public void setDid(String did) {
+		this.did = did;
 	}
 	
-	public void setCount(int count) {
-		this.count = count;
+	@Override
+	public String toString() {
+		return "名称:"+getName()+" did:"+getDid();
 	}
 }

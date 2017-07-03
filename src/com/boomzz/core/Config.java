@@ -13,6 +13,7 @@ public class Config {
 	public static String CACHE_KEY_ALLFRIENDS="ALLFRIENDS";
 	public static String CACHE_KEY_MYSELF="MYSELF";
 	public static String CACHE_KEY_CATEGORIES="CATEGORIES";
+	public static String CACHE_KEY_DISCUS="DISCUS";
 	/**
 	 * clientId 暂时不变
 	 */

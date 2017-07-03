@@ -74,6 +74,6 @@ public class FriendsModel extends BaseModel{
 	}
 	@Override
 	public String toString() {
-		return "昵称:"+getNickName()+",备注:"+getMarkName();
+		return "uin:"+getUin()+"昵称:"+getNickName()+",备注:"+getMarkName();
 	}
 }
