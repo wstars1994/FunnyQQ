@@ -1,7 +1,9 @@
 package com.boomzz.core.cache;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,9 +12,11 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+
 import com.boomzz.core.Config;
 import com.boomzz.core.FQQ;
 import com.boomzz.core.model.BaseModel;
+import com.boomzz.core.model.LoginModel;
 
 /**
  * @author WStars
@@ -63,10 +67,17 @@ public class Cache implements Serializable{
 			InputStream inputStream=file;
 			ObjectInputStream ois = new ObjectInputStream(inputStream);
 			cacheMap = (Map<String,Object>) ois.readObject();
-			FQQ.cookies = (Map<String, String>) cacheMap.get("cookie");
+			if(cacheMap.get("cookie")!=null)
+				FQQ.cookies = (Map<String, String>) cacheMap.get("cookie");
+			if(cacheMap.get("loginModel")!=null)
+				FQQ.loginModel =(LoginModel) cacheMap.get("loginModel");
 		} catch (Exception e) {
-			e.printStackTrace();
+			if(e instanceof FileNotFoundException){}
+			else e.printStackTrace();
 		}  
+	}
+	public static void persistenceDel(){
+		new File("data.x").delete();
 	}
 	public static void main(String[] args) {
 		BaseModel baseModel = new BaseModel();

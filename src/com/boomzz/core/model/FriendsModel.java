@@ -1,11 +1,15 @@
 package com.boomzz.core.model;
 
+import java.io.Serializable;
+
 /**
  * @author WStars
  * 好友列表
  */
-public class FriendsModel extends BaseModel{
+public class FriendsModel extends BaseModel implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * 备注
 	 */

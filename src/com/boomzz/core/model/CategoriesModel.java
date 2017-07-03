@@ -1,7 +1,11 @@
 package com.boomzz.core.model;
 
-public class CategoriesModel {
+import java.io.Serializable;
 
+public class CategoriesModel implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
 	private int index ; 
 	private int sort ; 
 	private String name;

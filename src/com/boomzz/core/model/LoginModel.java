@@ -1,10 +1,15 @@
 package com.boomzz.core.model;
+
+import java.io.Serializable;
+
 /**
  * @author WStars
  * 登录的一些必要信息 单例
  */
-public class LoginModel extends BaseModel{
+public class LoginModel extends BaseModel implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * 扫码登陆签名
 	 */

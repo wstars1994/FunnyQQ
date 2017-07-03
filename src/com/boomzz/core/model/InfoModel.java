@@ -1,5 +1,6 @@
 package com.boomzz.core.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,7 +8,9 @@ import java.util.Map;
  * @author WStars
  * 用户附加信息
  */
-public class InfoModel extends BaseModel{
+public class InfoModel extends BaseModel implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private String birthday;
 	private String face;

@@ -1,11 +1,15 @@
 package com.boomzz.core.model;
 
+import java.io.Serializable;
+
 /**
  * @author WStars
  *
  */
-public class GroupModel extends BaseModel{
+public class GroupModel extends BaseModel implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+	
 	private String name;
 	private String gid;
 	private String code;

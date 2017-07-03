@@ -1,12 +1,18 @@
 package com.boomzz.core.model;
+
+import java.io.Serializable;
+
 /**
  * @author WStars
  * 登录前返回消息
  */
-public class PtuiCBMsgModel {
+public class PtuiCBMsgModel implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 	//参数注释均为猜测
 	
+
 	/** 消息类型代码*/
 	private int no;
 	

@@ -13,10 +13,10 @@ import com.boomzz.util.DateTimeUtil;
 public class FQQLogs{
 	
 	private File logsFile=null;
-	private String path=null;
+	private String path="log/";
 	public FQQLogs(String path) {
-		this.path=path;
-		logsFile=new File(path);
+		this.path += path;
+		logsFile=new File(this.path);
 		if(!logsFile.exists()){
 			try {
 				logsFile.createNewFile();
@@ -39,15 +39,12 @@ public class FQQLogs{
 		StringBuffer sBuffer=new StringBuffer();
 		sBuffer.append("[");
 		sBuffer.append(DateTimeUtil.getFormatDate());
-		sBuffer.append("]");
+		sBuffer.append("] ");
 		sBuffer.append(log);
-	}
-	public void readLogs() {
-		
+		writeNewLogs(sBuffer.toString());
 	}
 	public static void main(String[] args) {
 		
-		new FQQLogs("D:/1.txt").writeNewLogs("huanhang");
-		
+		new FQQLogs("back.log").writeNewTimeLogs("huanhang");
 	}
 }

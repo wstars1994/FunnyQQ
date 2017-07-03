@@ -1,10 +1,14 @@
 package com.boomzz.core.model;
 
+import java.io.Serializable;
+
 /**
  * @author WStars
  *
  */
-public class DiscusModel  extends BaseModel{
+public class DiscusModel  extends BaseModel implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	private String name;
 	

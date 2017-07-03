@@ -1,5 +1,6 @@
 package com.boomzz.core;
 
+import com.boomzz.core.logs.FQQLogs;
 import com.boomzz.core.model.PtuiCBMsgModel;
 import com.boomzz.util.FQQUtil;
 import com.boomzz.util.HttpClientUtil;
@@ -50,7 +51,7 @@ public class QRCodeLogin extends FQQ{
 	}
 
 	public boolean login_1() {
-		if(cookies.size()!=0)
+		if(cookies!=null&&cookies.size()!=0)
 			return true;
 		final QRCodeLogin funnyQQ=new QRCodeLogin();
 		boolean status=funnyQQ.getQRCodeForMobile();
@@ -80,6 +81,7 @@ public class QRCodeLogin extends FQQ{
 					}
 					Thread.sleep(1000L);
 				} catch (InterruptedException e) {
+					new FQQLogs("error.log").writeNewTimeLogs(e.getLocalizedMessage());
 					e.printStackTrace();
 				}
 			}
