@@ -274,7 +274,18 @@ public class FQQUtil {
 			friendsList.add(mapping.get(uin));
 		return friendsList;
 	}
-	
+	public static List<String> jsonOnlineFriendsList(String json) {
+		List<String> onlinUin = new ArrayList<>();
+		if(checkRetcode(json)){
+			JSONObject o=JSONObject.fromObject(json);
+			JSONArray result=(JSONArray) o.get("result");
+			for(Object m:result){
+				JSONObject object = (JSONObject) m;
+				onlinUin.add(object.getString("uin"));
+			}
+		}
+		return onlinUin;
+	}
 	private static boolean checkRetcode(String json){
 		if(json==null) return false;
 		try {

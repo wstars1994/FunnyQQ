@@ -130,7 +130,10 @@ public class QRCodeLogin extends FQQBase{
 										}
 										break;
 									case "3":
-										getOnlineFrientList();
+										frientList = getOnlineFrientList();
+										for(FriendsModel model : frientList){
+											System.out.println(model.toString());
+										}
 										break;
 									case "4":
 										getRecentFrientList();

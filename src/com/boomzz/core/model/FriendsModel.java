@@ -51,7 +51,7 @@ public class FriendsModel extends BaseModel{
 	public void setCategories(String categories) {
 		this.categories = categories;
 	}
-	public boolean isOnline() {
+	public boolean getOnline() {
 		return online;
 	}
 	public void setOnline(boolean online) {

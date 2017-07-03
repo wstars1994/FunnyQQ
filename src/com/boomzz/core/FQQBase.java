@@ -53,18 +53,24 @@ public class FQQBase{
 			friendsModel=FQQUtil.jsonFriendsList(json);
 			Cache.putCache(Config.CACHE_KEY_ALLFRIENDS, friendsModel);
 		}
+		upOnlineFrientList(friendsModel);
 		return friendsModel;
 	}
-
-	protected List<FriendsModel> getOnlineFrientList() {
-		List<FriendsModel> friendsModel=new ArrayList<>();
+	protected List<FriendsModel> getOnlineFrientList(){
+		List<FriendsModel> friendsModel = new ArrayList<>();
+		for(FriendsModel model : getFrientList()){
+			if(model.getOnline())
+				friendsModel.add(model);
+		}
+		return friendsModel;
+	}
+	private void upOnlineFrientList(List<FriendsModel> friendsModel) {
 		Map<String,String> params=new HashMap<>();
 		params.put("vfwebqq", loginModel.getVfwebqq());
 		params.put("psessionid", loginModel.getPsessionid());
 		String url=FQQUtil.replace(Config.URL_GET_ONLINEFRIENDS, params);
 		String json=HttpClientUtil.get(url+DateTimeUtil.getTimestamp(),cookies);
-		System.out.println(json);
-		return friendsModel;
+		updateOnlineFriends(json,friendsModel);
 	}
 
 	protected List<FriendsModel> getRecentFrientList() {
@@ -102,6 +108,17 @@ public class FQQBase{
 		String back=HttpClientUtil.get(url,cookies);
 		System.out.println(back);
 		return discusModel;
+	}
+	
+	private void updateOnlineFriends(String json,List<FriendsModel> friendsModel){
+		List<String> uinList = FQQUtil.jsonOnlineFriendsList(json);
+		for(FriendsModel f:friendsModel){
+			for(String uin:uinList){
+				if(f.getUin().equals(uin)){
+					f.setOnline(true);
+				}
+			}
+		}
 	}
 	
 	private String getHash() {
