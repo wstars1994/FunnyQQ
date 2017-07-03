@@ -4,11 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import com.boomzz.config.Config;
-import com.boomzz.core.FunnyQQBase;
-import com.boomzz.core.IQRCodeLogin;
-import com.boomzz.model.InfoModel;
-import com.boomzz.model.PtuiCBMsgModel;
+import com.boomzz.core.Config;
+import com.boomzz.core.FQQBase;
+import com.boomzz.core.model.InfoModel;
+import com.boomzz.core.model.PtuiCBMsgModel;
 import com.boomzz.util.DateTimeUtil;
 import com.boomzz.util.FQQUtil;
 import com.boomzz.util.HttpClientUtil;
@@ -17,7 +16,7 @@ import com.boomzz.util.HttpClientUtil;
  * @author WStars
  *
  */
-public class QRCodeLogin extends FunnyQQBase implements IQRCodeLogin{
+public class QRCodeLogin extends FQQBase{
 
 	/*
 	 * 抓包时发现的
@@ -31,8 +30,7 @@ public class QRCodeLogin extends FunnyQQBase implements IQRCodeLogin{
 	//  现在只开放了手Q扫描二维码登录
 	
 	
-	@Override
-	public boolean getQRCodeForMobile() {
+	private boolean getQRCodeForMobile() {
 		try {
 			HttpClientUtil.getBackAndCookieForQR(Config.URL_GET_QR+Math.random(),Config.FILE_PATH_QR,cookies,Config.FILE_IMG_LOCAL);
     		System.out.println("获取二维码成功");
@@ -43,8 +41,7 @@ public class QRCodeLogin extends FunnyQQBase implements IQRCodeLogin{
 		return false;
 	}
 
-	@Override
-	public String getPtqrToken() {
+	private String getPtqrToken() {
 		String qrsig=null;
 		for(String str:cookies.keySet()){
 			if(str.equals("qrsig")){
@@ -60,8 +57,7 @@ public class QRCodeLogin extends FunnyQQBase implements IQRCodeLogin{
 		return (2147483647 & e)+"";
 	}
 
-	@Override
-	public void loginPolling(final String url) {
+	public void login(final String url) {
 		System.out.println("开始登录轮询");
 		Thread polling=new Thread(new Runnable() {
 			@Override
@@ -87,7 +83,7 @@ public class QRCodeLogin extends FunnyQQBase implements IQRCodeLogin{
 								String checkSigUrl=ptuiCBMsgModel.getP2();
 								HttpClientUtil.get(checkSigUrl, cookies);
 								//获取必须的Vfwebqq
-								back=HttpClientUtil.get(FQQUtil.replace(com.boomzz.config.Config.URL_GET_VFWEBQQ+DateTimeUtil.getTimestamp(), "ptwebqq",loginModel.getPtwebqq()), cookies);
+								back=HttpClientUtil.get(FQQUtil.replace(com.boomzz.core.Config.URL_GET_VFWEBQQ+DateTimeUtil.getTimestamp(), "ptwebqq",loginModel.getPtwebqq()), cookies);
 								loginModel.setVfwebqq(FQQUtil.jsonVfwebqq(back));
 								//第二次登录验证
 								Map<String, String> params=new HashMap<>();
@@ -156,12 +152,12 @@ public class QRCodeLogin extends FunnyQQBase implements IQRCodeLogin{
 		});
 		polling.start();
 	}
+	
 	public static void main(String[] args) {
-		
-		IQRCodeLogin funnyQQ=new QRCodeLogin();
+		QRCodeLogin funnyQQ=new QRCodeLogin();
 		boolean status=funnyQQ.getQRCodeForMobile();
 		if(status){
-			funnyQQ.loginPolling(FQQUtil.replace(Config.URL_GET_LOGIN_POLLING, "ptqrtoken",funnyQQ.getPtqrToken()));
+			funnyQQ.login(FQQUtil.replace(Config.URL_GET_LOGIN_POLLING, "ptqrtoken",funnyQQ.getPtqrToken()));
 		}
 	}
 }

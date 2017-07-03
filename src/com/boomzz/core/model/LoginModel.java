@@ -1,4 +1,4 @@
-package com.boomzz.model;
+package com.boomzz.core.model;
 /**
  * @author WStars
  * 登录的一些必要信息 单例

@@ -1,4 +1,4 @@
-package com.boomzz.model;
+package com.boomzz.core.model;
 
 import java.util.HashMap;
 import java.util.Map;

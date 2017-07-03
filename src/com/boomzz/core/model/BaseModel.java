@@ -1,4 +1,4 @@
-package com.boomzz.model;
+package com.boomzz.core.model;
 
 /**
  * @author WStars

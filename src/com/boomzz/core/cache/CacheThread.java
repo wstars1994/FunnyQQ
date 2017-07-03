@@ -1,4 +1,4 @@
-package com.boomzz.cache;
+package com.boomzz.core.cache;
 
 
 /**

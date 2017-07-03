@@ -1,4 +1,4 @@
-package com.boomzz.logs;
+package com.boomzz.core.logs;
 
 import java.io.File;
 import java.io.FileWriter;

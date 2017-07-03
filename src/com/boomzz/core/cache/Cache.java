@@ -1,9 +1,9 @@
-package com.boomzz.cache;
+package com.boomzz.core.cache;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import com.boomzz.config.Config;
+import com.boomzz.core.Config;
 
 /**
  * @author WStars

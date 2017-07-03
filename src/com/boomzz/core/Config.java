@@ -1,4 +1,4 @@
-package com.boomzz.config;
+package com.boomzz.core;
 
 /**
  * @author WStars

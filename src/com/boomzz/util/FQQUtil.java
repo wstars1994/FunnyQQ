@@ -7,9 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.boomzz.model.FriendsModel;
-import com.boomzz.model.InfoModel;
-import com.boomzz.model.PtuiCBMsgModel;
+import com.boomzz.core.model.FriendsModel;
+import com.boomzz.core.model.InfoModel;
+import com.boomzz.core.model.PtuiCBMsgModel;
 
 import net.sf.json.JSONObject;
 

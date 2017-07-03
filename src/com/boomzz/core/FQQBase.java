@@ -5,12 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.boomzz.cache.Cache;
-import com.boomzz.config.Config;
-import com.boomzz.model.DiscusModel;
-import com.boomzz.model.FriendsModel;
-import com.boomzz.model.GroupModel;
-import com.boomzz.model.InfoModel;
+import com.boomzz.core.cache.Cache;
+import com.boomzz.core.model.DiscusModel;
+import com.boomzz.core.model.FriendsModel;
+import com.boomzz.core.model.GroupModel;
+import com.boomzz.core.model.InfoModel;
+import com.boomzz.core.model.LoginModel;
 import com.boomzz.util.DateTimeUtil;
 import com.boomzz.util.FQQUtil;
 import com.boomzz.util.HttpClientUtil;
@@ -19,10 +19,14 @@ import com.boomzz.util.HttpClientUtil;
  * @author WStars
  *
  */
-public class FunnyQQBase implements IFunnyQQBase{
+public class FQQBase{
 
-	@Override
-	public InfoModel getSelfInfo() {
+	//个人登录信息
+	public static LoginModel loginModel = new LoginModel();
+	//全局Cookie
+	public static Map<String, String> cookies = new HashMap<>();
+	
+	protected InfoModel getSelfInfo() {
 		InfoModel userModel;
 		if(Cache.getCache("selfInfo")!=null)
 			userModel=(InfoModel) Cache.getCache("selfInfo");
@@ -34,8 +38,7 @@ public class FunnyQQBase implements IFunnyQQBase{
 		return userModel;
 	}
 
-	@Override
-	public List<FriendsModel> getFrientList() {
+	protected List<FriendsModel> getFrientList() {
 		List<FriendsModel> friendsModel;
 		if(Cache.getCache("allFriend")!=null)
 			friendsModel=(List<FriendsModel>) Cache.getCache("allFriend");
@@ -54,8 +57,7 @@ public class FunnyQQBase implements IFunnyQQBase{
 		return friendsModel;
 	}
 
-	@Override
-	public List<FriendsModel> getOnlineFrientList() {
+	protected List<FriendsModel> getOnlineFrientList() {
 		List<FriendsModel> friendsModel=new ArrayList<>();
 		Map<String,String> params=new HashMap<>();
 		params.put("vfwebqq", loginModel.getVfwebqq());
@@ -66,8 +68,7 @@ public class FunnyQQBase implements IFunnyQQBase{
 		return friendsModel;
 	}
 
-	@Override
-	public List<FriendsModel> getRecentFrientList() {
+	protected List<FriendsModel> getRecentFrientList() {
 		List<FriendsModel> friendsModel=new ArrayList<>();
 		Map<String,String> params=new HashMap<>();
 		params.put("vfwebqq", loginModel.getVfwebqq());
@@ -80,7 +81,6 @@ public class FunnyQQBase implements IFunnyQQBase{
 		return friendsModel;
 	}
 
-	@Override
 	public List<GroupModel> getGroupList() {
 		List<GroupModel> groupModel=new ArrayList<>();
 		Map<String,String> params=new HashMap<>();
@@ -94,8 +94,7 @@ public class FunnyQQBase implements IFunnyQQBase{
 		return groupModel;
 	}
 
-	@Override
-	public List<DiscusModel> getDiscusList() {
+	protected List<DiscusModel> getDiscusList() {
 		List<DiscusModel> discusModel=new ArrayList<>();
 		Map<String, String> map=new HashMap<>();
 		map.put("psessionid", loginModel.getPsessionid());
@@ -105,12 +104,7 @@ public class FunnyQQBase implements IFunnyQQBase{
 		System.out.println(back);
 		return discusModel;
 	}
-
-	@Override
-	public String sendMessage(String msg, String user) {
-		
-		return null;
-	}
+	
 	private String getHash() {
 		int uin=Integer.parseInt(loginModel.getId());
 		String ptvfwebqq=loginModel.getPtwebqq();
