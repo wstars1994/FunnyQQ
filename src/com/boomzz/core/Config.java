@@ -10,7 +10,9 @@ public class Config {
 	 * 是否开启缓存
 	 */
 	public static boolean CACHE=true;
-	
+	public static String CACHE_KEY_ALLFRIENDS="ALLFRIENDS";
+	public static String CACHE_KEY_MYSELF="MYSELF";
+	public static String CACHE_KEY_CATEGORIES="CATEGORIES";
 	/**
 	 * clientId 暂时不变
 	 */

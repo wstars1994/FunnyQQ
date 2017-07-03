@@ -7,10 +7,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.boomzz.core.Config;
+import com.boomzz.core.cache.Cache;
+import com.boomzz.core.model.CategoriesModel;
 import com.boomzz.core.model.FriendsModel;
 import com.boomzz.core.model.InfoModel;
 import com.boomzz.core.model.PtuiCBMsgModel;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 /**
@@ -193,15 +197,100 @@ public class FQQUtil {
 		return info;
 	}
 
+	/**
+	 * 获取好友列表
+	 * @param json
+	 * @return
+	 */
 	public static List<FriendsModel> jsonFriendsList(String json) {
-		List<FriendsModel> friendsModel = new ArrayList<>();
-		JSONObject o=JSONObject.fromObject(json);
-		if(json==null||!o.get("retcode").toString().equals("0")){
-			return null;
+		Map<String, FriendsModel> mapping = new HashMap<>();
+		List<FriendsModel> friendsList = new ArrayList<>();
+		if(checkRetcode(json)){
+			JSONObject o=JSONObject.fromObject(json);
+			if(isNotNull(o.get("result"))){
+				JSONObject result=(JSONObject) o.get("result");
+				//好友列表
+				if(isNotNull(result.get("friends"))){
+					JSONArray friends = (JSONArray) result.get("friends");
+					for(Object f:friends){
+						JSONObject object = (JSONObject) f;
+						FriendsModel fModel=new FriendsModel();
+						fModel.setUin(object.getString("uin"));
+						fModel.setCategories(object.getString("categories"));
+						fModel.setFlag(object.getString("flag"));
+						mapping.put(object.getString("uin"), fModel);
+					}
+				}
+				//备注
+				if(isNotNull(result.get("marknames"))){
+					JSONArray marknames = (JSONArray) result.get("marknames");
+					for(Object m:marknames){
+						JSONObject object = (JSONObject) m;
+						if(mapping.containsKey(object.getString("uin"))){
+							mapping.get(object.getString("uin")).setMarkName(object.getString("markname"));
+						}
+					}
+				}
+				//信息
+				if(isNotNull(result.get("info"))){
+					JSONArray info = (JSONArray) result.get("info");
+					for(Object m:info){
+						JSONObject object = (JSONObject) m;
+						if(mapping.containsKey(object.getString("uin"))){
+							mapping.get(object.getString("uin")).setNickName(object.getString("nick"));
+						}
+					}
+				}
+				//VIP信息
+				if(isNotNull(result.get("vipinfo"))){
+					JSONArray vipinfo = (JSONArray) result.get("vipinfo");
+					for(Object m:vipinfo){
+						JSONObject object = (JSONObject) m;
+						if(mapping.containsKey(object.getString("u"))){
+							FriendsModel friendsModel = mapping.get(object.getString("u"));
+							friendsModel.setVip_level(object.getInt("vip_level"));
+							friendsModel.setVip(object.getInt("vip_level")==1?true:false);
+							mapping.put(object.getString("u"), friendsModel);
+						}
+					}
+				}
+				//分组列表
+				if(isNotNull(result.get("categories"))){
+					JSONArray categories = (JSONArray) result.get("categories");
+					List<CategoriesModel> categoriesList = new ArrayList<>();
+					for(Object m:categories){
+						JSONObject object = (JSONObject) m;
+						CategoriesModel categoriesModel=new CategoriesModel();
+						categoriesModel.setIndex(object.getInt("index"));
+						categoriesModel.setSort(object.getInt("sort"));
+						categoriesModel.setName(object.getString("name"));
+						categoriesList.add(categoriesModel);
+					}
+					Cache.putCache(Config.CACHE_KEY_CATEGORIES, categoriesList);
+				}
+			}
 		}
-		
-		
-		
-		return friendsModel;
+		for(String uin:mapping.keySet())
+			friendsList.add(mapping.get(uin));
+		return friendsList;
+	}
+	
+	private static boolean checkRetcode(String json){
+		if(json==null) return false;
+		try {
+			JSONObject o=JSONObject.fromObject(json);
+			if(o.get("retcode")!=null&&o.get("retcode").toString().equals("0")){
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	private static boolean isNotNull(Object object){
+		if(object==null){
+			return false;
+		}
+		return true;
 	}
 }

@@ -1,11 +1,13 @@
 package com.boomzz.test;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
 import com.boomzz.core.Config;
 import com.boomzz.core.FQQBase;
+import com.boomzz.core.model.FriendsModel;
 import com.boomzz.core.model.InfoModel;
 import com.boomzz.core.model.PtuiCBMsgModel;
 import com.boomzz.util.DateTimeUtil;
@@ -121,7 +123,11 @@ public class QRCodeLogin extends FQQBase{
 										}
 										break;
 									case "2":
-										getFrientList();
+										List<FriendsModel> frientList = getFrientList();
+										System.out.println("count:"+frientList.size());
+										for(FriendsModel model : frientList){
+											System.out.println(model.toString());
+										}
 										break;
 									case "3":
 										getOnlineFrientList();

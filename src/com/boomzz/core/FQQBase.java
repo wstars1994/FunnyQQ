@@ -28,20 +28,20 @@ public class FQQBase{
 	
 	protected InfoModel getSelfInfo() {
 		InfoModel userModel;
-		if(Cache.getCache("selfInfo")!=null)
-			userModel=(InfoModel) Cache.getCache("selfInfo");
+		if(Cache.getCache(Config.CACHE_KEY_MYSELF)!=null)
+			userModel=(InfoModel) Cache.getCache(Config.CACHE_KEY_MYSELF);
 		else{
 			String back=HttpClientUtil.get(Config.URL_GET_SELFINFO+DateTimeUtil.getTimestamp(),cookies);
 			userModel=FQQUtil.jsonInfo(back);
-			Cache.putCache("selfInfo", userModel);
+			Cache.putCache(Config.CACHE_KEY_MYSELF, userModel);
 		}
 		return userModel;
 	}
 
 	protected List<FriendsModel> getFrientList() {
 		List<FriendsModel> friendsModel;
-		if(Cache.getCache("allFriend")!=null)
-			friendsModel=(List<FriendsModel>) Cache.getCache("allFriend");
+		if(Cache.getCache(Config.CACHE_KEY_ALLFRIENDS)!=null)
+			friendsModel=(List<FriendsModel>) Cache.getCache(Config.CACHE_KEY_ALLFRIENDS);
 		else{
 			Map<String,String> params=new HashMap<>();
 			params.put("vfwebqq", loginModel.getVfwebqq());
@@ -51,8 +51,7 @@ public class FQQBase{
 			params.put("r", pString);
 			String json=HttpClientUtil.post(Config.URL_POST_FRIENDS,params,cookies);
 			friendsModel=FQQUtil.jsonFriendsList(json);
-			Cache.putCache("allFriend", friendsModel);
-			System.out.println(json);
+			Cache.putCache(Config.CACHE_KEY_ALLFRIENDS, friendsModel);
 		}
 		return friendsModel;
 	}
