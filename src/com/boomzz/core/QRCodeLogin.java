@@ -1,5 +1,15 @@
 package com.boomzz.core;
 
+import java.util.List;
+import java.util.Scanner;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.boomzz.core.model.DiscusModel;
+import com.boomzz.core.model.FriendsModel;
+import com.boomzz.core.model.GroupModel;
+import com.boomzz.core.model.InfoModel;
 import com.boomzz.core.model.PtuiCBMsgModel;
 import com.boomzz.util.FQQUtil;
 import com.boomzz.util.HttpClientUtil;
@@ -10,6 +20,8 @@ import com.boomzz.util.HttpClientUtil;
  */
 public class QRCodeLogin extends FQQ{
 
+	private final Logger logger = LogManager.getLogger();
+	
 	/*
 	 * 抓包时发现的
 	 * 10:'online',20:'offline',30:'away',40:'hidden',50:'busy',60:'callme',70:'silent'
@@ -25,7 +37,7 @@ public class QRCodeLogin extends FQQ{
 	private boolean getQRCodeForMobile() {
 		try {
 			HttpClientUtil.getBackAndCookieForQR(Config.URL_GET_QR+Math.random(),Config.FILE_PATH_QR,cookies,Config.FILE_IMG_LOCAL);
-    		System.out.println("获取二维码成功");
+			logger.info("获取二维码成功");
     		return true;
     	} catch (Exception e) {
     		e.printStackTrace();
@@ -53,17 +65,17 @@ public class QRCodeLogin extends FQQ{
 		final QRCodeLogin funnyQQ=new QRCodeLogin();
 		boolean status=funnyQQ.getQRCodeForMobile();
 		if(status){
-			System.out.println("开始登录轮询");
+			logger.info("开始登录轮询");
 			while(true){
 				try {
 					String back=HttpClientUtil.get(FQQUtil.replace(Config.URL_GET_LOGIN_POLLING, "ptqrtoken",funnyQQ.getPtqrToken()),cookies);
 					//转换成类
 					PtuiCBMsgModel ptuiCBMsgModel=FQQUtil.ptuiCBMsgToModel(back);
 					if(ptuiCBMsgModel==null){
-						System.out.println("登录轮询失败");
+						logger.error("登录轮询失败");
 						return false;
 					}else{
-						System.out.println(ptuiCBMsgModel.getNo() +" : "+ ptuiCBMsgModel.getP4());
+						logger.info(ptuiCBMsgModel.getNo() +" : "+ ptuiCBMsgModel.getP4());
 						if(ptuiCBMsgModel.getNo()==0){//初次登录成功
 							loginModel.setNickName(ptuiCBMsgModel.getP5());
 							loginModel.setUin(FQQUtil.findParam(ptuiCBMsgModel.getP2(),"uin"));
@@ -78,7 +90,7 @@ public class QRCodeLogin extends FQQ{
 					}
 					Thread.sleep(1000L);
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					logger.error(e.getMessage(),e);
 				}
 			}
 		}
@@ -87,6 +99,61 @@ public class QRCodeLogin extends FQQ{
 
 	@Override
 	public void loginSuccess() {
-		
+		while(true)
+		{
+			System.out.println(">> 欢迎您 "+loginModel.getNickName());
+			System.out.println(">> 选择一个项目");
+			System.out.println(">> 1.获取个人信息");
+			System.out.println(">> 2.获取好友列表");
+			System.out.println(">> 3.获取在线好友列表");
+			System.out.println(">> 4.获取最近联系的好友列表");
+			System.out.println(">> 5.获取群列表");
+			System.out.println(">> 6.获取讨论组列表");
+			System.out.println(">> 7.退出");
+			System.out.print(">> 请选择 : ");
+			Scanner sc = new Scanner(System.in);
+			String line = sc.nextLine();
+			switch(line){
+			case "1":
+				InfoModel info=getSelfInfo();
+				if(info!=null){
+					System.out.println(info.getBirthday());
+					System.out.println(info.getBlood());
+					System.out.println(info.getGender());
+					System.out.println(info.getConstel());
+					System.out.println(info.getShengxiao());
+				}
+				break;
+			case "2":
+				List<FriendsModel> frientList = getFrientList();
+				System.out.println("count:"+frientList.size());
+				for(FriendsModel model : frientList){
+					System.out.println(model.toString());
+				}
+				break;
+			case "3":
+				frientList = getOnlineFrientList();
+				for(FriendsModel model : frientList){
+					System.out.println(model.toString());
+				}
+				break;
+			case "4":
+				getRecentFrientList();
+				break;
+			case "5":
+				List<GroupModel> groupList = getGroupList();
+				for(GroupModel m:groupList)
+					System.out.println(m.toString());
+				break;
+			case "6":
+				List<DiscusModel> discusList = getDiscusList();
+				for(DiscusModel m:discusList)
+					System.out.println(m.toString());
+				break;
+			case "7":
+				System.out.print(">> 退出成功");
+				return;
+			}
+		}
 	}
 }
