@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Scanner;
 
 import com.boomzz.core.cache.Cache;
-import com.boomzz.core.logs.FQQLogs;
 import com.boomzz.core.model.DiscusModel;
 import com.boomzz.core.model.FriendsModel;
 import com.boomzz.core.model.GroupModel;
@@ -30,13 +29,11 @@ public abstract class FQQ{
 	
 	public void login(){
 		try {
-			Cache.getPersist();
 			//第一次登陆 表现为登录方式 cookie获取完毕 相应值已经获取并设置
 			if(login_1()){
 				//获取必须的Vfwebqq
 				if(loginModel.getPtwebqq()==null){
 					System.out.println("必要参数缺失");
-					Cache.persistenceDel();
 					return;
 				}
 				String back=HttpClientUtil.get(FQQUtil.replace(com.boomzz.core.Config.URL_GET_VFWEBQQ+DateTimeUtil.getTimestamp(), "ptwebqq",loginModel.getPtwebqq()), cookies);
@@ -50,9 +47,6 @@ public abstract class FQQ{
 					System.out.println("正式登陆成功");
 					loginModel.setPsessionid(map.get("psessionid"));
 					loginSuccess();
-					Cache.putCache("cookie", cookies);
-					Cache.putCache("loginModel", loginModel);
-					Cache.persist();
 				}
 				while(true)
 				{
@@ -114,7 +108,6 @@ public abstract class FQQ{
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			new FQQLogs("error.log").writeNewTimeLogs(e.getMessage());
 			System.out.println("系统错误");
 		}
 	}

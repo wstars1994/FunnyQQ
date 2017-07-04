@@ -1,28 +1,15 @@
 package com.boomzz.core.cache;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.boomzz.core.Config;
-import com.boomzz.core.FQQ;
-import com.boomzz.core.model.BaseModel;
-import com.boomzz.core.model.LoginModel;
 
 /**
  * @author WStars
  * 缓存
  */
-public class Cache implements Serializable{
+public class Cache{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -45,48 +32,5 @@ public class Cache implements Serializable{
 	public void clear(){
 		if(Config.CACHE)
 			cacheMap.clear();
-	}
-	public static void persist(){
-		try {
-			FileOutputStream fos = new FileOutputStream("data.x");
-			ByteArrayOutputStream outputStream=new ByteArrayOutputStream();
-			ObjectOutputStream objectOutputStream=new ObjectOutputStream(outputStream);
-			objectOutputStream.writeObject(cacheMap);
-			byte []b = outputStream.toByteArray();
-			for(int i = 0; i<b.length ; i++)
-			    fos.write(b[i]);
-			fos.close();
-			objectOutputStream.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	public static void getPersist(){
-		try {
-			FileInputStream file=new FileInputStream("data.x");
-			InputStream inputStream=file;
-			ObjectInputStream ois = new ObjectInputStream(inputStream);
-			cacheMap = (Map<String,Object>) ois.readObject();
-			if(cacheMap.get("cookie")!=null)
-				FQQ.cookies = (Map<String, String>) cacheMap.get("cookie");
-			if(cacheMap.get("loginModel")!=null)
-				FQQ.loginModel =(LoginModel) cacheMap.get("loginModel");
-		} catch (Exception e) {
-			if(e instanceof FileNotFoundException){}
-			else e.printStackTrace();
-		}  
-	}
-	public static void persistenceDel(){
-		new File("data.x").delete();
-	}
-	public static void main(String[] args) {
-		BaseModel baseModel = new BaseModel();
-		baseModel.setId("123456");
-		baseModel.setNickName("忽悠局HYJ");
-		baseModel.setType(1);
-		baseModel.setUin("545640807");
-		cacheMap.put("baseModel", baseModel);
-		persist();
-		getPersist();
 	}
 }

@@ -23,8 +23,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 
-import com.boomzz.core.logs.FQQLogs;
-
 public class HttpClientUtil {
 
 	/**
@@ -80,7 +78,6 @@ public class HttpClientUtil {
             if(response.getStatusLine().getStatusCode()==200){
                 content = EntityUtils.toString(response.getEntity(),"utf-8");
             }
-            new FQQLogs("back.log").writeNewTimeLogs(content);
         } catch (ClientProtocolException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -210,7 +207,6 @@ public class HttpClientUtil {
             if(response.getStatusLine().getStatusCode()==200){
                 content = EntityUtils.toString(response.getEntity(),"utf-8");
             }
-            new FQQLogs("back.log").writeNewTimeLogs(content);
         } catch (ClientProtocolException e) {
             e.printStackTrace();
         } catch (IOException e) {
