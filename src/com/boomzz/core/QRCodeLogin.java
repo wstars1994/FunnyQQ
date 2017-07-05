@@ -12,7 +12,7 @@ import com.boomzz.core.model.GroupModel;
 import com.boomzz.core.model.InfoModel;
 import com.boomzz.core.model.PtuiCBMsgModel;
 import com.boomzz.util.FQQUtil;
-import com.boomzz.util.HttpClientUtil;
+import com.boomzz.util.HttpClient;
 
 /**
  * @author WStars
@@ -36,7 +36,7 @@ public class QRCodeLogin extends FQQ{
 	
 	private boolean getQRCodeForMobile() {
 		try {
-			HttpClientUtil.getBackAndCookieForQR(Config.URL_GET_QR+Math.random(),Config.FILE_PATH_QR,cookies,Config.FILE_IMG_LOCAL);
+			HttpClient.getBackAndCookieForQR(Config.URL_GET_QR+Math.random(),Config.FILE_PATH_QR,cookies,Config.FILE_IMG_LOCAL);
 			logger.info("获取二维码成功");
     		return true;
     	} catch (Exception e) {
@@ -68,7 +68,7 @@ public class QRCodeLogin extends FQQ{
 			logger.info("开始登录轮询");
 			while(true){
 				try {
-					String back=HttpClientUtil.get(FQQUtil.replace(Config.URL_GET_LOGIN_POLLING, "ptqrtoken",funnyQQ.getPtqrToken()),cookies);
+					String back=HttpClient.get(FQQUtil.replace(Config.URL_GET_LOGIN_POLLING, "ptqrtoken",funnyQQ.getPtqrToken()),cookies);
 					//转换成类
 					PtuiCBMsgModel ptuiCBMsgModel=FQQUtil.ptuiCBMsgToModel(back);
 					if(ptuiCBMsgModel==null){
@@ -84,7 +84,7 @@ public class QRCodeLogin extends FQQ{
 							loginModel.setClientId(Config.PARAM_CLIENTID);
 							//第一次登录验证 获取必要参数
 							String checkSigUrl=ptuiCBMsgModel.getP2();
-							HttpClientUtil.get(checkSigUrl, cookies);
+							HttpClient.get(checkSigUrl, cookies);
 							return true;
 						}
 					}
