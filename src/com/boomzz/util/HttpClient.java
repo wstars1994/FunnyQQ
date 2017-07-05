@@ -148,6 +148,7 @@ public class HttpClient {
 		connection.setDoInput(true);
 		connection.setUseCaches(false);
 //		connection.setRequestProperty("Content-Type", ContentType);
+		connection.setRequestProperty("Connection", "Keep-Alive");// 维持长连接
 		connection.setRequestMethod(method);
 		connection.setInstanceFollowRedirects(rediect);
 		if(cookies!=null){

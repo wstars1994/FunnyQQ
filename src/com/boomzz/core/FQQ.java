@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import com.boomzz.core.cache.Cache;
 import com.boomzz.core.model.DiscusModel;
 import com.boomzz.core.model.FriendsModel;
@@ -25,8 +23,6 @@ import com.boomzz.util.HttpClient;
 public abstract class FQQ{
 
 	private final Logger logger = LogManager.getLogger();
-	
-	
 	//个人登录信息
 	public static LoginModel loginModel = new LoginModel();
 	//全局Cookie
@@ -38,7 +34,7 @@ public abstract class FQQ{
 			if(login_1()){
 				//获取必须的Vfwebqq
 				if(loginModel.getPtwebqq()==null){
-					logger.error("必要参数缺失");
+					logger.error("必要参数缺失,登录失败");
 					return;
 				}
 				String back=HttpClient.get(FQQUtil.replace(com.boomzz.core.Config.URL_GET_VFWEBQQ+DateTimeUtil.getTimestamp(), "ptwebqq",loginModel.getPtwebqq()), cookies);
@@ -52,6 +48,8 @@ public abstract class FQQ{
 					logger.info("正式登陆成功");
 					loginModel.setPsessionid(map.get("psessionid"));
 					loginSuccess();
+					//开始接收消息
+//					new MessageThread().start();
 				}
 			}
 			
@@ -59,7 +57,9 @@ public abstract class FQQ{
 			logger.error(e.getMessage(),e);
 		}
 	}
+	
 	public abstract boolean login_1();
+	
 	public abstract void loginSuccess();
 	
 	protected InfoModel getSelfInfo() {

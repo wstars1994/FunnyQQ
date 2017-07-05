@@ -38,6 +38,10 @@ public class Config {
 	 * 获取最近好友列表请求参数
 	 */
 	public static String PARAM_RECENTFRIENDS_LIST="{\"vfwebqq\":\"vfwebqq\",\"clientid\":"+PARAM_CLIENTID+",\"psessionid\":\"#psessionid#\"}";
+	/**
+	 * 消息接收
+	 */
+	public static String PARAM_MESSAGE_POLL="{\"ptwebqq\":\"#ptwebqq#\",\"clientid\":53999199,\"psessionid\":\"#psessionid#\",\"key\":\"\"}";
 	
 	/**
 	 * 图片路径
