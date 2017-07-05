@@ -47,9 +47,9 @@ public abstract class FQQ{
 				if(map.get("psessionid")!=null){
 					logger.info("正式登陆成功");
 					loginModel.setPsessionid(map.get("psessionid"));
-					loginSuccess();
+//					loginSuccess();
 					//开始接收消息
-//					new MessageThread().start();
+					new MessageThread().start();
 				}
 			}
 			

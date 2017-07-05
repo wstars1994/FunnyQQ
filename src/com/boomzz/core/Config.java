@@ -116,10 +116,9 @@ public class Config {
 	 * 获取新消息  注意:此处为长连接
 	 */
 	public static String URL_POST_NEWMESSAGE="https://d1.web2.qq.com/channel/poll2";
-	
 	/**
 	 * 发送消息
 	 */
-	public static String URL_POST_SENDMESSAGE="https://d1.web2.qq.com/channel/poll2";
+	public static String URL_POST_SENDMESSAGE="https://d1.web2.qq.com/channel/send_buddy_msg2";
 	
 }

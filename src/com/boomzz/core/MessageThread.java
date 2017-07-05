@@ -12,12 +12,12 @@ public class MessageThread extends Thread{
 		
 		while(true){
 			Map<String, String> params=new HashMap<>();
-			params.put("vfwebqq", FQQ.loginModel.getVfwebqq());
+			params.put("ptwebqq", FQQ.loginModel.getPtwebqq());
 			params.put("psessionid", FQQ.loginModel.getPsessionid());
 			String url=FQQUtil.replace(Config.PARAM_MESSAGE_POLL, params);
 			params.clear();
 			params.put("r",url);
-			String back=HttpClient.post(Config.URL_POST_LONGIN2, params, FQQ.cookies);
+			String back=HttpClient.postHttps(Config.URL_POST_NEWMESSAGE, params, FQQ.cookies);
 			System.out.println(back);
 		}
 	}
