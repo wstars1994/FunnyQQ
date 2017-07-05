@@ -47,9 +47,10 @@ public abstract class FQQ{
 				if(map.get("psessionid")!=null){
 					logger.info("正式登陆成功");
 					loginModel.setPsessionid(map.get("psessionid"));
-//					loginSuccess();
 					//开始接收消息
 					new MessageThread().start();
+					//登录成功后调用
+					loginSuccess();
 				}
 			}
 			
@@ -61,6 +62,10 @@ public abstract class FQQ{
 	public abstract boolean login_1();
 	
 	public abstract void loginSuccess();
+
+	public void sendMessage(FriendsModel model,String msg){
+		
+	}
 	
 	protected InfoModel getSelfInfo() {
 		InfoModel userModel;

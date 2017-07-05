@@ -118,8 +118,7 @@ public class HttpClient {
 			connection.setUseCaches(false);
 			connection.setRequestProperty("Connection", "Keep-Alive");// 维持长连接
 			connection.setRequestMethod("POST");
-			connection.setConnectTimeout(60000);
-			connection.addRequestProperty("Referer","https://d1.web2.qq.com/cfproxy.html?v=20151105001&callback=1");
+			connection.setRequestProperty("Referer","https://d1.web2.qq.com/cfproxy.html?v=20151105001&callback=1");
 			if(cookies!=null){
 				String cooStr="";
 				for(String c:cookies.keySet()){
