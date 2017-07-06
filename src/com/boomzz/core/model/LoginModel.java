@@ -23,6 +23,8 @@ public class LoginModel extends BaseModel implements Serializable{
 
 	private String psessionid;
 	
+	private int loginStatus;
+	
 	public String getQrSig() {
 		return qrSig;
 	}

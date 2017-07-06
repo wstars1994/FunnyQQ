@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.boomzz.core.Config;
+import com.boomzz.core.FQQ;
 import com.boomzz.core.cache.Cache;
 import com.boomzz.core.model.CategoriesModel;
 import com.boomzz.core.model.DiscusModel;
@@ -204,9 +205,8 @@ public class FQQUtil {
 	 * @param json
 	 * @return
 	 */
-	public static List<FriendsModel> jsonFriendsList(String json) {
+	public static Map<String,FriendsModel> jsonFriendsList(String json) {
 		Map<String, FriendsModel> mapping = new HashMap<>();
-		List<FriendsModel> friendsList = new ArrayList<>();
 		if(checkRetcode(json)){
 			JSONObject o=JSONObject.fromObject(json);
 			if(isNotNull(o.get("result"))){
@@ -272,9 +272,7 @@ public class FQQUtil {
 				}
 			}
 		}
-		for(String uin:mapping.keySet())
-			friendsList.add(mapping.get(uin));
-		return friendsList;
+		return mapping;
 	}
 	/**
 	 * 获取在线好友
@@ -345,5 +343,30 @@ public class FQQUtil {
 			return false;
 		}
 		return true;
+	}
+	public static String getHash() {
+		int uin=Integer.parseInt(FQQ.loginModel.getId());
+		String ptvfwebqq=FQQ.loginModel.getPtwebqq();
+		int ptb[]=new int[4];
+		for (int i=0;i<ptvfwebqq.length();i++){
+            int ptbIndex = i%4;
+            ptb[ptbIndex] ^= ptvfwebqq.charAt(i);
+        }
+		String salt[]={"EC", "OK"};
+		int uinByte[]={(((uin >> 24) & 0xFF) ^ salt[0].charAt(0)),(((uin >> 16) & 0xFF) ^ salt[0].charAt(1)),(((uin >> 8) & 0xFF) ^ salt[1].charAt(0)),((uin & 0xFF) ^ salt[1].charAt(1))};
+		int result[] = new int[8];
+		for (int i=0;i<8;i++){
+			if (i%2 == 0)
+				result[i] = ptb[i>>1];
+			else
+				result[i] = uinByte[i>>1];
+        }
+		char hex[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+		String buf = "";
+		for (int i=0;i<result.length;i++){
+			buf += (hex[(result[i]>>4) & 0xF]);
+			buf += (hex[result[i] & 0xF]);
+		}
+		return buf;
 	}
 }

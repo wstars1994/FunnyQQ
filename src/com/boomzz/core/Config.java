@@ -14,6 +14,7 @@ public class Config {
 	public static String CACHE_KEY_MYSELF="MYSELF";
 	public static String CACHE_KEY_CATEGORIES="CATEGORIES";
 	public static String CACHE_KEY_DISCUS="DISCUS";
+	public static String CACHE_KEY_GROUP="GROUP";
 	/**
 	 * clientId 暂时不变
 	 */

@@ -1,12 +1,21 @@
-package com.boomzz.core;
+package com.boomzz.core.message;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import com.boomzz.core.Config;
+import com.boomzz.core.FQQ;
 import com.boomzz.util.FQQUtil;
 import com.boomzz.util.HttpClient;
 
-public class MessageThread extends Thread{
+public class Message extends Thread{
+	
+	private FQQ fqq;
+	
+	public Message(FQQ fqq){
+		this.fqq = fqq;
+	}
+	
 	@Override
 	public void run() {
 		
@@ -21,4 +30,5 @@ public class MessageThread extends Thread{
 			System.out.println(back);
 		}
 	}
+	
 }

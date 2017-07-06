@@ -1,6 +1,7 @@
 package com.boomzz.core;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import org.apache.logging.log4j.LogManager;
@@ -97,63 +98,62 @@ public class QRCodeLogin extends FQQ{
 		return false;
 	}
 
-	@Override
-	public void loginSuccess() {
-		while(true)
-		{
-			System.out.println(">> 欢迎您 "+loginModel.getNickName());
-			System.out.println(">> 选择一个项目");
-			System.out.println(">> 1.获取个人信息");
-			System.out.println(">> 2.获取好友列表");
-			System.out.println(">> 3.获取在线好友列表");
-			System.out.println(">> 4.获取最近联系的好友列表");
-			System.out.println(">> 5.获取群列表");
-			System.out.println(">> 6.获取讨论组列表");
-			System.out.println(">> 7.退出");
-			System.out.print(">> 请选择 : ");
-			Scanner sc = new Scanner(System.in);
-			String line = sc.nextLine();
-			switch(line){
-			case "1":
-				InfoModel info=getSelfInfo();
-				if(info!=null){
-					System.out.println(info.getBirthday());
-					System.out.println(info.getBlood());
-					System.out.println(info.getGender());
-					System.out.println(info.getConstel());
-					System.out.println(info.getShengxiao());
-				}
-				break;
-			case "2":
-				List<FriendsModel> frientList = getFrientList();
-				System.out.println("count:"+frientList.size());
-				for(FriendsModel model : frientList){
-					System.out.println(model.toString());
-				}
-				break;
-			case "3":
-				frientList = getOnlineFrientList();
-				for(FriendsModel model : frientList){
-					System.out.println(model.toString());
-				}
-				break;
-			case "4":
-				getRecentFrientList();
-				break;
-			case "5":
-				List<GroupModel> groupList = getGroupList();
-				for(GroupModel m:groupList)
-					System.out.println(m.toString());
-				break;
-			case "6":
-				List<DiscusModel> discusList = getDiscusList();
-				for(DiscusModel m:discusList)
-					System.out.println(m.toString());
-				break;
-			case "7":
-				System.out.print(">> 退出成功");
-				return;
-			}
-		}
-	}
+//	@Override
+//	public void loginSuccess() {
+//		while(true)
+//		{
+//			System.out.println(">> 欢迎您 "+loginModel.getNickName());
+//			System.out.println(">> 选择一个项目");
+//			System.out.println(">> 1.获取个人信息");
+//			System.out.println(">> 2.获取好友列表");
+//			System.out.println(">> 3.获取在线好友列表");
+//			System.out.println(">> 4.获取最近联系的好友列表");
+//			System.out.println(">> 5.获取群列表");
+//			System.out.println(">> 6.获取讨论组列表");
+//			System.out.println(">> 7.退出");
+//			System.out.print(">> 请选择 : ");
+//			Scanner sc = new Scanner(System.in);
+//			String line = sc.nextLine();
+//			switch(line){
+//			case "1":
+//				InfoModel info=getSelfInfo();
+//				if(info!=null){
+//					System.out.println(info.getBirthday());
+//					System.out.println(info.getBlood());
+//					System.out.println(info.getGender());
+//					System.out.println(info.getConstel());
+//					System.out.println(info.getShengxiao());
+//				}
+//				break;
+//			case "2":
+//				Map<String, FriendsModel> map = getFrientList();
+//				for(String uin : map.keySet()){
+//					System.out.println(map.get(uin).toString());
+//				}
+//				break;
+//			case "3":
+//				List<FriendsModel> frientList = frientList = getOnlineFrientList();
+//				for(FriendsModel model : frientList){
+//					System.out.println(model.toString());
+//				}
+//				break;
+//			case "4":
+//				getRecentFrientList();
+//				break;
+//			case "5":
+//				List<GroupModel> groupList = getGroupList();
+//				for(GroupModel m:groupList)
+//					System.out.println(m.toString());
+//				break;
+//			case "6":
+//				List<DiscusModel> discusList = getDiscusList();
+//				for(DiscusModel m:discusList)
+//					System.out.println(m.toString());
+//				break;
+//			case "7":
+//				System.out.print(">> 退出成功");
+//				return;
+//			}
+//		}
+//	}
 }
