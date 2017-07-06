@@ -18,9 +18,6 @@ import java.util.regex.Pattern;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.boomzz.core.Config;
 
 public class HttpClient {
@@ -168,7 +165,7 @@ public class HttpClient {
 		return null;
 	}
 	public static void main(String[] args) {
-		postHttps(Config.URL_POST_NEWMESSAGE,new HashMap<String,String>(),new HashMap<String,String>());
+		postHttps(Config.URL_POST_SENDMESSAGE,new HashMap<String,String>(),new HashMap<String,String>());
 	}
 	public static String getBackAndCookieForQR(String url, String path,Map<String, String> cookies,boolean local) throws Exception{
 		HttpURLConnection connection = getConnection(url,"GET","application/json;charset=UTF-8",false,cookies);
