@@ -1,16 +1,9 @@
-package com.boomzz.core;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+package com.boomzz.core.login;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.boomzz.core.model.DiscusModel;
-import com.boomzz.core.model.FriendsModel;
-import com.boomzz.core.model.GroupModel;
-import com.boomzz.core.model.InfoModel;
+import com.boomzz.core.Config;
 import com.boomzz.core.model.PtuiCBMsgModel;
 import com.boomzz.util.FQQUtil;
 import com.boomzz.util.HttpClient;
@@ -19,7 +12,7 @@ import com.boomzz.util.HttpClient;
  * @author WStars
  *
  */
-public class QRCodeLogin extends FQQ{
+public class QRCodeLogin extends AbstractLogin{
 
 	private final Logger logger = LogManager.getLogger();
 	

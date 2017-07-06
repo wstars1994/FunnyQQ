@@ -45,6 +45,11 @@ public class Config {
 	public static String PARAM_MESSAGE_POLL="{\"ptwebqq\":\"#ptwebqq#\",\"clientid\":53999199,\"psessionid\":\"#psessionid#\",\"key\":\"\"}";
 	
 	/**
+	 * 消息接收
+	 */
+	public static String PARAM_MESSAGE_SEND="{\"%s\": %s,\"content\": \"[\"%s\",[\"font\",{\"name\":\"宋体\",\"size\":10,\"style\":[0,0,0],\"color\":\"000000\"}]]\",\"face\": 558,\"clientid\": 53999199,\"msg_id\": 53770002,\"psessionid\": \"%s\"}";
+	
+	/**
 	 * 图片路径
 	 */
 	public static String FILE_PATH_QR="qr.png";
@@ -67,7 +72,7 @@ public class Config {
 	/**
 	 *登录扫描验证 初次登陆
 	 */
-	public static String URL_GET_LOGIN_POLLING="https://ssl.ptlogin2.qq.com/ptqrlogin?ptqrtoken=#ptqrtoken#&webqq_type=10&remember_uin=1&login2qq=1&aid=501004106&u1=http://w.qq.com/proxy.html?login2qq=1&webqq_type=10&ptredirect=0&ptlang=2052&daid=164&from_ui=1&pttype=1&dumy=&fp=loginerroralert&action=0-0-666&mibao_css=m_webqq&t=undefined&g=1&js_type=0&js_ver=10197&login_sig=&pt_randsalt=0";
+	public static String URL_GET_LOGIN_POLLING="https://ssl.ptlogin2.qq.com/ptqrlogin?ptqrtoken=#ptqrtoken#&webqq_type=10&remember_uin=1&login2qq=1&aid=501004106&u1=http://w.qq.com/proxy.html?login2qq=1&webqq_type=10&ptredirect=0&ptlang=2052&daid=164&from_ui=1&pttype=1&dumy=&fp=loginerroralert&action=0-0-9489&mibao_css=m_webqq&t=undefined&g=1&js_type=0&js_ver=10224&login_sig=&pt_randsalt=0";
 
 	/**
 	 * 获取VFWEBQQ参数
@@ -121,5 +126,8 @@ public class Config {
 	 * 发送消息
 	 */
 	public static String URL_POST_SENDMESSAGE="https://d1.web2.qq.com/channel/send_buddy_msg2";
+	public static String URL_POST_SENDMESSAGE_DISCUS="https://d1.web2.qq.com/channel/send_discu_msg2";
+	public static String URL_POST_SENDMESSAGE_GROUP="https://d1.web2.qq.com/channel/send_qun_msg2";
+	
 	
 }

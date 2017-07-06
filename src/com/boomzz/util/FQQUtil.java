@@ -8,13 +8,14 @@ import java.util.List;
 import java.util.Map;
 
 import com.boomzz.core.Config;
-import com.boomzz.core.FQQ;
 import com.boomzz.core.cache.Cache;
+import com.boomzz.core.login.AbstractLogin;
 import com.boomzz.core.model.CategoriesModel;
 import com.boomzz.core.model.DiscusModel;
 import com.boomzz.core.model.FriendsModel;
 import com.boomzz.core.model.GroupModel;
 import com.boomzz.core.model.InfoModel;
+import com.boomzz.core.model.MessageModel;
 import com.boomzz.core.model.PtuiCBMsgModel;
 
 import net.sf.json.JSONArray;
@@ -311,8 +312,8 @@ public class FQQUtil {
 		List<GroupModel> discusList = new ArrayList<>();
 		if(checkRetcode(json)){
 			JSONObject o=JSONObject.fromObject(json);
-			JSONObject result=(JSONObject) o.get("result");
-			JSONArray dnamelist=(JSONArray)result.get("gnamelist");
+			JSONObject result=o.getJSONObject("result");
+			JSONArray dnamelist=result.getJSONArray("gnamelist");
 			for(Object m:dnamelist){
 				JSONObject object = (JSONObject) m;
 				GroupModel model = new GroupModel();
@@ -325,7 +326,21 @@ public class FQQUtil {
 		}
 		return discusList;
 	}
-	
+	public static void jsonNewMessage(String json){
+		if(checkRetcode(json)){
+			JSONObject o=JSONObject.fromObject(json);
+			JSONObject result=o.getJSONObject("result");
+			MessageModel messageModel = new MessageModel();
+			messageModel.setPollType(result.getString("pool_type"));
+			JSONObject value = result.getJSONObject("value");
+			JSONArray content = value.getJSONArray("content");
+			messageModel.setMsg(content.getString(1));
+			
+		}
+	}
+	public static void jsonSendMessage(MessageModel model){
+		
+	}
 	private static boolean checkRetcode(String json){
 		if(json==null) return false;
 		try {
@@ -343,30 +358,5 @@ public class FQQUtil {
 			return false;
 		}
 		return true;
-	}
-	public static String getHash() {
-		int uin=Integer.parseInt(FQQ.loginModel.getId());
-		String ptvfwebqq=FQQ.loginModel.getPtwebqq();
-		int ptb[]=new int[4];
-		for (int i=0;i<ptvfwebqq.length();i++){
-            int ptbIndex = i%4;
-            ptb[ptbIndex] ^= ptvfwebqq.charAt(i);
-        }
-		String salt[]={"EC", "OK"};
-		int uinByte[]={(((uin >> 24) & 0xFF) ^ salt[0].charAt(0)),(((uin >> 16) & 0xFF) ^ salt[0].charAt(1)),(((uin >> 8) & 0xFF) ^ salt[1].charAt(0)),((uin & 0xFF) ^ salt[1].charAt(1))};
-		int result[] = new int[8];
-		for (int i=0;i<8;i++){
-			if (i%2 == 0)
-				result[i] = ptb[i>>1];
-			else
-				result[i] = uinByte[i>>1];
-        }
-		char hex[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
-		String buf = "";
-		for (int i=0;i<result.length;i++){
-			buf += (hex[(result[i]>>4) & 0xF]);
-			buf += (hex[result[i] & 0xF]);
-		}
-		return buf;
 	}
 }
