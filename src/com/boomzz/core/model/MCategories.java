@@ -2,7 +2,7 @@ package com.boomzz.core.model;
 
 import java.io.Serializable;
 
-public class CategoriesModel implements Serializable{
+public class MCategories implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	

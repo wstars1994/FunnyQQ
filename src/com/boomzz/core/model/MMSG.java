@@ -2,15 +2,15 @@ package com.boomzz.core.model;
 
 import com.boomzz.core.message.MessageStyle;
 
-public class MessageModel extends BaseModel {
+public class MMSG extends MBase {
 
 	private static final long serialVersionUID = 1L;
 	
 	private String msg;
 	
-	private BaseModel fromFriends;
+	private MBase fromFriends;
 	
-	private BaseModel toFriends;
+	private MBase toFriends;
 	
 	private long time;
 
@@ -63,19 +63,19 @@ public class MessageModel extends BaseModel {
 		this.msg = msg;
 	}
 
-	public BaseModel getFromFriends() {
+	public MBase getFromFriends() {
 		return fromFriends;
 	}
 
-	public void setFromFriends(BaseModel fromFriends) {
+	public void setFromFriends(MBase fromFriends) {
 		this.fromFriends = fromFriends;
 	}
 
-	public BaseModel getToFriends() {
+	public MBase getToFriends() {
 		return toFriends;
 	}
 
-	public void setToFriends(BaseModel toFriends) {
+	public void setToFriends(MBase toFriends) {
 		this.toFriends = toFriends;
 	}
 

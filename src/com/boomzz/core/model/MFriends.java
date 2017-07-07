@@ -6,7 +6,7 @@ import java.io.Serializable;
  * @author WStars
  * 好友列表
  */
-public class FriendsModel extends BaseModel implements Serializable{
+public class MFriends extends MBase implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
@@ -39,7 +39,7 @@ public class FriendsModel extends BaseModel implements Serializable{
 		this.vip_level = vip_level;
 	}
 
-	public FriendsModel() {
+	public MFriends() {
 		setType(0);
 	}
 	

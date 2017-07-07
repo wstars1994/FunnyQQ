@@ -4,7 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.boomzz.core.Config;
-import com.boomzz.core.model.PtuiCBMsgModel;
+import com.boomzz.core.model.MPtuiCBMsg;
 import com.boomzz.util.FQQUtil;
 import com.boomzz.util.HttpClient;
 
@@ -64,7 +64,7 @@ public class QRCodeLogin extends AbstractLogin{
 				try {
 					String back=HttpClient.get(FQQUtil.replace(Config.URL_GET_LOGIN_POLLING, "ptqrtoken",funnyQQ.getPtqrToken()),cookies);
 					//转换成类
-					PtuiCBMsgModel ptuiCBMsgModel=FQQUtil.ptuiCBMsgToModel(back);
+					MPtuiCBMsg ptuiCBMsgModel=FQQUtil.ptuiCBMsgToModel(back);
 					if(ptuiCBMsgModel==null){
 						logger.error("登录轮询失败");
 						return false;

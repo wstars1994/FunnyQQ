@@ -47,8 +47,7 @@ public class Config {
 	/**
 	 * 消息接收
 	 */
-	public static String PARAM_MESSAGE_SEND="{\"%s\": %s,\"content\": \"[\"%s\",[\"font\",{\"name\":\"宋体\",\"size\":10,\"style\":[0,0,0],\"color\":\"000000\"}]]\",\"face\": 558,\"clientid\": 53999199,\"msg_id\": 53770002,\"psessionid\": \"%s\"}";
-	
+	public static String PARAM_MESSAGE_SEND="{\"%s\": %s,\"content\": \"[\\\"%s\\\",[\\\"font\\\",{\\\"name\\\":\\\"宋体\\\",\\\"size\\\":10,\\\"style\\\":[0,0,0],\\\"color\\\":\\\"000000\\\"}]]\",\"face\": 558,\"clientid\": 53999199,\"msg_id\": 53770002,\"psessionid\": \"%s\"}";
 	/**
 	 * 图片路径
 	 */

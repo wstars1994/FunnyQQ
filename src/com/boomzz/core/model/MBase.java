@@ -6,7 +6,7 @@ import java.io.Serializable;
  * @author WStars
  *
  */
-public class BaseModel implements Serializable{
+public class MBase implements Serializable{
 	/**
 	 * 
 	 */

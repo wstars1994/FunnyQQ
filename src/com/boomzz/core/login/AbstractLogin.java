@@ -6,7 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import com.boomzz.core.Config;
 import com.boomzz.core.message.Message;
-import com.boomzz.core.model.LoginModel;
+import com.boomzz.core.model.MLogin;
 import com.boomzz.util.DateTimeUtil;
 import com.boomzz.util.FQQUtil;
 import com.boomzz.util.HttpClient;
@@ -19,7 +19,7 @@ public abstract class AbstractLogin{
 
 	private final Logger logger = LogManager.getLogger();
 	//个人登录信息
-	public LoginModel loginModel = new LoginModel();
+	public MLogin loginModel = new MLogin();
 	//全局Cookie
 	public static Map<String, String> cookies = new HashMap<>();
 	

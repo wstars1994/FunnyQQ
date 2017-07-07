@@ -3,7 +3,7 @@ package com.boomzz.test;
 import com.boomzz.core.login.AbstractLogin;
 import com.boomzz.core.login.QRCodeLogin;
 import com.boomzz.core.message.Message;
-import com.boomzz.core.message.MessageSendModel;
+import com.boomzz.core.message.MMSGSend;
 
 public class FQQTest {
 
@@ -12,9 +12,9 @@ public class FQQTest {
 		Message msg = fqq.login();
 		if(msg!=null){
 //			Map<String, FriendsModel> frientList = msg.getFrientList();
-			MessageSendModel messageModel=new MessageSendModel();
+			MMSGSend messageModel=new MMSGSend();
 			messageModel.setContent("test");
-			messageModel.setUin("3735856765");
+			messageModel.setUin("2650379035");
 			msg.sendMessage(messageModel);
 		}
 	}

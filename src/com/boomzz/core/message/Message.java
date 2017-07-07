@@ -8,12 +8,12 @@ import java.util.Map;
 import com.boomzz.core.Config;
 import com.boomzz.core.cache.Cache;
 import com.boomzz.core.login.AbstractLogin;
-import com.boomzz.core.model.DiscusModel;
-import com.boomzz.core.model.FriendsModel;
-import com.boomzz.core.model.GroupModel;
-import com.boomzz.core.model.InfoModel;
-import com.boomzz.core.model.LoginModel;
-import com.boomzz.core.model.MessageModel;
+import com.boomzz.core.model.MDiscus;
+import com.boomzz.core.model.MFriends;
+import com.boomzz.core.model.MGroup;
+import com.boomzz.core.model.MInfo;
+import com.boomzz.core.model.MLogin;
+import com.boomzz.core.model.MMSG;
 import com.boomzz.util.DateTimeUtil;
 import com.boomzz.util.FQQUtil;
 import com.boomzz.util.HttpClient;
@@ -22,11 +22,11 @@ public class Message extends Thread{
 	
 	private AbstractLogin fqq;
 	
-	private LoginModel loginModel;
+	private MLogin loginModel;
 	
 	private Map<String, String> cookies;
 	
-	public Message(AbstractLogin fqq,LoginModel loginModel,Map<String, String> cookies){
+	public Message(AbstractLogin fqq,MLogin loginModel,Map<String, String> cookies){
 		this.fqq = fqq;
 		this.loginModel=loginModel;
 		this.cookies=cookies;
@@ -51,49 +51,47 @@ public class Message extends Thread{
 		}
 	}
 	
-	private void newMessage(MessageModel model){
+	private void newMessage(MMSG model){
 		
 	}
 	
-	public void sendMessage(MessageSendModel m){
+	public void sendMessage(MMSGSend m){
 		String param = String.format(Config.PARAM_MESSAGE_SEND,"to",m.getUin(),m.getContent(),loginModel.getPsessionid());
+		System.out.println(param);
 		Map<String, String> params=new HashMap<>();
 		params.put("r", param);
-		String back=HttpClient.postHttps(Config.URL_POST_SENDMESSAGE, params,cookies);
-		System.out.println(back);
+		HttpClient.postHttps(Config.URL_POST_SENDMESSAGE, params,cookies);
 	}
 	
-	public void sendGroupMessage(MessageSendModel m){
+	public void sendGroupMessage(MMSGSend m){
 		String param = String.format(Config.PARAM_MESSAGE_SEND,"group_uin",m.getUin(),m.getContent(),loginModel.getPsessionid());
 		Map<String, String> params=new HashMap<>();
 		params.put("r", param);
-		String back=HttpClient.postHttps(Config.URL_POST_SENDMESSAGE_GROUP, params,cookies);
-		System.out.println(back);
+		HttpClient.postHttps(Config.URL_POST_SENDMESSAGE_GROUP, params,cookies);
 	}
 	
-	public void sendDiscusMessage(MessageSendModel m){
+	public void sendDiscusMessage(MMSGSend m){
 		String param = String.format(Config.PARAM_MESSAGE_SEND,"did",m.getUin(),m.getContent(),loginModel.getPsessionid());
 		Map<String, String> params=new HashMap<>();
 		params.put("r", param);
-		String back=HttpClient.postHttps(Config.URL_POST_SENDMESSAGE_DISCUS, params,cookies);
-		System.out.println(back);
+		HttpClient.postHttps(Config.URL_POST_SENDMESSAGE_DISCUS, params,cookies);
 	}
 	
-	public InfoModel getSelfInfo() {
+	public MInfo getSelfInfo() {
 		if(Cache.getCache(Config.CACHE_KEY_MYSELF)!=null)
-			return (InfoModel) Cache.getCache(Config.CACHE_KEY_MYSELF);
+			return (MInfo) Cache.getCache(Config.CACHE_KEY_MYSELF);
 		else{
 			String back=HttpClient.get(Config.URL_GET_SELFINFO+DateTimeUtil.getTimestamp(),cookies);
-			InfoModel userModel=FQQUtil.jsonInfo(back);
+			MInfo userModel=FQQUtil.jsonInfo(back);
 			Cache.putCache(Config.CACHE_KEY_MYSELF, userModel);
 			return userModel;
 		}
 	}
 
-	public Map<String,FriendsModel> getFrientList() {
-		Map<String,FriendsModel> friendsModel;
+	public Map<String,MFriends> getFrientList() {
+		Map<String,MFriends> friendsModel;
 		if(Cache.getCache(Config.CACHE_KEY_ALLFRIENDS)!=null)
-			friendsModel=(Map<String,FriendsModel>) Cache.getCache(Config.CACHE_KEY_ALLFRIENDS);
+			friendsModel=(Map<String,MFriends>) Cache.getCache(Config.CACHE_KEY_ALLFRIENDS);
 		else{
 			Map<String,String> params=new HashMap<>();
 			params.put("vfwebqq", loginModel.getVfwebqq());
@@ -108,16 +106,16 @@ public class Message extends Thread{
 		upOnlineFrientList(friendsModel);
 		return friendsModel;
 	}
-	public List<FriendsModel> getOnlineFrientList(){
-		List<FriendsModel> friendsModel = new ArrayList<>();
-		Map<String, FriendsModel> map = getFrientList();
+	public List<MFriends> getOnlineFrientList(){
+		List<MFriends> friendsModel = new ArrayList<>();
+		Map<String, MFriends> map = getFrientList();
 		for(String uin : map.keySet()){
 			if(map.get(uin).getOnline())
 				friendsModel.add(map.get(uin));
 		}
 		return friendsModel;
 	}
-	private void upOnlineFrientList(Map<String,FriendsModel> friendsModel) {
+	private void upOnlineFrientList(Map<String,MFriends> friendsModel) {
 		Map<String,String> params=new HashMap<>();
 		params.put("vfwebqq", loginModel.getVfwebqq());
 		params.put("psessionid", loginModel.getPsessionid());
@@ -126,8 +124,8 @@ public class Message extends Thread{
 		updateOnlineFriends(json,friendsModel);
 	}
 
-	public List<FriendsModel> getRecentFrientList() {
-		List<FriendsModel> friendsModel=new ArrayList<>();
+	public List<MFriends> getRecentFrientList() {
+		List<MFriends> friendsModel=new ArrayList<>();
 		Map<String,String> params=new HashMap<>();
 		params.put("vfwebqq", loginModel.getVfwebqq());
 		params.put("psessionid", loginModel.getPsessionid());
@@ -139,9 +137,9 @@ public class Message extends Thread{
 		return friendsModel;
 	}
 
-	public List<GroupModel> getGroupList() {
+	public List<MGroup> getGroupList() {
 		if(Cache.getCache(Config.CACHE_KEY_GROUP)!=null){
-			return (List<GroupModel>) Cache.getCache(Config.CACHE_KEY_GROUP);
+			return (List<MGroup>) Cache.getCache(Config.CACHE_KEY_GROUP);
 		}
 		Map<String,String> params=new HashMap<>();
 		params.put("vfwebqq", loginModel.getVfwebqq());
@@ -150,26 +148,26 @@ public class Message extends Thread{
 		params.clear();
 		params.put("r", pString);
 		String json=HttpClient.post(Config.URL_POST_GROUP,params,cookies);
-		List<GroupModel> jsonGroupList = FQQUtil.jsonGroupList(json);
+		List<MGroup> jsonGroupList = FQQUtil.jsonGroupList(json);
 		Cache.putCache(Config.CACHE_KEY_GROUP, jsonGroupList);
 		return jsonGroupList;
 	}
 
-	public List<DiscusModel> getDiscusList() {
+	public List<MDiscus> getDiscusList() {
 		if(Cache.getCache(Config.CACHE_KEY_DISCUS)!=null)
-			return (List<DiscusModel>) Cache.getCache(Config.CACHE_KEY_DISCUS);
+			return (List<MDiscus>) Cache.getCache(Config.CACHE_KEY_DISCUS);
 		else{
 			Map<String, String> map=new HashMap<>();
 			map.put("psessionid", loginModel.getPsessionid());
 			map.put("vfwebqq", loginModel.getVfwebqq());
 			String url=FQQUtil.replace(Config.URL_GET_DISCUS+Math.random(), map);
 			String back=HttpClient.get(url,cookies);
-			List<DiscusModel> discusModels = FQQUtil.jsonDiscusList(back);
+			List<MDiscus> discusModels = FQQUtil.jsonDiscusList(back);
 			Cache.putCache(Config.CACHE_KEY_DISCUS, discusModels);
 			return discusModels;
 		}
 	}
-	private void updateOnlineFriends(String json,Map<String,FriendsModel> friendsModel){
+	private void updateOnlineFriends(String json,Map<String,MFriends> friendsModel){
 		List<String> uinList = FQQUtil.jsonOnlineFriendsList(json);
 		for(String uin:uinList){
 			friendsModel.get(uin).setOnline(true);
