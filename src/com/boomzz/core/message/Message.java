@@ -7,9 +7,7 @@ import java.util.Map;
 
 import com.boomzz.core.Config;
 import com.boomzz.core.cache.Cache;
-import com.boomzz.core.cache.thread.TFriendsOnline;
 import com.boomzz.core.message.model.MMsgSend;
-import com.boomzz.core.message.model.MMsgAccept;
 import com.boomzz.core.model.MDiscus;
 import com.boomzz.core.model.MFriends;
 import com.boomzz.core.model.MGroup;

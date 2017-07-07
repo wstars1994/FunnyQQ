@@ -7,7 +7,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.boomzz.core.Config;
-import com.boomzz.core.cache.thread.TFriendsOnline;
 import com.boomzz.core.message.Message;
 import com.boomzz.core.model.MLogin;
 import com.boomzz.util.DateTimeUtil;

@@ -8,10 +8,10 @@ import com.boomzz.core.model.MFriends;
 import com.boomzz.core.model.MGroup;
 import com.boomzz.util.DateTimeUtil;
 
-public class MsgAcceptHandler implements IMessageAcceptListener{
+public class MsgAcceptListener implements IMessageAcceptListener{
 
 	private Message message;
-	public MsgAcceptHandler(Message msg){
+	public MsgAcceptListener(Message msg){
 		this.message = msg;
 	}
 	
