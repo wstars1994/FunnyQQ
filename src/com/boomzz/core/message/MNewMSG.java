@@ -1,22 +1,20 @@
-package com.boomzz.core.model;
+package com.boomzz.core.message;
 
-import com.boomzz.core.message.MessageStyle;
-
-public class MMSG extends MBase {
+public class MNewMSG{
 
 	private static final long serialVersionUID = 1L;
 	
 	private String msg;
 	
-	private MBase fromFriends;
+	private String fromUin;
 	
-	private MBase toFriends;
+	private String sendUin;
 	
 	private long time;
 
 	private MessageStyle style;
 	
-	private String msgType;
+	private int msgType;
 
 	private String msgId;
 	
@@ -39,11 +37,11 @@ public class MMSG extends MBase {
 		this.style = style;
 	}
 
-	public String getMsgType() {
+	public int getMsgType() {
 		return msgType;
 	}
 
-	public void setMsgType(String msgType) {
+	public void setMsgType(int msgType) {
 		this.msgType = msgType;
 	}
 
@@ -63,22 +61,6 @@ public class MMSG extends MBase {
 		this.msg = msg;
 	}
 
-	public MBase getFromFriends() {
-		return fromFriends;
-	}
-
-	public void setFromFriends(MBase fromFriends) {
-		this.fromFriends = fromFriends;
-	}
-
-	public MBase getToFriends() {
-		return toFriends;
-	}
-
-	public void setToFriends(MBase toFriends) {
-		this.toFriends = toFriends;
-	}
-
 	public long getTime() {
 		return time;
 	}
@@ -86,4 +68,21 @@ public class MMSG extends MBase {
 	public void setTime(long time) {
 		this.time = time;
 	}
+	
+	public String getFromUin() {
+		return fromUin;
+	}
+
+	public void setFromUin(String fromUin) {
+		this.fromUin = fromUin;
+	}
+
+	public String getSendUin() {
+		return sendUin;
+	}
+
+	public void setSendUin(String sendUin) {
+		this.sendUin = sendUin;
+	}
+	
 }

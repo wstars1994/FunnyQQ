@@ -19,4 +19,7 @@ public class DateTimeUtil {
 	public static String getFormatDate() {
 		return new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
 	}
+	public static String timestampFormat(long time){
+		return new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date(time));
+	}
 }

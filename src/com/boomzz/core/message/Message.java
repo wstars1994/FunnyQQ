@@ -13,7 +13,6 @@ import com.boomzz.core.model.MFriends;
 import com.boomzz.core.model.MGroup;
 import com.boomzz.core.model.MInfo;
 import com.boomzz.core.model.MLogin;
-import com.boomzz.core.model.MMSG;
 import com.boomzz.util.DateTimeUtil;
 import com.boomzz.util.FQQUtil;
 import com.boomzz.util.HttpClient;
@@ -46,18 +45,20 @@ public class Message extends Thread{
 			params.clear();
 			params.put("r",url);
 			String back=HttpClient.postHttps(Config.URL_POST_NEWMESSAGE, params,cookies);
-			System.out.println(back);
-			newMessage(null);
+			newMessage(FQQUtil.jsonNewMessage(back));
 		}
 	}
 	
-	private void newMessage(MMSG model){
-		
+	private void newMessage(MNewMSG model){
+		if(model!=null&&model.getMsgType()==1){
+			MFriends mFriends = getFrientList().get(model.getFromUin());
+			String name = mFriends.getMarkName()==null?mFriends.getNickName():mFriends.getMarkName();
+			System.out.println(DateTimeUtil.timestampFormat(model.getTime()*1000)+" "+name+":"+model.getMsg());
+		}
 	}
 	
 	public void sendMessage(MMSGSend m){
 		String param = String.format(Config.PARAM_MESSAGE_SEND,"to",m.getUin(),m.getContent(),loginModel.getPsessionid());
-		System.out.println(param);
 		Map<String, String> params=new HashMap<>();
 		params.put("r", param);
 		HttpClient.postHttps(Config.URL_POST_SENDMESSAGE, params,cookies);
