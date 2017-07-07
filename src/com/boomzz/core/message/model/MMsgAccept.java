@@ -1,6 +1,6 @@
 package com.boomzz.core.message.model;
 
-public class MNewMSG{
+public class MMsgAccept{
 
 	private static final long serialVersionUID = 1L;
 	

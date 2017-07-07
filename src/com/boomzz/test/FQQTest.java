@@ -7,5 +7,6 @@ public class FQQTest {
 
 	public static void main(String[] args) {
 		Message msg = new QRCodeLogin().login();
+		msg.addAcceptListener(new MsgAcceptHandler(msg));
 	}
 }

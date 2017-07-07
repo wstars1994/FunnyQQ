@@ -1,6 +1,6 @@
 package com.boomzz.core.message.model;
 
-public class MMSGSend {
+public class MMsgSend {
 	
 	private String uin;
 	

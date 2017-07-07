@@ -12,7 +12,7 @@ import com.boomzz.util.HttpClient;
  * @author WStars
  *
  */
-public class QRCodeLogin extends AbstractLogin{
+public final class QRCodeLogin extends AbstractLogin{
 
 	private final Logger logger = LogManager.getLogger();
 	

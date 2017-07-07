@@ -8,7 +8,8 @@ import java.util.Map;
 import com.boomzz.core.Config;
 import com.boomzz.core.cache.Cache;
 import com.boomzz.core.cache.thread.TFriendsOnline;
-import com.boomzz.core.message.model.MMSGSend;
+import com.boomzz.core.message.model.MMsgSend;
+import com.boomzz.core.message.model.MMsgAccept;
 import com.boomzz.core.model.MDiscus;
 import com.boomzz.core.model.MFriends;
 import com.boomzz.core.model.MGroup;
@@ -18,8 +19,7 @@ import com.boomzz.util.DateTimeUtil;
 import com.boomzz.util.FQQUtil;
 import com.boomzz.util.HttpClient;
 
-public class Message{
-	
+public final class Message{
 	
 	protected MLogin loginModel;
 	
@@ -34,27 +34,25 @@ public class Message{
 		getFrientList();
 		getGroupList();
 		getDiscusList();
-		//接收消息
-		new Thread(new TMSGAccept()).start();
 		//定时更新在线好友
-		new TFriendsOnline(this).start();
+//		new TFriendsOnline(this).start();
 	}
 	
-	public void sendMessage(MMSGSend m){
+	public void sendMessage(MMsgSend m){
 		String param = String.format(Config.PARAM_MESSAGE_SEND,"to",m.getUin(),m.getContent(),loginModel.getPsessionid());
 		Map<String, String> params=new HashMap<>();
 		params.put("r", param);
 		HttpClient.postHttps(Config.URL_POST_SENDMESSAGE, params,cookies);
 	}
 	
-	public void sendGroupMessage(MMSGSend m){
+	public void sendGroupMessage(MMsgSend m){
 		String param = String.format(Config.PARAM_MESSAGE_SEND,"group_uin",m.getUin(),m.getContent(),loginModel.getPsessionid());
 		Map<String, String> params=new HashMap<>();
 		params.put("r", param);
 		HttpClient.postHttps(Config.URL_POST_SENDMESSAGE_GROUP, params,cookies);
 	}
 	
-	public void sendDiscusMessage(MMSGSend m){
+	public void sendDiscusMessage(MMsgSend m){
 		String param = String.format(Config.PARAM_MESSAGE_SEND,"did",m.getUin(),m.getContent(),loginModel.getPsessionid());
 		Map<String, String> params=new HashMap<>();
 		params.put("r", param);
@@ -195,5 +193,9 @@ public class Message{
 			buf += (hex[result[i] & 0xF]);
 		}
 		return buf;
+	}
+
+	public void addAcceptListener(IMessageAcceptListener listener) {
+		new Thread(new TMsgAccept(this,listener)).start();
 	}
 }

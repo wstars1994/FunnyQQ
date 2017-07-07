@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 import com.boomzz.core.Config;
 import com.boomzz.core.cache.Cache;
 import com.boomzz.core.login.AbstractLogin;
-import com.boomzz.core.message.model.MNewMSG;
+import com.boomzz.core.message.model.MMsgAccept;
 import com.boomzz.core.model.MCategories;
 import com.boomzz.core.model.MDiscus;
 import com.boomzz.core.model.MFriends;
@@ -331,14 +331,14 @@ public class FQQUtil {
 		}
 		return mapping;
 	}
-	public static MNewMSG jsonNewMessage(String json){
+	public static MMsgAccept jsonNewMessage(String json){
 		try {
 			if(checkRetcode(json)){
 				JSONObject o=JSONObject.fromObject(json);
 				if(o.getJSONObject("errmsg")!=null)
 					return null;
 				JSONArray result=o.getJSONArray("result");
-				MNewMSG messageModel = new MNewMSG();
+				MMsgAccept messageModel = new MMsgAccept();
 				messageModel.setPollType(result.getJSONObject(0).getString("poll_type"));
 				JSONObject value = result.getJSONObject(0).getJSONObject("value");
 				JSONArray content = value.getJSONArray("content");
