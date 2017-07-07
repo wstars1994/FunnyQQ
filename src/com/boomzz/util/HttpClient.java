@@ -21,6 +21,7 @@ import javax.net.ssl.HttpsURLConnection;
 import com.boomzz.core.Config;
 
 public class HttpClient {
+	
 	public static String get(String url,Map<String, String> cookies){
 		//创建连接
 		try {
@@ -52,9 +53,9 @@ public class HttpClient {
             	}
             }
             reader.close();
+            
+        	return sb.toString();
             // 断开连接
-            connection.disconnect();
-            return sb.toString();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -1,4 +1,4 @@
-package com.boomzz.core.message;
+package com.boomzz.core.message.model;
 
 public class MMSGSend {
 	

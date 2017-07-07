@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 import com.boomzz.core.Config;
 import com.boomzz.core.cache.Cache;
 import com.boomzz.core.login.AbstractLogin;
-import com.boomzz.core.message.MNewMSG;
+import com.boomzz.core.message.model.MNewMSG;
 import com.boomzz.core.model.MCategories;
 import com.boomzz.core.model.MDiscus;
 import com.boomzz.core.model.MFriends;
@@ -297,8 +297,8 @@ public class FQQUtil {
 		}
 		return onlinUin;
 	}
-	public static List<MDiscus> jsonDiscusList(String json){
-		List<MDiscus> discusList = new ArrayList<>();
+	public static Map<String, MDiscus> jsonDiscusList(String json){
+		Map<String, MDiscus> mapping = new HashMap<>();
 		if(checkRetcode(json)){
 			JSONObject o=JSONObject.fromObject(json);
 			JSONObject result=(JSONObject) o.get("result");
@@ -308,13 +308,13 @@ public class FQQUtil {
 				MDiscus model = new MDiscus();
 				model.setDid(object.getString("did"));
 				model.setName(object.getString("name"));
-				discusList.add(model);
+				mapping.put(object.getString("did"), model);
 			}
 		}
-		return discusList;
+		return mapping;
 	}
-	public static List<MGroup> jsonGroupList(String json){
-		List<MGroup> discusList = new ArrayList<>();
+	public static Map<String, MGroup> jsonGroupList(String json){
+		Map<String, MGroup> mapping = new HashMap<>();
 		if(checkRetcode(json)){
 			JSONObject o=JSONObject.fromObject(json);
 			JSONObject result=o.getJSONObject("result");
@@ -326,15 +326,17 @@ public class FQQUtil {
 				model.setCode(object.getString("code"));
 				model.setFlag(object.getString("flag"));
 				model.setGid(object.getString("gid"));
-				discusList.add(model);
+				mapping.put(object.getString("gid"), model);
 			}
 		}
-		return discusList;
+		return mapping;
 	}
 	public static MNewMSG jsonNewMessage(String json){
 		try {
 			if(checkRetcode(json)){
 				JSONObject o=JSONObject.fromObject(json);
+				if(o.getJSONObject("errmsg")!=null)
+					return null;
 				JSONArray result=o.getJSONArray("result");
 				MNewMSG messageModel = new MNewMSG();
 				messageModel.setPollType(result.getJSONObject(0).getString("poll_type"));
