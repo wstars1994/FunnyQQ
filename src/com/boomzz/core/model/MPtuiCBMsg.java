@@ -6,7 +6,7 @@ import java.io.Serializable;
  * @author WStars
  * 登录前返回消息
  */
-public class PtuiCBMsgModel implements Serializable{
+public class MPtuiCBMsg implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	

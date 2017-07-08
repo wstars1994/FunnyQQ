@@ -6,7 +6,7 @@ import java.io.Serializable;
  * @author WStars
  *
  */
-public class GroupModel extends BaseModel implements Serializable{
+public class MGroup extends MBase implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -15,7 +15,7 @@ public class GroupModel extends BaseModel implements Serializable{
 	private String code;
 	private String flag;
 	
-	public GroupModel() {
+	public MGroup() {
 		setType(1);
 	}
 

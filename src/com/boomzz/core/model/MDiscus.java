@@ -6,7 +6,7 @@ import java.io.Serializable;
  * @author WStars
  *
  */
-public class DiscusModel  extends BaseModel implements Serializable{
+public class MDiscus  extends MBase implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
@@ -14,7 +14,7 @@ public class DiscusModel  extends BaseModel implements Serializable{
 	
 	private String did;
 	
-	public DiscusModel() {
+	public MDiscus() {
 		setType(2);
 	}
 

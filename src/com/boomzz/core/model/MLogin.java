@@ -6,7 +6,7 @@ import java.io.Serializable;
  * @author WStars
  * 登录的一些必要信息 单例
  */
-public class LoginModel extends BaseModel implements Serializable{
+public class MLogin extends MBase implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
@@ -22,6 +22,8 @@ public class LoginModel extends BaseModel implements Serializable{
 	private String clientId;
 
 	private String psessionid;
+	
+	private int loginStatus;
 	
 	public String getQrSig() {
 		return qrSig;

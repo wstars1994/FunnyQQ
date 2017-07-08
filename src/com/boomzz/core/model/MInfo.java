@@ -8,7 +8,7 @@ import java.util.Map;
  * @author WStars
  * 用户附加信息
  */
-public class InfoModel extends BaseModel implements Serializable{
+public class MInfo extends MBase implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -31,7 +31,7 @@ public class InfoModel extends BaseModel implements Serializable{
 	private String mobile;
 	
 	private Map<String,String> genderMap,bloodMap,shengxiaoMap,constelMap;
-	public InfoModel() {
+	public MInfo() {
 		genderMap=new HashMap<>();
 		bloodMap=new HashMap<>();
 		shengxiaoMap=new HashMap<>();

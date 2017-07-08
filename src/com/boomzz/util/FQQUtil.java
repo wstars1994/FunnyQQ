@@ -7,14 +7,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.boomzz.core.Config;
 import com.boomzz.core.cache.Cache;
-import com.boomzz.core.model.CategoriesModel;
-import com.boomzz.core.model.DiscusModel;
-import com.boomzz.core.model.FriendsModel;
-import com.boomzz.core.model.GroupModel;
-import com.boomzz.core.model.InfoModel;
-import com.boomzz.core.model.PtuiCBMsgModel;
+import com.boomzz.core.login.AbstractLogin;
+import com.boomzz.core.message.model.MMsgAccept;
+import com.boomzz.core.model.MCategories;
+import com.boomzz.core.model.MDiscus;
+import com.boomzz.core.model.MFriends;
+import com.boomzz.core.model.MGroup;
+import com.boomzz.core.model.MInfo;
+import com.boomzz.core.model.MPtuiCBMsg;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -28,16 +33,18 @@ public class FQQUtil {
 	//ptuiCB('66','0','','0','二维码未失效。(3974129836)', '');
 	//ptuiCB('67','0','','0','二维码认证中。(812671429)', '');
 	//ptuiCB('0','0','msg','0','tip', 'info');
-
-	public static PtuiCBMsgModel ptuiCBMsgToModel(String msg) {
+	private final static Logger logger = LogManager.getLogger();
+	
+	
+	public static MPtuiCBMsg ptuiCBMsgToModel(String msg) {
 		
 		int first=msg.indexOf("(");
 		int last=msg.lastIndexOf(")");
 		String params=msg.substring(first+1,last);
 		String paramsArr[]=params.split(",");
-		PtuiCBMsgModel model=null;
+		MPtuiCBMsg model=null;
 		if(paramsArr.length==6){
-			model=new PtuiCBMsgModel();
+			model=new MPtuiCBMsg();
 			model.setNo(Integer.parseInt(paramsArr[0].replace("'", "")));
 			model.setP1(paramsArr[1].replace("'", ""));
 			model.setP2(paramsArr[2].replace("'", ""));
@@ -172,8 +179,8 @@ public class FQQUtil {
 	 * @param json
 	 * @return
 	 */
-	public static InfoModel jsonInfo(String json){
-		InfoModel info=new InfoModel();
+	public static MInfo jsonInfo(String json){
+		MInfo info=new MInfo();
 		JSONObject o=JSONObject.fromObject(json);
 		if(json==null||!o.get("retcode").toString().equals("0")){
 			return null;
@@ -204,9 +211,8 @@ public class FQQUtil {
 	 * @param json
 	 * @return
 	 */
-	public static List<FriendsModel> jsonFriendsList(String json) {
-		Map<String, FriendsModel> mapping = new HashMap<>();
-		List<FriendsModel> friendsList = new ArrayList<>();
+	public static Map<String,MFriends> jsonFriendsList(String json) {
+		Map<String, MFriends> mapping = new HashMap<>();
 		if(checkRetcode(json)){
 			JSONObject o=JSONObject.fromObject(json);
 			if(isNotNull(o.get("result"))){
@@ -216,7 +222,7 @@ public class FQQUtil {
 					JSONArray friends = (JSONArray) result.get("friends");
 					for(Object f:friends){
 						JSONObject object = (JSONObject) f;
-						FriendsModel fModel=new FriendsModel();
+						MFriends fModel=new MFriends();
 						fModel.setUin(object.getString("uin"));
 						fModel.setCategories(object.getString("categories"));
 						fModel.setFlag(object.getString("flag"));
@@ -249,7 +255,7 @@ public class FQQUtil {
 					for(Object m:vipinfo){
 						JSONObject object = (JSONObject) m;
 						if(mapping.containsKey(object.getString("u"))){
-							FriendsModel friendsModel = mapping.get(object.getString("u"));
+							MFriends friendsModel = mapping.get(object.getString("u"));
 							friendsModel.setVip_level(object.getInt("vip_level"));
 							friendsModel.setVip(object.getInt("vip_level")==1?true:false);
 							mapping.put(object.getString("u"), friendsModel);
@@ -259,10 +265,10 @@ public class FQQUtil {
 				//分组列表
 				if(isNotNull(result.get("categories"))){
 					JSONArray categories = (JSONArray) result.get("categories");
-					List<CategoriesModel> categoriesList = new ArrayList<>();
+					List<MCategories> categoriesList = new ArrayList<>();
 					for(Object m:categories){
 						JSONObject object = (JSONObject) m;
-						CategoriesModel categoriesModel=new CategoriesModel();
+						MCategories categoriesModel=new MCategories();
 						categoriesModel.setIndex(object.getInt("index"));
 						categoriesModel.setSort(object.getInt("sort"));
 						categoriesModel.setName(object.getString("name"));
@@ -272,9 +278,7 @@ public class FQQUtil {
 				}
 			}
 		}
-		for(String uin:mapping.keySet())
-			friendsList.add(mapping.get(uin));
-		return friendsList;
+		return mapping;
 	}
 	/**
 	 * 获取在线好友
@@ -293,41 +297,68 @@ public class FQQUtil {
 		}
 		return onlinUin;
 	}
-	public static List<DiscusModel> jsonDiscusList(String json){
-		List<DiscusModel> discusList = new ArrayList<>();
+	public static Map<String, MDiscus> jsonDiscusList(String json){
+		Map<String, MDiscus> mapping = new HashMap<>();
 		if(checkRetcode(json)){
 			JSONObject o=JSONObject.fromObject(json);
 			JSONObject result=(JSONObject) o.get("result");
 			JSONArray dnamelist=(JSONArray)result.get("dnamelist");
 			for(Object m:dnamelist){
 				JSONObject object = (JSONObject) m;
-				DiscusModel model = new DiscusModel();
+				MDiscus model = new MDiscus();
 				model.setDid(object.getString("did"));
 				model.setName(object.getString("name"));
-				discusList.add(model);
+				mapping.put(object.getString("did"), model);
 			}
 		}
-		return discusList;
+		return mapping;
 	}
-	public static List<GroupModel> jsonGroupList(String json){
-		List<GroupModel> discusList = new ArrayList<>();
+	public static Map<String, MGroup> jsonGroupList(String json){
+		Map<String, MGroup> mapping = new HashMap<>();
 		if(checkRetcode(json)){
 			JSONObject o=JSONObject.fromObject(json);
-			JSONObject result=(JSONObject) o.get("result");
-			JSONArray dnamelist=(JSONArray)result.get("gnamelist");
+			JSONObject result=o.getJSONObject("result");
+			JSONArray dnamelist=result.getJSONArray("gnamelist");
 			for(Object m:dnamelist){
 				JSONObject object = (JSONObject) m;
-				GroupModel model = new GroupModel();
+				MGroup model = new MGroup();
 				model.setName(object.getString("name"));
 				model.setCode(object.getString("code"));
 				model.setFlag(object.getString("flag"));
 				model.setGid(object.getString("gid"));
-				discusList.add(model);
+				mapping.put(object.getString("gid"), model);
 			}
 		}
-		return discusList;
+		return mapping;
 	}
-	
+	public static MMsgAccept jsonNewMessage(String json){
+		try {
+			if(checkRetcode(json)){
+				JSONObject o=JSONObject.fromObject(json);
+				if(o.get("errmsg")!=null)
+					return null;
+				JSONArray result=o.getJSONArray("result");
+				MMsgAccept messageModel = new MMsgAccept();
+				messageModel.setPollType(result.getJSONObject(0).getString("poll_type"));
+				JSONObject value = result.getJSONObject(0).getJSONObject("value");
+				JSONArray content = value.getJSONArray("content");
+				if(content.size()>2)
+					messageModel.setMsg(content.getString(1)+" "+content.getString(3));
+				else
+					messageModel.setMsg(content.getString(1));
+				messageModel.setFromUin(value.getString("from_uin"));
+				messageModel.setTime(value.getLong("time"));
+				messageModel.setMsgType(value.getInt("msg_type"));
+				if(messageModel.getMsgType()==4||messageModel.getMsgType()==5){
+					messageModel.setSendUin(value.getString("send_uin"));
+				}
+				return messageModel;
+			}
+		} catch (Exception e) {
+			logger.error("解析错误 : "+json , e);
+		}
+		return null;
+	}
 	private static boolean checkRetcode(String json){
 		if(json==null) return false;
 		try {

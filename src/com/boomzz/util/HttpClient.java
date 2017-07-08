@@ -18,12 +18,10 @@ import java.util.regex.Pattern;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.boomzz.core.Config;
 
 public class HttpClient {
+	
 	public static String get(String url,Map<String, String> cookies){
 		//创建连接
 		try {
@@ -55,9 +53,9 @@ public class HttpClient {
             	}
             }
             reader.close();
+            
+        	return sb.toString();
             // 断开连接
-            connection.disconnect();
-            return sb.toString();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -168,9 +166,9 @@ public class HttpClient {
 		return null;
 	}
 	public static void main(String[] args) {
-		postHttps(Config.URL_POST_NEWMESSAGE,new HashMap<String,String>(),new HashMap<String,String>());
+		postHttps(Config.URL_POST_SENDMESSAGE,new HashMap<String,String>(),new HashMap<String,String>());
 	}
-	public static String getBackAndCookieForQR(String url, String path,Map<String, String> cookies,boolean local) throws Exception{
+	public static InputStream getBackAndCookieForQR(String url, String path,Map<String, String> cookies,boolean local) throws Exception{
 		HttpURLConnection connection = getConnection(url,"GET","application/json;charset=UTF-8",false,cookies);
 		connection.connect();
 		InputStream inputStream=connection.getInputStream();
@@ -206,7 +204,7 @@ public class HttpClient {
     			e.printStackTrace();
     		}
     	}
-		return "";
+		return inputStream;
 	}
 	private static HttpURLConnection getConnection(String urlStr,String method,String ContentType,boolean rediect,Map<String, String> cookies) throws Exception{
 		URL url = new URL(urlStr);
