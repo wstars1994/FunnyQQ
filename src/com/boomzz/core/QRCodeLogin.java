@@ -33,34 +33,7 @@ public class QRCodeLogin extends FQQ{
 	
 	//  现在只开放了手Q扫描二维码登录
 	
-	
-	private boolean getQRCodeForMobile() {
-		try {
-			HttpClient.getBackAndCookieForQR(Config.URL_GET_QR+Math.random(),Config.FILE_PATH_QR,cookies,Config.FILE_IMG_LOCAL);
-			logger.info("获取二维码成功");
-    		return true;
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    	}
-		return false;
-	}
-
-	private String getPtqrToken() {
-		String qrsig=null;
-		for(String str:cookies.keySet()){
-			if(str.equals("qrsig")){
-				qrsig=cookies.get(str);
-				loginModel.setQrSig(qrsig);
-			}
-		}
-		int e=0,i=0,n=0;
-		for (e = 0, i = 0, n = qrsig.length(); n > i; ++i){
-			char s=qrsig.charAt(i);
-			e += (e << 5) + (int)s;
-		}
-		return (2147483647 & e)+"";
-	}
-
+	@Override
 	public boolean login_1() {
 		final QRCodeLogin funnyQQ=new QRCodeLogin();
 		boolean status=funnyQQ.getQRCodeForMobile();
@@ -96,7 +69,7 @@ public class QRCodeLogin extends FQQ{
 		}
 		return false;
 	}
-
+	
 	@Override
 	public void loginSuccess() {
 		while(true)
@@ -151,9 +124,38 @@ public class QRCodeLogin extends FQQ{
 					System.out.println(m.toString());
 				break;
 			case "7":
+				System.exit(0);
 				System.out.print(">> 退出成功");
 				return;
 			}
 		}
 	}
+	
+	private boolean getQRCodeForMobile() {
+		try {
+			HttpClient.getBackAndCookieForQR(Config.URL_GET_QR+Math.random(),Config.FILE_PATH_QR,cookies,Config.FILE_IMG_LOCAL);
+			logger.info("获取二维码成功");
+    		return true;
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+		return false;
+	}
+
+	private String getPtqrToken() {
+		String qrsig=null;
+		for(String str:cookies.keySet()){
+			if(str.equals("qrsig")){
+				qrsig=cookies.get(str);
+				loginModel.setQrSig(qrsig);
+			}
+		}
+		int e=0,i=0,n=0;
+		for (e = 0, i = 0, n = qrsig.length(); n > i; ++i){
+			char s=qrsig.charAt(i);
+			e += (e << 5) + (int)s;
+		}
+		return (2147483647 & e)+"";
+	}
+	
 }

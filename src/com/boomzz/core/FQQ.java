@@ -67,7 +67,7 @@ public abstract class FQQ{
 		
 	}
 	
-	protected InfoModel getSelfInfo() {
+	public InfoModel getSelfInfo() {
 		InfoModel userModel;
 		if(Cache.getCache(Config.CACHE_KEY_MYSELF)!=null)
 			userModel=(InfoModel) Cache.getCache(Config.CACHE_KEY_MYSELF);
@@ -79,7 +79,7 @@ public abstract class FQQ{
 		return userModel;
 	}
 
-	protected List<FriendsModel> getFrientList() {
+	public List<FriendsModel> getFrientList() {
 		List<FriendsModel> friendsModel;
 		if(Cache.getCache(Config.CACHE_KEY_ALLFRIENDS)!=null)
 			friendsModel=(List<FriendsModel>) Cache.getCache(Config.CACHE_KEY_ALLFRIENDS);
@@ -97,7 +97,7 @@ public abstract class FQQ{
 		upOnlineFrientList(friendsModel);
 		return friendsModel;
 	}
-	protected List<FriendsModel> getOnlineFrientList(){
+	public List<FriendsModel> getOnlineFrientList(){
 		List<FriendsModel> friendsModel = new ArrayList<>();
 		for(FriendsModel model : getFrientList()){
 			if(model.getOnline())
@@ -114,7 +114,7 @@ public abstract class FQQ{
 		updateOnlineFriends(json,friendsModel);
 	}
 
-	protected List<FriendsModel> getRecentFrientList() {
+	public List<FriendsModel> getRecentFrientList() {
 		List<FriendsModel> friendsModel=new ArrayList<>();
 		Map<String,String> params=new HashMap<>();
 		params.put("vfwebqq", loginModel.getVfwebqq());
@@ -139,7 +139,7 @@ public abstract class FQQ{
 		return gList;
 	}
 
-	protected List<DiscusModel> getDiscusList() {
+	public List<DiscusModel> getDiscusList() {
 		List<DiscusModel> discusModels;
 		if(Cache.getCache(Config.CACHE_KEY_DISCUS)!=null)
 			discusModels=(List<DiscusModel>) Cache.getCache(Config.CACHE_KEY_DISCUS);
