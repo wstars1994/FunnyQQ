@@ -25,7 +25,7 @@ public abstract class AbstractLogin{
 	//全局Cookie
 	protected static Map<String, String> cookies = new HashMap<>();
 	
-	public abstract boolean login_1();
+	protected abstract boolean login_1();
 
 	public Message login(){
 		try {

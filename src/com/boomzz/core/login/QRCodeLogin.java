@@ -49,7 +49,7 @@ public final class QRCodeLogin extends AbstractLogin{
 		return (2147483647 & e)+"";
 	}
 
-	public boolean login_1() {
+	protected boolean login_1() {
 		boolean status=getQRCodeForMobile();
 		if(status){
 			logger.info("开始登录轮询");
