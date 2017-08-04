@@ -335,7 +335,7 @@ public class FQQUtil {
 		try {
 			if(checkRetcode(json)){
 				JSONObject o=JSONObject.fromObject(json);
-				if(o.getJSONObject("errmsg")!=null)
+				if(o.get("errmsg")!=null)
 					return null;
 				JSONArray result=o.getJSONArray("result");
 				MMsgAccept messageModel = new MMsgAccept();
