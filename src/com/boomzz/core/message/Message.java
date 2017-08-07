@@ -19,7 +19,7 @@ import com.boomzz.util.HttpClient;
 
 public final class Message{
 	
-	protected MLogin loginModel;
+	public MLogin loginModel;
 	
 	protected Map<String, String> cookies;
 	

@@ -10,6 +10,8 @@ public class MMsgAccept{
 	
 	private String sendUin;
 	
+	private String toUin;
+	
 	private long time;
 
 	private MessageStyle style;
@@ -84,5 +86,14 @@ public class MMsgAccept{
 	public void setSendUin(String sendUin) {
 		this.sendUin = sendUin;
 	}
+
+	public String getToUin() {
+		return toUin;
+	}
+
+	public void setToUin(String toUin) {
+		this.toUin = toUin;
+	}
+	
 	
 }

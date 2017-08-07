@@ -349,6 +349,7 @@ public class FQQUtil {
 				messageModel.setFromUin(value.getString("from_uin"));
 				messageModel.setTime(value.getLong("time"));
 				messageModel.setMsgType(value.getInt("msg_type"));
+				messageModel.setToUin(value.getString("to_uin"));
 				if(messageModel.getMsgType()==4||messageModel.getMsgType()==5){
 					messageModel.setSendUin(value.getString("send_uin"));
 				}
