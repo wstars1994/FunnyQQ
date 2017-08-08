@@ -7,6 +7,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class PropertiesUtil {
 	
 	private static String filePath="/login.properties";
@@ -30,6 +33,7 @@ public class PropertiesUtil {
 
 		String url =  PropertiesUtil.class.getResource(filePath).toString();
 		url = url.substring(6,url.length());
+		
 		// 从输入流中读取属性列表（键和元素对）
 		pps.load(new FileInputStream(url));
 		// 调用 Hashtable 的方法 put。使用 getProperty 方法提供并行性。
