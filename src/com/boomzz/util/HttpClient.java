@@ -18,9 +18,14 @@ import java.util.regex.Pattern;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.boomzz.core.Config;
 
 public class HttpClient {
+	
+	private final static Logger logger = LogManager.getLogger(HttpClient.class);
 	
 	public static String get(String url,Map<String, String> cookies){
 		//创建连接
@@ -35,6 +40,9 @@ public class HttpClient {
                 lines = new String(lines.getBytes(), "utf-8");
                 sb.append(lines);
             }
+            
+            logger.info(sb.toString());
+            
             Map<String, List<String>> headerFields = connection.getHeaderFields();
             for(String h: headerFields.keySet()){
             	if("Set-Cookie".equals(h)){
@@ -79,6 +87,9 @@ public class HttpClient {
 				lines = new String(lines.getBytes(), "utf-8");
 				sb.append(lines);
 			}
+			
+			logger.info(sb.toString());
+			
 			Map<String, List<String>> headerFields = connection.getHeaderFields();
 			for(String h: headerFields.keySet()){
 				if("Set-Cookie".equals(h)){
@@ -139,6 +150,9 @@ public class HttpClient {
 				lines = new String(lines.getBytes(), "utf-8");
 				sb.append(lines);
 			}
+			
+			logger.info(sb.toString());
+			
 			Map<String, List<String>> headerFields = connection.getHeaderFields();
 			for(String h: headerFields.keySet()){
 				if("Set-Cookie".equals(h)){

@@ -9,6 +9,7 @@ import com.boomzz.core.Config;
 import com.boomzz.core.model.MPtuiCBMsg;
 import com.boomzz.util.FQQUtil;
 import com.boomzz.util.HttpClient;
+import com.boomzz.util.PropertiesUtil;
 
 /**
  * @author WStars
@@ -69,6 +70,11 @@ public final class QRCodeLogin extends AbstractLogin{
 							loginModel.setId(loginModel.getUin());
 							loginModel.setPtwebqq(FQQUtil.findCookieParam("ptwebqq", cookies));
 							loginModel.setClientId(Config.PARAM_CLIENTID);
+							PropertiesUtil.WriteProperties("ptwebqq",loginModel.getPtwebqq());
+							PropertiesUtil.WriteProperties("id",loginModel.getId());
+							PropertiesUtil.WriteProperties("nickName",loginModel.getNickName());
+							PropertiesUtil.WriteProperties("uin",loginModel.getUin());
+							PropertiesUtil.WriteProperties("clientId",loginModel.getClientId());
 							//第一次登录验证 获取必要参数
 							String checkSigUrl=ptuiCBMsgModel.getP2();
 							HttpClient.get(checkSigUrl, cookies);
@@ -76,7 +82,7 @@ public final class QRCodeLogin extends AbstractLogin{
 						}
 					}
 					Thread.sleep(1000L);
-				} catch (InterruptedException e) {
+				} catch (Exception e) {
 					logger.error(e.getMessage(),e);
 				}
 			}

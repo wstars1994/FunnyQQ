@@ -1,6 +1,8 @@
 package com.boomzz.core.model;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author WStars
@@ -14,7 +16,16 @@ public class MGroup extends MBase implements Serializable{
 	private String gid;
 	private String code;
 	private String flag;
+	private Map<String, Object> member = new HashMap();
 	
+	public Map<String, Object> getMember() {
+		return member;
+	}
+
+	public void setMember(Map<String, Object> member) {
+		this.member = member;
+	}
+
 	public MGroup() {
 		setType(1);
 	}
