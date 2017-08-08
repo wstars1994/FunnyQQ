@@ -22,6 +22,7 @@ public class MMsgAccept{
 	
 	private String pollType;
 	
+	private boolean isAt = false;
 	
 	public String getPollType() {
 		return pollType;
@@ -93,6 +94,14 @@ public class MMsgAccept{
 
 	public void setToUin(String toUin) {
 		this.toUin = toUin;
+	}
+
+	public boolean isAt() {
+		return isAt;
+	}
+
+	public void setAt(boolean isAt) {
+		this.isAt = isAt;
 	}
 	
 	
