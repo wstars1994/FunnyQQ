@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.boomzz.core.Config;
+import com.boomzz.core.IQQListener;
 import com.boomzz.core.message.Message;
 import com.boomzz.core.model.MLogin;
 import com.boomzz.util.DateTimeUtil;
@@ -26,14 +27,18 @@ public abstract class AbstractLogin{
 	//全局Cookie
 	protected static Map<String, String> cookies = new HashMap<>();
 	
+	protected IQQListener listener = null;
+	
 	protected abstract boolean login_1();
 
+	public AbstractLogin(IQQListener listener){
+		this.listener = listener;
+	}
 	/**
 	 * @param type 登录方式 1:重新扫码登录;2:缓存登录(可能会超时失效)
 	 */
 	public Message login(int type){
 		try {
-			//第一次登陆 表现为登录方式 cookie获取完毕 相应值已经获取并设置
 			if(type==2){
 				loginModel.setPtwebqq(PropertiesUtil.GetValueByKey("ptwebqq"));
 				loginModel.setId(PropertiesUtil.GetValueByKey("id"));
@@ -48,6 +53,7 @@ public abstract class AbstractLogin{
 						cookies.put(c[0], c[1]);
 					}
 				}
+				//第一次登陆 表现为登录方式 cookie获取完毕 相应值已经获取并设置
 			}else if(type==1){
 				login_1();
 			}
@@ -73,7 +79,7 @@ public abstract class AbstractLogin{
 					PropertiesUtil.WriteProperties("cookie",cooStr);
 				}
 				//消息处理
-				return new Message(loginModel,cookies);
+				return new Message(loginModel,cookies,listener);
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);

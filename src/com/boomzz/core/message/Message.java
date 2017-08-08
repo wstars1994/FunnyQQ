@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.boomzz.core.Config;
+import com.boomzz.core.IQQListener;
 import com.boomzz.core.cache.Cache;
 import com.boomzz.core.message.model.MMsgSend;
 import com.boomzz.core.model.MDiscus;
@@ -25,13 +26,14 @@ public final class Message{
 	
 	public Message(){}
 	
-	public Message(MLogin loginModel,Map<String, String> cookies){
+	public Message(MLogin loginModel,Map<String, String> cookies,IQQListener listener){
 		this.loginModel=loginModel;
 		this.cookies=cookies;
 		getSelfInfo();
 		getFrientList();
 		getGroupList();
 		getDiscusList();
+		new Thread(new TMsgAccept(this,listener)).start();
 		//定时更新在线好友
 //		new TFriendsOnline(this).start();
 	}
@@ -191,9 +193,5 @@ public final class Message{
 			buf += (hex[result[i] & 0xF]);
 		}
 		return buf;
-	}
-
-	public void addAcceptListener(IMessageAcceptListener listener) {
-		new Thread(new TMsgAccept(this,listener)).start();
 	}
 }

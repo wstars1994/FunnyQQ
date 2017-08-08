@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.boomzz.core.Config;
+import com.boomzz.core.IQQListener;
 import com.boomzz.core.model.MPtuiCBMsg;
 import com.boomzz.util.FQQUtil;
 import com.boomzz.util.HttpClient;
@@ -17,9 +18,10 @@ import com.boomzz.util.PropertiesUtil;
  */
 public final class QRCodeLogin extends AbstractLogin{
 
+	public QRCodeLogin(IQQListener listener) {
+		super(listener);
+	}
 	private final Logger logger = LogManager.getLogger();
-	
-	private IQRImageListener listener = null;
 	
 	private boolean getQRCodeForMobile() {
 		try {
@@ -88,9 +90,5 @@ public final class QRCodeLogin extends AbstractLogin{
 			}
 		}
 		return false;
-	}
-	
-	public void addQRImageListener(IQRImageListener listener) {
-		this.listener = listener;
 	}
 }

@@ -1,6 +1,8 @@
 package com.boomzz.test;
 
-import com.boomzz.core.message.IMessageAcceptListener;
+import java.io.InputStream;
+
+import com.boomzz.core.IQQListener;
 import com.boomzz.core.message.Message;
 import com.boomzz.core.message.model.MMsgAccept;
 import com.boomzz.core.message.model.MMsgSend;
@@ -9,16 +11,16 @@ import com.boomzz.core.model.MFriends;
 import com.boomzz.core.model.MGroup;
 import com.boomzz.util.DateTimeUtil;
 
-public class MsgAcceptListener implements IMessageAcceptListener{
+public class QQListener implements IQQListener{
 
-	private Message message;
-	public MsgAcceptListener(){}
-	public MsgAcceptListener(Message msg){
-		this.message = msg;
-	}
-	
 	@Override
-	public void acceptMessage(MMsgAccept model) {
+	public void imageStream(InputStream inputStream) {
+		System.out.println("获取到图片资源");
+	}
+
+
+	@Override
+	public void acceptMessage(MMsgAccept model, Message message) {
 		
 		if(model!=null&&model.getMsgType()==1){
 			MFriends mFriends = message.getFrientList().get(model.getFromUin());

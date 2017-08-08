@@ -4,20 +4,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.boomzz.core.Config;
-import com.boomzz.core.message.model.MMsgAccept;
-import com.boomzz.core.model.MDiscus;
-import com.boomzz.core.model.MFriends;
-import com.boomzz.core.model.MGroup;
-import com.boomzz.util.DateTimeUtil;
+import com.boomzz.core.IQQListener;
 import com.boomzz.util.FQQUtil;
 import com.boomzz.util.HttpClient;
 
 public final class TMsgAccept implements Runnable{
 
-	private IMessageAcceptListener listener;
+	private IQQListener listener;
 	private Message message;
 	
-	public TMsgAccept(Message message,IMessageAcceptListener listener) {
+	public TMsgAccept(Message message,IQQListener listener) {
 		this.message = message;
 		this.listener=listener;
 	}
@@ -32,7 +28,7 @@ public final class TMsgAccept implements Runnable{
 			params.clear();
 			params.put("r",url);
 			String back=HttpClient.postHttps(Config.URL_POST_NEWMESSAGE, params,message.cookies);
-			listener.acceptMessage(FQQUtil.jsonNewMessage(back));
+			listener.acceptMessage(FQQUtil.jsonNewMessage(back),message);
 		}
 	}
 }
