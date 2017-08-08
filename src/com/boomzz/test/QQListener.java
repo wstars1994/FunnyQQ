@@ -5,7 +5,6 @@ import java.io.InputStream;
 import com.boomzz.core.IQQListener;
 import com.boomzz.core.message.Message;
 import com.boomzz.core.message.model.MMsgAccept;
-import com.boomzz.core.message.model.MMsgSend;
 import com.boomzz.core.model.MDiscus;
 import com.boomzz.core.model.MFriends;
 import com.boomzz.core.model.MGroup;
@@ -15,7 +14,7 @@ public class QQListener implements IQQListener{
 
 	@Override
 	public void imageStream(InputStream inputStream) {
-		System.out.println("获取到图片资源");
+		System.out.println("获取到二维码资源");
 	}
 
 
@@ -29,14 +28,6 @@ public class QQListener implements IQQListener{
 		}
 		if(model!=null&&model.getMsgType()==4){
 			MGroup group = message.getGroupList().get(model.getFromUin());
-			if(model.getMsg().equals("QQ小冰")||!group.getName().equals("Funny QQ Test Group"))
-				return;
-			else{
-				MMsgSend m = new MMsgSend();
-				m.setContent("QQ小冰");
-				m.setUin(model.getFromUin());
-				message.sendGroupMessage(m);
-			}
 			String name = group.getName();
 			System.out.println(DateTimeUtil.timestampFormat(model.getTime()*1000)+" "+name+":"+model.getMsg());
 		}
