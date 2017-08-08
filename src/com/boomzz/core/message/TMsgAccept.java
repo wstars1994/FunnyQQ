@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.boomzz.core.Config;
 import com.boomzz.core.IQQListener;
+import com.boomzz.core.message.model.MMsgAccept;
 import com.boomzz.util.FQQUtil;
 import com.boomzz.util.HttpClient;
 
@@ -28,7 +29,9 @@ public final class TMsgAccept implements Runnable{
 			params.clear();
 			params.put("r",url);
 			String back=HttpClient.postHttps(Config.URL_POST_NEWMESSAGE, params,message.cookies);
-			listener.acceptMessage(FQQUtil.jsonNewMessage(back),message);
+			MMsgAccept me = FQQUtil.jsonNewMessage(back);
+			if(me!=null)
+				listener.acceptMessage(me,message);
 		}
 	}
 }

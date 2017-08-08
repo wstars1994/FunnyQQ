@@ -1,10 +1,12 @@
 package com.boomzz.util;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
@@ -100,7 +102,7 @@ public class HttpClient {
 							String c[]=strCookie.split("=");
 							if(c.length==2){
 								//除去不需要的
-								if(!c[0].contains("EXPIRES")&&!c[0].contains("PATH")&&!c[0].contains("DOMAIN"))
+								if(cookies!=null&&!c[0].contains("EXPIRES")&&!c[0].contains("PATH")&&!c[0].contains("DOMAIN"))
 									cookies.put(c[0], c[1]);
 							}
 						}
