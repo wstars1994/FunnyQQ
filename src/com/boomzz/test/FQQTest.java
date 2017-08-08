@@ -13,6 +13,8 @@ public class FQQTest {
 		Message msg = qrLogin.login(2);
 		if(msg==null){
 			System.out.println("登录失败,请查看登录日志");
+		}else {
+			System.out.println("登录成功");
 		}
 	}
 }

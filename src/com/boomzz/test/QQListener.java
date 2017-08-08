@@ -36,7 +36,7 @@ public class QQListener implements IQQListener{
 		if(model!=null&&model.getMsgType()==4){
 			MGroup group = message.getGroupList().get(model.getFromUin());
 			String name = group.getName();
-			System.out.println(DateTimeUtil.timestampFormat(model.getTime()*1000)+" "+name+":"+model.getMsg());
+			System.out.println("[群消息] "+DateTimeUtil.timestampFormat(model.getTime()*1000)+" ["+name+"] :"+model.getMsg());
 			
 			if(model.getSendUin().equals(fromUin)||!whiteList.contains(group.getName()))
 				return;
