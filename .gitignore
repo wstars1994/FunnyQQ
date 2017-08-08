@@ -6,3 +6,4 @@ qr.png
 /.settings/
 /.git/
 *.log
+*.properties
