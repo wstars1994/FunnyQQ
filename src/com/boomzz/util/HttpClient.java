@@ -182,7 +182,7 @@ public class HttpClient {
 		return null;
 	}
 	public static void main(String[] args) {
-		postHttps(Config.URL_POST_SENDMESSAGE,new HashMap<String,String>(),new HashMap<String,String>());
+		String post = HttpClient.post("http://pingma.qq.com/mstat/report/?index=1",null, null);
 	}
 	public static InputStream getBackAndCookieForQR(String url, String path,Map<String, String> cookies,boolean local) throws Exception{
 		HttpURLConnection connection = getConnection(url,"GET","application/json;charset=UTF-8",false,cookies);

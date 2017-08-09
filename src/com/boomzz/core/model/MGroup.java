@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * QQ群
  * @author WStars
- *
  */
 public class MGroup extends MBase implements Serializable{
 

@@ -3,25 +3,25 @@ package com.boomzz.core.message.model;
 public class MMsgAccept{
 
 	private static final long serialVersionUID = 1L;
-	
+	//消息文本
 	private String msg;
-	
+	//来源
 	private String fromUin;
-	
+	//发送者的Uin
 	private String sendUin;
-	
+	//接收者的QQ
 	private String toUin;
-	
+	//时间
 	private long time;
-
+	//消息风格
 	private MessageStyle style;
-	
+	//消息类型 1:个人消息 4:群消息 5:讨论组消息
 	private int msgType;
-
+	//消息ID
 	private String msgId;
 	
 	private String pollType;
-	
+	//是否为@消息
 	private boolean isAt = false;
 	
 	public String getPollType() {

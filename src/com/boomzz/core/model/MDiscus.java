@@ -3,8 +3,8 @@ package com.boomzz.core.model;
 import java.io.Serializable;
 
 /**
+ * 讨论组
  * @author WStars
- *
  */
 public class MDiscus  extends MBase implements Serializable{
 
