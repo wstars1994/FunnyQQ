@@ -12,9 +12,9 @@ import org.apache.logging.log4j.Logger;
 
 import com.boomzz.core.Config;
 import com.boomzz.core.cache.Cache;
-import com.boomzz.core.login.AbstractLogin;
 import com.boomzz.core.message.Message;
 import com.boomzz.core.message.model.MMsgAccept;
+import com.boomzz.core.model.MBase;
 import com.boomzz.core.model.MCategories;
 import com.boomzz.core.model.MDiscus;
 import com.boomzz.core.model.MFriends;
@@ -347,6 +347,27 @@ public class FQQUtil {
 		return mapping;
 	}
 	/**
+	 * 群成员列表
+	 * @param json
+	 * @return
+	 */
+	public static Map<String, MBase> jsonGroupMemberList(String json){
+		Map<String, MBase> member = new HashMap<>();
+		if(checkRetcode(json)){
+			JSONObject o=JSONObject.fromObject(json);
+			JSONObject result=o.getJSONObject("result");
+			JSONArray dnamelist=result.getJSONArray("minfo");
+			for(Object m:dnamelist){
+				JSONObject mem = (JSONObject) m;
+				MBase mBase = new MBase();
+				mBase.setUin(mem.getString("uin"));
+				mBase.setNickName(mem.getString("nick"));
+				member.put(mBase.getUin(), mBase);
+			}
+		}
+		return member;
+	}
+	/**
 	 * 新消息
 	 * @param json
 	 * @return
@@ -362,7 +383,9 @@ public class FQQUtil {
 				messageModel.setPollType(result.getJSONObject(0).getString("poll_type"));
 				JSONObject value = result.getJSONObject(0).getJSONObject("value");
 				JSONArray content = value.getJSONArray("content");
-				if(content.size()>2){
+				if(content.size()==1){
+					messageModel.setMsg("未识别的消息类型");
+				}else if(content.size()>2){
 					messageModel.setMsg(content.getString(1)+" "+content.getString(3));
 					String meString = Message.loginModel.getNickName();
 					if(meString.substring(0, 1).equals(" ")){
@@ -372,9 +395,7 @@ public class FQQUtil {
 						messageModel.setAt(true);
 						messageModel.setMsg(content.getString(3));
 					}
-				}
-				else
-					messageModel.setMsg(content.getString(1));
+				} else messageModel.setMsg(content.getString(1));
 				messageModel.setFromUin(value.getString("from_uin"));
 				messageModel.setTime(value.getLong("time"));
 				messageModel.setMsgType(value.getInt("msg_type"));

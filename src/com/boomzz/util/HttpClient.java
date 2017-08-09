@@ -43,7 +43,7 @@ public class HttpClient {
                 sb.append(lines);
             }
             
-            logger.info(sb.toString());
+            logger.info(url+" \n"+sb.toString());
             
             Map<String, List<String>> headerFields = connection.getHeaderFields();
             for(String h: headerFields.keySet()){
@@ -90,7 +90,7 @@ public class HttpClient {
 				sb.append(lines);
 			}
 			
-			logger.info(sb.toString());
+			logger.info(url+" \n"+sb.toString());
 			
 			Map<String, List<String>> headerFields = connection.getHeaderFields();
 			for(String h: headerFields.keySet()){
@@ -153,7 +153,7 @@ public class HttpClient {
 				sb.append(lines);
 			}
 			
-			logger.info(sb.toString());
+			logger.info(url+" \n"+sb.toString());
 			
 			Map<String, List<String>> headerFields = connection.getHeaderFields();
 			for(String h: headerFields.keySet()){

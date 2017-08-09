@@ -9,6 +9,7 @@ import com.boomzz.core.Config;
 import com.boomzz.core.IQQListener;
 import com.boomzz.core.cache.Cache;
 import com.boomzz.core.message.model.MMsgSend;
+import com.boomzz.core.model.MBase;
 import com.boomzz.core.model.MDiscus;
 import com.boomzz.core.model.MFriends;
 import com.boomzz.core.model.MGroup;
@@ -110,6 +111,7 @@ public final class Message{
 		}
 		return friendsModel;
 	}
+	
 	private void upOnlineFrientList(Map<String,MFriends> friendsModel) {
 		Map<String,String> params=new HashMap<>();
 		params.put("vfwebqq", loginModel.getVfwebqq());
@@ -118,7 +120,14 @@ public final class Message{
 		String json=HttpClient.get(url+DateTimeUtil.getTimestamp(),cookies);
 		updateOnlineFriends(json,friendsModel);
 	}
-
+	
+	private void updateOnlineFriends(String json,Map<String,MFriends> friendsModel){
+		List<String> uinList = FQQUtil.jsonOnlineFriendsList(json);
+		for(String uin:uinList){
+			friendsModel.get(uin).setOnline(true);
+		}
+	}
+	
 	public List<MFriends> getRecentFrientList() {
 		List<MFriends> friendsModel=new ArrayList<>();
 		Map<String,String> params=new HashMap<>();
@@ -136,9 +145,7 @@ public final class Message{
 		if(Cache.getCache(Config.CACHE_KEY_GROUP)!=null){
 			return (Map<String, MGroup>) Cache.getCache(Config.CACHE_KEY_GROUP);
 		}
-		Map<String, MGroup> jsonGroupList = getGroupListOnline();
-		Cache.putCache(Config.CACHE_KEY_GROUP, jsonGroupList);
-		return jsonGroupList;
+		return getGroupListOnline();
 	}
 	public Map<String, MGroup> getGroupListOnline(){
 		Map<String,String> params=new HashMap<>();
@@ -148,16 +155,34 @@ public final class Message{
 		params.clear();
 		params.put("r", pString);
 		String json=HttpClient.post(Config.URL_POST_GROUP,params,cookies);
-		return FQQUtil.jsonGroupList(json);
+		Map<String, MGroup> jsonGroupList = FQQUtil.jsonGroupList(json);
+		for(String gcode : jsonGroupList.keySet()){
+			Map<String,String> param=new HashMap<>();
+			param.put("gcode", gcode);
+			param.put("vfwebqq", loginModel.getVfwebqq());
+			pString=FQQUtil.replace(Config.URL_GET_GROUP_MEMBER, param);
+			param.clear();
+			param.put("r", pString);
+			String jsonMember=HttpClient.get(pString+DateTimeUtil.getTimestamp(),cookies);
+			Map<String, MBase> jsonGroupMemberList = FQQUtil.jsonGroupMemberList(jsonMember);
+			if(jsonGroupMemberList.size()==0){
+				param.put("gcode", jsonGroupList.get(gcode).getCode());
+				param.put("vfwebqq", loginModel.getVfwebqq());
+				pString=FQQUtil.replace(Config.URL_GET_GROUP_MEMBER, param);
+				param.clear();
+				param.put("r", pString);
+				jsonMember=HttpClient.get(pString+DateTimeUtil.getTimestamp(),cookies);
+				jsonGroupMemberList = FQQUtil.jsonGroupMemberList(jsonMember);
+			}
+			jsonGroupList.get(gcode).setMember(jsonGroupMemberList);
+		}
+		Cache.putCache(Config.CACHE_KEY_GROUP, jsonGroupList);
+		return jsonGroupList;
 	}
 	public Map<String, MDiscus> getDiscusList() {
 		if(Cache.getCache(Config.CACHE_KEY_DISCUS)!=null)
 			return (Map<String, MDiscus>) Cache.getCache(Config.CACHE_KEY_DISCUS);
-		else{
-			Map<String, MDiscus> discusModels = getDiscusListOnline();
-			Cache.putCache(Config.CACHE_KEY_DISCUS, discusModels);
-			return discusModels;
-		}
+		return getDiscusListOnline();
 	}
 	public Map<String, MDiscus> getDiscusListOnline(){
 		Map<String, String> map=new HashMap<>();
@@ -165,14 +190,11 @@ public final class Message{
 		map.put("vfwebqq", loginModel.getVfwebqq());
 		String url=FQQUtil.replace(Config.URL_GET_DISCUS+Math.random(), map);
 		String back=HttpClient.get(url,cookies);
-		return FQQUtil.jsonDiscusList(back);
+		Map<String, MDiscus> jsonDiscusList = FQQUtil.jsonDiscusList(back);
+		Cache.putCache(Config.CACHE_KEY_DISCUS, jsonDiscusList);
+		return jsonDiscusList;
 	}
-	private void updateOnlineFriends(String json,Map<String,MFriends> friendsModel){
-		List<String> uinList = FQQUtil.jsonOnlineFriendsList(json);
-		for(String uin:uinList){
-			friendsModel.get(uin).setOnline(true);
-		}
-	}
+	
 	private String getHash() {
 		int uin=Integer.parseInt(loginModel.getId());
 		String ptvfwebqq=loginModel.getPtwebqq();

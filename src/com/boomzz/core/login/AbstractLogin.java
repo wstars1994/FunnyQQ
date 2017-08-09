@@ -58,14 +58,19 @@ public abstract class AbstractLogin{
 				login_1();
 			}
 			String back=HttpClient.get(FQQUtil.replace(Config.URL_GET_VFWEBQQ+DateTimeUtil.getTimestamp(), "ptwebqq",loginModel.getPtwebqq()), cookies);
-			loginModel.setVfwebqq(FQQUtil.jsonVfwebqq(back));
+			String jsonVfwebqq = FQQUtil.jsonVfwebqq(back);
+			if(jsonVfwebqq==null){
+				logger.error("登录失败:获取vfwebqq失败,可能是登录缓存过期,请使用非缓存方式登录");
+				return null;
+			}
+			loginModel.setVfwebqq(jsonVfwebqq);
 			//第二次登录验证
 			Map<String, String> params=new HashMap<>();
 			params.put("r", FQQUtil.replace(Config.PARAM_LOGIN2, "ptwebqq",loginModel.getPtwebqq()));
 			back=HttpClient.post(Config.URL_POST_LONGIN2, params, cookies);
 			Map<String, String> map=FQQUtil.jsonLogin(back);
 			if(map==null){
-				logger.info("登录失败:"+back);
+				logger.error("登录失败:"+back);
 				return null;
 			}
 			if(map.get("psessionid")!=null){

@@ -127,6 +127,7 @@ public class Config {
 	public static String URL_POST_SENDMESSAGE="https://d1.web2.qq.com/channel/send_buddy_msg2";
 	public static String URL_POST_SENDMESSAGE_DISCUS="https://d1.web2.qq.com/channel/send_discu_msg2";
 	public static String URL_POST_SENDMESSAGE_GROUP="https://d1.web2.qq.com/channel/send_qun_msg2";
-	
+	public static String URL_GET_GROUP_MEMBER="http://s.web2.qq.com/api/get_group_info_ext2?gcode=#gcode#&vfwebqq=#vfwebqq#&t=";
+	public static String URL_GET_DISCUS_MEMBER="http://d1.web2.qq.com/channel/get_discu_info?did=#did#&vfwebqq=#vfwebqq#&clientid="+PARAM_CLIENTID+"&psessionid=#psessionid#&t=";
 	
 }
