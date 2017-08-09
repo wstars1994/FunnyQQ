@@ -8,6 +8,7 @@ import com.boomzz.core.IQQListener;
 import com.boomzz.core.message.Message;
 import com.boomzz.core.message.model.MMsgAccept;
 import com.boomzz.core.message.model.MMsgSend;
+import com.boomzz.core.model.MBase;
 import com.boomzz.core.model.MDiscus;
 import com.boomzz.core.model.MFriends;
 import com.boomzz.core.model.MGroup;
@@ -36,7 +37,10 @@ public class QQListener implements IQQListener{
 		if(model!=null&&model.getMsgType()==4){
 			MGroup group = message.getGroupList().get(model.getFromUin());
 			String name = group.getName();
-			String sendName = group.getMember().get(model.getSendUin()).getNickName();
+			MBase mBase = group.getMember().get(model.getSendUin());
+			String sendName="";
+			if(mBase!=null)
+				sendName = mBase.getNickName();
 			System.out.println("[群] "+DateTimeUtil.timestampFormat(model.getTime()*1000)+" ["+name+" | "+sendName+"] :"+model.getMsg());
 			
 			if(model.getSendUin().equals(fromUin)||!whiteList.contains(group.getName()))

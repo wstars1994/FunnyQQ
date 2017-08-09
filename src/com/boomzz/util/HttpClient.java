@@ -115,6 +115,7 @@ public class HttpClient {
 			return sb.toString();
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.error("请求失败");
 		}
 		return null;
 	}

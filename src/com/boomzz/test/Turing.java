@@ -1,6 +1,5 @@
 package com.boomzz.test;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import com.boomzz.util.HttpClient;
@@ -16,9 +15,9 @@ public class Turing {
 			String post = HttpClient.get(url+INFO, null);
 			JSONObject fromObject = JSONObject.fromObject(post);
 			return fromObject.getString("text");
-		} catch (UnsupportedEncodingException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return msg; 
+		return "图灵机器人连接失败,请重试";
 	}
 }
