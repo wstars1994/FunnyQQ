@@ -37,8 +37,12 @@ public class FQQUtil {
 	private final static Logger logger = LogManager.getLogger();
 	
 	
+	/**
+	 * 登录前信息
+	 * @param msg
+	 * @return
+	 */
 	public static MPtuiCBMsg ptuiCBMsgToModel(String msg) {
-		
 		int first=msg.indexOf("(");
 		int last=msg.lastIndexOf(")");
 		String params=msg.substring(first+1,last);
@@ -298,6 +302,11 @@ public class FQQUtil {
 		}
 		return onlinUin;
 	}
+	/**
+	 * 讨论组列表
+	 * @param json
+	 * @return
+	 */
 	public static Map<String, MDiscus> jsonDiscusList(String json){
 		Map<String, MDiscus> mapping = new HashMap<>();
 		if(checkRetcode(json)){
@@ -314,6 +323,11 @@ public class FQQUtil {
 		}
 		return mapping;
 	}
+	/**
+	 * 群列表
+	 * @param json
+	 * @return
+	 */
 	public static Map<String, MGroup> jsonGroupList(String json){
 		Map<String, MGroup> mapping = new HashMap<>();
 		if(checkRetcode(json)){
@@ -332,6 +346,11 @@ public class FQQUtil {
 		}
 		return mapping;
 	}
+	/**
+	 * 新消息
+	 * @param json
+	 * @return
+	 */
 	public static MMsgAccept jsonNewMessage(String json){
 		try {
 			if(checkRetcode(json)){

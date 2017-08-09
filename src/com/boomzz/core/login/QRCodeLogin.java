@@ -14,7 +14,7 @@ import com.boomzz.util.PropertiesUtil;
 
 /**
  * @author WStars
- *
+ * 二维码登录
  */
 public final class QRCodeLogin extends AbstractLogin{
 

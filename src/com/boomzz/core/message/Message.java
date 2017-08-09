@@ -18,6 +18,10 @@ import com.boomzz.util.DateTimeUtil;
 import com.boomzz.util.FQQUtil;
 import com.boomzz.util.HttpClient;
 
+/**
+ * 消息类 接收消息 发送消息 获取信息
+ * @author WStars
+ */
 public final class Message{
 	
 	public static MLogin loginModel;
@@ -27,7 +31,7 @@ public final class Message{
 	public Message(){}
 	
 	public Message(MLogin loginModel,Map<String, String> cookies,IQQListener listener){
-		this.loginModel=loginModel;
+		Message.loginModel=loginModel;
 		this.cookies=cookies;
 		getSelfInfo();
 		getFrientList();

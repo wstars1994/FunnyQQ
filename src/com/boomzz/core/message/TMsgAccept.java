@@ -9,6 +9,10 @@ import com.boomzz.core.message.model.MMsgAccept;
 import com.boomzz.util.FQQUtil;
 import com.boomzz.util.HttpClient;
 
+/**
+ * @author WStars
+ * 接收消息线程(长连接)
+ */
 public final class TMsgAccept implements Runnable{
 
 	private IQQListener listener;
@@ -23,8 +27,8 @@ public final class TMsgAccept implements Runnable{
 	public void run() {
 		while(true){
 			Map<String, String> params=new HashMap<>();
-			params.put("ptwebqq", message.loginModel.getPtwebqq());
-			params.put("psessionid", message.loginModel.getPsessionid());
+			params.put("ptwebqq", Message.loginModel.getPtwebqq());
+			params.put("psessionid", Message.loginModel.getPsessionid());
 			String url=FQQUtil.replace(Config.PARAM_MESSAGE_POLL, params);
 			params.clear();
 			params.put("r",url);

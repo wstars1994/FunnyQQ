@@ -11,8 +11,6 @@ import com.boomzz.core.Config;
  */
 public class Cache{
 	
-	private static final long serialVersionUID = 1L;
-	
 	private static Map<String,Object> cacheMap=new HashMap<>();
 	
 	public static void putCache(String uniqueKey,Object o){

@@ -17,7 +17,7 @@ import com.boomzz.util.PropertiesUtil;
 
 /**
  * @author WStars
- *
+ * 
  */
 public abstract class AbstractLogin{
 
