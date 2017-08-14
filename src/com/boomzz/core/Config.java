@@ -122,12 +122,24 @@ public class Config {
 	 */
 	public static String URL_POST_NEWMESSAGE="https://d1.web2.qq.com/channel/poll2";
 	/**
-	 * 发送消息
+	 * 发送消息 个人
 	 */
 	public static String URL_POST_SENDMESSAGE="https://d1.web2.qq.com/channel/send_buddy_msg2";
+	/**
+	 * 发送消息 讨论组
+	 */
 	public static String URL_POST_SENDMESSAGE_DISCUS="https://d1.web2.qq.com/channel/send_discu_msg2";
+	/**
+	 * 发送消息 群组
+	 */
 	public static String URL_POST_SENDMESSAGE_GROUP="https://d1.web2.qq.com/channel/send_qun_msg2";
+	/**
+	 * 获取群成员信息
+	 */
 	public static String URL_GET_GROUP_MEMBER="http://s.web2.qq.com/api/get_group_info_ext2?gcode=#gcode#&vfwebqq=#vfwebqq#&t=";
+	/**
+	 * 获取讨论组成员信息
+	 */
 	public static String URL_GET_DISCUS_MEMBER="http://d1.web2.qq.com/channel/get_discu_info?did=#did#&vfwebqq=#vfwebqq#&clientid="+PARAM_CLIENTID+"&psessionid=#psessionid#&t=";
 	
 }
