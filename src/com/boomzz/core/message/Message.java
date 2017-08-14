@@ -39,6 +39,9 @@ public final class Message{
 		getGroupList();
 		getDiscusList();
 		new Thread(new TMsgAccept(this,listener)).start();
+//		String url="https://user.qzone.qq.com/"+Message.loginModel.getUin();
+//		String string = HttpClient.get(url, cookies);
+//		System.out.println(string);
 		//定时更新在线好友
 //		new TFriendsOnline(this).start();
 	}

@@ -1,12 +1,10 @@
 package com.boomzz.util;
 
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
@@ -23,8 +21,6 @@ import javax.net.ssl.HttpsURLConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.boomzz.core.Config;
-
 public class HttpClient {
 	
 	private final static Logger logger = LogManager.getLogger(HttpClient.class);
@@ -32,7 +28,7 @@ public class HttpClient {
 	public static String get(String url,Map<String, String> cookies){
 		//创建连接
 		try {
-			HttpURLConnection connection = getConnection(url,"GET","application/json;charset=UTF-8",false,cookies);
+			HttpURLConnection connection = getConnection(url,"GET","application/json;charset=UTF-8",true,cookies);
 			connection.connect();
 			//读取响应
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -46,6 +42,9 @@ public class HttpClient {
             logger.info(url+" \n"+sb.toString());
             
             Map<String, List<String>> headerFields = connection.getHeaderFields();
+//            if(headerFields.get("Location")!=null&&headerFields.get("Location").size()>0){
+//            	return get(headerFields.get("Location").get(0), cookies);
+//            }
             for(String h: headerFields.keySet()){
             	if("Set-Cookie".equals(h)){
             		List<String> list = headerFields.get(h);
@@ -230,6 +229,7 @@ public class HttpClient {
 //		connection.setRequestProperty("Content-Type", ContentType);
 		connection.setRequestMethod(method);
 		connection.setInstanceFollowRedirects(rediect);
+		connection.addRequestProperty("user-agent","Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.86 Safari/537.36");
 		if(cookies!=null){
 			String cooStr="";
 			for(String c:cookies.keySet()){
@@ -241,6 +241,9 @@ public class HttpClient {
 			connection.addRequestProperty("Referer","http://d1.web2.qq.com/proxy.html?v=20151105001&callback=1&id=2"); 
 		else 
 			connection.addRequestProperty("Referer","http://s.web2.qq.com/proxy.html?v=20130916001&callback=1&id=1");
+		if(urlStr.contains("https://user.qzone.qq.com/")){
+			connection.addRequestProperty("Referer","https://qzs.qq.com/qzone/v5/loginsucc.html?para=izone");
+		}
 		return connection;
 	}
 	private static String urlParamsStr(Map<String, String> params) throws UnsupportedEncodingException{
@@ -251,5 +254,12 @@ public class HttpClient {
 		if(!url.equals(""))
 			url = url.substring(0,url.length()-1);
 		return url;
+	}
+	
+	public static void main(String[] args) {
+		String url="https://user.qzone.qq.com/545640807";
+		Map<String, String> cookies = new HashMap<>();
+		String string = get(url, cookies);
+		System.out.println(string);
 	}
 }
