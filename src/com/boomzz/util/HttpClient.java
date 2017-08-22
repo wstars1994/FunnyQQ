@@ -28,7 +28,7 @@ public class HttpClient {
 	public static String get(String url,Map<String, String> cookies){
 		//创建连接
 		try {
-			HttpURLConnection connection = getConnection(url,"GET","application/json;charset=UTF-8",true,cookies);
+			HttpURLConnection connection = getConnection(url,"GET","application/json;charset=UTF-8",false,cookies);
 			connection.connect();
 			//读取响应
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -241,9 +241,9 @@ public class HttpClient {
 			connection.addRequestProperty("Referer","http://d1.web2.qq.com/proxy.html?v=20151105001&callback=1&id=2"); 
 		else 
 			connection.addRequestProperty("Referer","http://s.web2.qq.com/proxy.html?v=20130916001&callback=1&id=1");
-		if(urlStr.contains("https://user.qzone.qq.com/")){
-			connection.addRequestProperty("Referer","https://qzs.qq.com/qzone/v5/loginsucc.html?para=izone");
-		}
+//		if(urlStr.contains("https://user.qzone.qq.com/")){
+//			connection.addRequestProperty("Referer","https://qzs.qq.com/qzone/v5/loginsucc.html?para=izone");
+//		}
 		return connection;
 	}
 	private static String urlParamsStr(Map<String, String> params) throws UnsupportedEncodingException{
