@@ -6,6 +6,12 @@ package com.boomzz.core;
  */
 public class Config {
 	
+	
+	
+	/**
+	 * 是否
+	 */
+	public static boolean AUTO_LOGIN=true;
 	/**
 	 * 是否开启缓存
 	 */
@@ -141,5 +147,93 @@ public class Config {
 	 * 获取讨论组成员信息
 	 */
 	public static String URL_GET_DISCUS_MEMBER="http://d1.web2.qq.com/channel/get_discu_info?did=#did#&vfwebqq=#vfwebqq#&clientid="+PARAM_CLIENTID+"&psessionid=#psessionid#&t=";
+	
+	public static void setCACHE(boolean cACHE) {
+		CACHE = cACHE;
+	}
+	public static void setPARAM_CLIENTID(String pARAM_CLIENTID) {
+		PARAM_CLIENTID = pARAM_CLIENTID;
+	}
+	public static void setPARAM_SENDMSG(String pARAM_SENDMSG) {
+		PARAM_SENDMSG = pARAM_SENDMSG;
+	}
+	public static void setPARAM_LOGIN2(String pARAM_LOGIN2) {
+		PARAM_LOGIN2 = pARAM_LOGIN2;
+	}
+	public static void setPARAM_FRIENDS_LIST(String pARAM_FRIENDS_LIST) {
+		PARAM_FRIENDS_LIST = pARAM_FRIENDS_LIST;
+	}
+	public static void setPARAM_RECENTFRIENDS_LIST(String pARAM_RECENTFRIENDS_LIST) {
+		PARAM_RECENTFRIENDS_LIST = pARAM_RECENTFRIENDS_LIST;
+	}
+	public static void setPARAM_MESSAGE_POLL(String pARAM_MESSAGE_POLL) {
+		PARAM_MESSAGE_POLL = pARAM_MESSAGE_POLL;
+	}
+	public static void setPARAM_MESSAGE_SEND(String pARAM_MESSAGE_SEND) {
+		PARAM_MESSAGE_SEND = pARAM_MESSAGE_SEND;
+	}
+	public static void setFILE_PATH_QR(String fILE_PATH_QR) {
+		FILE_PATH_QR = fILE_PATH_QR;
+	}
+	public static void setFILE_IMG_LOCAL(boolean fILE_IMG_LOCAL) {
+		FILE_IMG_LOCAL = fILE_IMG_LOCAL;
+	}
+	public static void setFILE_PATH_LOGS(String fILE_PATH_LOGS) {
+		FILE_PATH_LOGS = fILE_PATH_LOGS;
+	}
+	public static void setURL_GET_QR(String uRL_GET_QR) {
+		URL_GET_QR = uRL_GET_QR;
+	}
+	public static void setURL_GET_LOGIN_POLLING(String uRL_GET_LOGIN_POLLING) {
+		URL_GET_LOGIN_POLLING = uRL_GET_LOGIN_POLLING;
+	}
+	public static void setURL_GET_VFWEBQQ(String uRL_GET_VFWEBQQ) {
+		URL_GET_VFWEBQQ = uRL_GET_VFWEBQQ;
+	}
+	public static void setURL_POST_LONGIN2(String uRL_POST_LONGIN2) {
+		URL_POST_LONGIN2 = uRL_POST_LONGIN2;
+	}
+	public static void setURL_GET_SELFINFO(String uRL_GET_SELFINFO) {
+		URL_GET_SELFINFO = uRL_GET_SELFINFO;
+	}
+	public static void setURL_GET_SELFPIC(String uRL_GET_SELFPIC) {
+		URL_GET_SELFPIC = uRL_GET_SELFPIC;
+	}
+	public static void setURL_POST_FRIENDS(String uRL_POST_FRIENDS) {
+		URL_POST_FRIENDS = uRL_POST_FRIENDS;
+	}
+	public static void setURL_POST_GROUP(String uRL_POST_GROUP) {
+		URL_POST_GROUP = uRL_POST_GROUP;
+	}
+	public static void setURL_GET_DISCUS(String uRL_GET_DISCUS) {
+		URL_GET_DISCUS = uRL_GET_DISCUS;
+	}
+	public static void setURL_GET_ONLINEFRIENDS(String uRL_GET_ONLINEFRIENDS) {
+		URL_GET_ONLINEFRIENDS = uRL_GET_ONLINEFRIENDS;
+	}
+	public static void setURL_POST_RECENTRIENDS(String uRL_POST_RECENTRIENDS) {
+		URL_POST_RECENTRIENDS = uRL_POST_RECENTRIENDS;
+	}
+	public static void setURL_POST_NEWMESSAGE(String uRL_POST_NEWMESSAGE) {
+		URL_POST_NEWMESSAGE = uRL_POST_NEWMESSAGE;
+	}
+	public static void setURL_POST_SENDMESSAGE(String uRL_POST_SENDMESSAGE) {
+		URL_POST_SENDMESSAGE = uRL_POST_SENDMESSAGE;
+	}
+	public static void setURL_POST_SENDMESSAGE_DISCUS(String uRL_POST_SENDMESSAGE_DISCUS) {
+		URL_POST_SENDMESSAGE_DISCUS = uRL_POST_SENDMESSAGE_DISCUS;
+	}
+	public static void setURL_POST_SENDMESSAGE_GROUP(String uRL_POST_SENDMESSAGE_GROUP) {
+		URL_POST_SENDMESSAGE_GROUP = uRL_POST_SENDMESSAGE_GROUP;
+	}
+	public static void setURL_GET_GROUP_MEMBER(String uRL_GET_GROUP_MEMBER) {
+		URL_GET_GROUP_MEMBER = uRL_GET_GROUP_MEMBER;
+	}
+	public static void setURL_GET_DISCUS_MEMBER(String uRL_GET_DISCUS_MEMBER) {
+		URL_GET_DISCUS_MEMBER = uRL_GET_DISCUS_MEMBER;
+	}
+	public static void setAUTO_LOGIN(boolean aUTO_LOGIN) {
+		AUTO_LOGIN = aUTO_LOGIN;
+	}
 	
 }

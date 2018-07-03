@@ -393,7 +393,7 @@ public class FQQUtil {
 					}
 					if(content.getString(1).indexOf("@"+meString)!=-1){
 						messageModel.setAt(true);
-						messageModel.setMsg(content.getString(3));
+						messageModel.setMsg(content.getString(4));
 					}
 				} else messageModel.setMsg(content.getString(1));
 				messageModel.setFromUin(value.getString("from_uin"));

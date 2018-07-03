@@ -20,4 +20,10 @@ public interface IQQListener {
 	 */
 	public void acceptMessage(MMsgAccept msg, Message message);
 	
+	/**
+	 * 输出系统消息
+	 * @param msg
+	 * @param message
+	 */
+	public void sysout(String msg);
 }

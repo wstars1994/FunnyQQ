@@ -18,7 +18,7 @@ public class QQListener implements IQQListener{
 
 	private String lastSendMsg = "";
 	private String fromUin = "";
-	private List<String> whiteList = Arrays.asList("战略忽悠局 - SFYA","Funny QQ Test Group");
+	private List<String> whiteList = Arrays.asList("战略忽悠局 - CSFYA","Funny QQ Test Group");
 	@Override
 	public void imageStream(InputStream inputStream) {
 		System.out.println("获取到二维码资源");
@@ -63,6 +63,11 @@ public class QQListener implements IQQListener{
 			System.out.println("[讨论组] "+DateTimeUtil.timestampFormat(model.getTime()*1000)+" ["+name+"] :"+model.getMsg());
 		}
 		
+	}
+
+	@Override
+	public void sysout(String msg) {
+		System.out.println(msg);
 	}
 
 }

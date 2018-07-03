@@ -53,7 +53,7 @@ public abstract class AbstractLogin{
 						cookies.put(c[0], c[1]);
 					}
 				}
-				//第一次登陆 表现为登录方式 cookie获取完毕 相应值已经获取并设置
+//				第一次登陆 表现为登录方式 cookie获取完毕 相应值已经获取并设置
 			}else if(type==1){
 				login_1();
 			}
@@ -81,7 +81,7 @@ public abstract class AbstractLogin{
 					for(String c:cookies.keySet()){
 						cooStr+=c+"="+cookies.get(c)+";";
 					}
-					PropertiesUtil.WriteProperties("cookie",cooStr);
+//					PropertiesUtil.WriteProperties("cookie",cooStr);
 				}
 				//消息处理
 				return new Message(loginModel,cookies,listener);

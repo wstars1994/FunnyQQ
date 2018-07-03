@@ -18,17 +18,22 @@ import com.boomzz.util.PropertiesUtil;
  */
 public final class QRCodeLogin extends AbstractLogin{
 
+	private final static Logger logger = LogManager.getLogger(QRCodeLogin.class);
+	
+	private IQQListener listener;
+	
 	public QRCodeLogin(IQQListener listener) {
 		super(listener);
+		this.listener = listener;
 	}
-	private final Logger logger = LogManager.getLogger();
 	
 	private boolean getQRCodeForMobile() {
 		try {
 			InputStream inputStream = HttpClient.getBackAndCookieForQR(Config.URL_GET_QR+Math.random(),Config.FILE_PATH_QR,cookies,Config.FILE_IMG_LOCAL);
 			if(listener!=null)
 				listener.imageStream(inputStream);
-			logger.info("获取二维码成功");
+			logger.info("二维码获取成功");
+			listener.sysout("二维码获取成功");
     		return true;
     	} catch (Exception e) {
     		e.printStackTrace();
@@ -55,6 +60,7 @@ public final class QRCodeLogin extends AbstractLogin{
 	protected boolean login_1() {
 		boolean status=getQRCodeForMobile();
 		if(status){
+			listener.sysout("开始登录轮询");
 			logger.info("开始登录轮询");
 			while(true){
 				try {
@@ -62,17 +68,20 @@ public final class QRCodeLogin extends AbstractLogin{
 					//转换成类
 					MPtuiCBMsg ptuiCBMsgModel=FQQUtil.ptuiCBMsgToModel(back);
 					if(ptuiCBMsgModel==null){
+						listener.sysout("登录轮询失败");
 						logger.error("登录轮询失败");
 						return false;
 					}else{
-						logger.info(ptuiCBMsgModel.getNo() +" : "+ ptuiCBMsgModel.getP4());
+						listener.sysout(ptuiCBMsgModel.getNo() +" : "+ ptuiCBMsgModel.getP4());
+//						logger.info(ptuiCBMsgModel.getNo() +" : "+ ptuiCBMsgModel.getP4());
 						if(ptuiCBMsgModel.getNo()==0){//初次登录成功
 							loginModel.setNickName(ptuiCBMsgModel.getP5());
 							loginModel.setUin(FQQUtil.findParam(ptuiCBMsgModel.getP2(),"uin"));
 							loginModel.setId(loginModel.getUin());
 							loginModel.setPtwebqq(FQQUtil.findCookieParam("ptwebqq", cookies));
 							loginModel.setClientId(Config.PARAM_CLIENTID);
-							PropertiesUtil.WriteProperties("ptwebqq",loginModel.getPtwebqq());
+							if(loginModel.getPtwebqq()!=null)
+								PropertiesUtil.WriteProperties("ptwebqq",loginModel.getPtwebqq());
 							PropertiesUtil.WriteProperties("id",loginModel.getId());
 							PropertiesUtil.WriteProperties("nickName",loginModel.getNickName());
 							PropertiesUtil.WriteProperties("uin",loginModel.getUin());
@@ -85,7 +94,9 @@ public final class QRCodeLogin extends AbstractLogin{
 					}
 					Thread.sleep(1000L);
 				} catch (Exception e) {
-					logger.error(e.getMessage(),e);
+					listener.sysout(e.getMessage());
+					logger.error(e.getMessage());
+					e.printStackTrace();
 				}
 			}
 		}
