@@ -18,6 +18,7 @@ public class FQQTest {
 		int loginType = 1; //登录方式 1:重新扫码登录;2:缓存登录(可能会超时失效)
 		Message msg = qrLogin.login(loginType);
 		if(msg==null){
+			
 			System.out.println("登录失败,请查看登录日志");
 		}else {
 			System.out.println("登录成功");
