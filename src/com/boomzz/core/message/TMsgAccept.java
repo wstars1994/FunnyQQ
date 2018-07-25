@@ -34,8 +34,10 @@ public final class TMsgAccept implements Runnable{
 			params.put("r",url);
 			String back=HttpClient.postHttps(Config.URL_POST_NEWMESSAGE, params,message.cookies);
 			MMsgAccept me = FQQUtil.jsonNewMessage(back);
-			if(me!=null)
+			if(me!=null) {
+				if(me.getSendUin().equals(me.getToUin())) continue;
 				listener.acceptMessage(me,message);
+			}
 		}
 	}
 }

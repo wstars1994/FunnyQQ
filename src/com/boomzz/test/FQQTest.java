@@ -1,6 +1,5 @@
 package com.boomzz.test;
 
-import com.boomzz.core.Config;
 import com.boomzz.core.login.AbstractLogin;
 import com.boomzz.core.login.QRCodeLogin;
 import com.boomzz.core.message.Message;

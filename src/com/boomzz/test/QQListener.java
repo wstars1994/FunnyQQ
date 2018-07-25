@@ -16,9 +16,8 @@ import com.boomzz.util.DateTimeUtil;
 
 public class QQListener implements IQQListener{
 
-	private String lastSendMsg = "";
-	private String fromUin = "";
-	private List<String> whiteList = Arrays.asList("战略忽悠局 - CSFYA","Funny QQ Test Group");
+	private List<String> whiteList = Arrays.asList("战略忽悠局 - ZFYA","FunnyQQ Test Group");
+	
 	@Override
 	public void imageStream(InputStream inputStream) {
 		System.out.println("获取到二维码资源");
@@ -26,9 +25,6 @@ public class QQListener implements IQQListener{
 
 	@Override
 	public void acceptMessage(MMsgAccept model, Message message) {
-		if(lastSendMsg.equals(model.getMsg())){
-			fromUin=model.getSendUin();
-		}
 		if(model!=null&&model.getMsgType()==1){
 			MFriends mFriends = message.getFrientList().get(model.getFromUin());
 			String name = mFriends.getMarkName()==null?mFriends.getNickName():mFriends.getMarkName();
@@ -43,14 +39,12 @@ public class QQListener implements IQQListener{
 				sendName = mBase.getNickName();
 			System.out.println("[群] "+DateTimeUtil.timestampFormat(model.getTime()*1000)+" ["+name+" | "+sendName+"] :"+model.getMsg());
 			
-			if(model.getSendUin().equals(fromUin)||!whiteList.contains(group.getName()))
+			if(!whiteList.contains(group.getName()))
 				return;
 			else{
 				if(model.isAt()){
 					MMsgSend m = new MMsgSend();
 					String reply = Turing.reply(model.getMsg());
-					if(lastSendMsg.equals(""))
-						lastSendMsg = reply;
 					m.setContent(reply);
 					m.setUin(model.getFromUin());
 					message.sendGroupMessage(m);
