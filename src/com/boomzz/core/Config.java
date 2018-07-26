@@ -26,10 +26,6 @@ public class Config {
 	 */
 	public static String PARAM_CLIENTID="53999199";
 	
-	/**
-	 * 发送消息参数
-	 */
-	public static String PARAM_SENDMSG="{\"to\":#to#,\"content\":\"#content#\",\"face\":#face#,\"clientid\":"+PARAM_CLIENTID+",\"msg_id\":#msg_id#,\"psessionid\":\"#psessionid#\"}";
 
 	/**
 	 * 第二次登录请求参数
@@ -153,9 +149,6 @@ public class Config {
 	}
 	public static void setPARAM_CLIENTID(String pARAM_CLIENTID) {
 		PARAM_CLIENTID = pARAM_CLIENTID;
-	}
-	public static void setPARAM_SENDMSG(String pARAM_SENDMSG) {
-		PARAM_SENDMSG = pARAM_SENDMSG;
 	}
 	public static void setPARAM_LOGIN2(String pARAM_LOGIN2) {
 		PARAM_LOGIN2 = pARAM_LOGIN2;

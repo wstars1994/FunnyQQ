@@ -386,14 +386,22 @@ public class FQQUtil {
 				if(content.size()==1){
 					messageModel.setMsg("未识别的消息类型");
 				}else if(content.size()>2){
-					messageModel.setMsg(content.getString(1)+" "+content.getString(3));
-					String meString = Message.loginModel.getNickName();
-					if(meString.substring(0, 1).equals(" ")){
-						meString = meString.substring(1, meString.length());
+					String msg = "";
+					for(int i=1;i<content.size();i++) {
+						msg+=content.getString(i);
 					}
-					if(content.getString(1).indexOf("@"+meString)!=-1){
+					messageModel.setMsg(msg);
+					String nickName = Message.loginModel.getNickName();
+					if(nickName.substring(0, 1).equals(" ")){
+						nickName = nickName.substring(1, nickName.length());
+					}
+					if(content.getString(1).indexOf("@"+nickName)!=-1){
 						messageModel.setAt(true);
-						messageModel.setMsg(content.getString(4));
+						msg = "";
+						for(int i=2;i<content.size();i++) {
+							msg+=content.getString(i);
+						}
+						messageModel.setMsg(msg);
 					}
 				} else messageModel.setMsg(content.getString(1));
 				messageModel.setFromUin(value.getString("from_uin"));
